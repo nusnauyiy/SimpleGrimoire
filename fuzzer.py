@@ -366,6 +366,14 @@ class GrimoireFuzzer(Fuzzer):
         for input_data in initial_inputs:
             has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
             self.save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
+        
+        # set of all previously generalized input
+        self.generalized = []
+        # provided dictionary obtained from the binary
+        self.strings = []
+        # queue of inputs
+        self.queue = list(self.initial_inputs)
+
 
     def fuzz_prob(self, saved_input: SavedInput) -> float:
         """
@@ -398,22 +406,38 @@ class GrimoireFuzzer(Fuzzer):
         base_children = base_children * smaller_boost * faster_boost
         return base_children
 
+    def get_content(input):
+        # possibly converts byte data to text content
+        # in paper, this is described as the 'original input string'
+        return NotImplemented
+
     def mutate_input(self, input_data: bytes) -> bytes:
         """
         Produce a new byte-level input by mutating `input_data`.
 
         Note: this function should not alter the original `input_data` object.
         """
+        # could this be where we're converting byte data to text content?
+        # content <- input.content
+        content = self.get_content(input)
+        # this is supposedly a method from redqueen. However, I'm not exactly able to find it in the repo
+        # but the paper mentioned that it's generally between 512 - 1024
+        # perhaps some of the constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
         # n ← havoc_amount(input.performance())
+        n = 64
         # 3 for i ← 0 to n do
         #     4 if input.is_generalized() then
         #         5 input_extension(input, generalized)
         #         6 recursive_replacement(input, generalized)
         #     string_replacement(content, strings)
         # return bytes(mutated_data)
-        pass
+        for i in range(0, n):
+            if self.is_generalized(input_data):
+                self.input_extension(input_data, self.generalized)
+                self.recursive_replacement(input, self.generalized)
+            self.string_replacement(content, self.strings)
 
-    def random_generalized():
+    def random_generalized(self):
         """
         takes as input a set of all previously
         generalized inputs, tokens and strings from the dictionary and
@@ -428,19 +452,42 @@ class GrimoireFuzzer(Fuzzer):
         #         5 rand ← random_token_or_string(generalized)
         # 6 else
         # 7 rand ← random_generalized_input(generalized)
-        pass
+        def random_coin():
+            return random.randint(0, 1)
 
-    def send_to_fuzzer(input):
+        def random_slice(generalized):
+            """
+            select a substring between two arbitrary in a generalized input
+            """
+            return NotImplemented
+
+        def random_token_or_string(generalized):
+            """
+            randomly selects from the fragments from generalization
+            """
+            return NotImplemented
+
+        def random_generalized_input(generalized):
+            return random.choice(generalized)
+
+        if random_coin():
+            if random_coin():
+                rand = random_slice(self.generalized)
+            else:
+                rand = random_token_or_string(self.generalized)
+        else:
+            rand = random_generalized_input(self.generalized)
+
+    def send_to_fuzzer(self, input):
         """
         implies that the fuzzer executes
         the target application with the mutated input. 
         It expects concrete inputs. Thus, mutations working
-        on generalized inputs
-        first replace all remaining  by an empty string
+        on generalized inputs first replace all remaining [] by an empty string
         """
-        pass
+        return NotImplemented
 
-    def input_extension(input, all_generalized):
+    def input_extension(self, input):
         """
         we extend an generalized input by placing another randomly
         chosen generalized input, slice, token or string before and
@@ -449,15 +496,71 @@ class GrimoireFuzzer(Fuzzer):
         # 1 rand ← random_generalized(generalized_inputs)
         # 2 send_to_fuzzer(concat(input.content(), rand.content()))
         # 3 send_to_fuzzer(concat(rand.content(),input.content()))
-        pass
+        rand = self.random_generalized()
+        self.send_to_fuzzer(self.get_content(input) + self.get_content(rand))
+        self.send_to_fuzzer(self.get_content(rand) + self.get_content(input))
 
-    def recursive_replacement(input, generalized):
+    def recursive_replacement(self, input):
         # 1 input ← pad_with_gaps(input)
         # 2 for i ← 0 to random_power_of_two() do
         #     3 rand ← random_generalized(generalized_inputs)
         #     4 input ← replace_random_gap(input, rand)
         # 5 send_to_fuzzer(input.content())
-        pass
+        def pad_with_gaps(input):
+            # adding gaps to the beginning and the end of inputs
+            return NotImplemented
+        
+        def random_power_of_two():
+            # arbitrarily chosen
+            return pow(2, random.randint(1, 10))
+
+        def replace_random_gaps(input, rand):
+            return NotImplemented 
+
+        input = pad_with_gaps(input)
+        for i in range(0, random_power_of_two()):
+            rand = self.random_generalized()
+            input = replace_random_gaps(input, rand)
+        self.send_to_fuzzer(self.get_content(input))
+
+    def string_replacement(self, input):
+        """
+        Given an input, it locates all substrings in the input that match
+        strings from the obtained dictionary and chooses one randomly.
+        GRIMOIRE first selects a random occurrence of the matching substring
+        and replaces it with a random string. In a second step, it replaces
+        all occurrences of the substring with the same random string. Finally,
+        the mutation sends both mutated inputs to the fuzzer.
+        """
+        # 1 sub ← find_random_substring(input, strings)
+        # 2 if sub then
+        # 3 rand ← random_string(strings)
+        # 4 data ← replace_random_instance(input, sub, rand)
+        # 5 send_to_fuzzer(data)
+        # 6 data ← replace_all_instances(input, sub, and)
+        # 7 send_to_fuzzer(data)
+
+        def find_random_substring(input, strings):
+            # locates all substrings in the input that match strings from
+            # the obtained dictionary and chooses one randomly
+            return NotImplemented
+
+        def random_string(strings):
+            return NotImplemented
+
+        def replace_random_instance(input, sub, rand):
+            return NotImplemented
+
+        def replace_all_instances(input, sub, rand):
+            return NotImplemented
+
+        sub = find_random_substring(input, self.strings)
+        if (sub):
+            rand = random_string(strings)
+            data = replace_random_instance(input, sub, rand)
+            self.send_to_fuzzer(data)
+            data = replace_all_instances(input, sub, rand)
+            self.send_to_fuzzer(data)
 
     def fuzz(self, search_time: int):
         """
@@ -479,12 +582,73 @@ class GrimoireFuzzer(Fuzzer):
                         has_error, input_cov, exec_time = self.exec_with_coverage(
                             mutated_input
                         )
-                        self.save_if_has_new_coverage(
+                        self.generalize_and_save_if_has_new_coverage(
                             mutated_input, has_error, input_cov, exec_time
                         )
                         
                     saved_input.times_mutated += 1
         self.save_data()
+
+    def generalize(self, input, new_bytes, splitting_rule):
+        # 1 start ← 0
+        # 2 while start < input.length() do
+        # 3 end ← find_next_boundary(input, splitting_rule)
+        # 4 candidate ← remove_substring(input, start, end)
+        # 5 if get_new_bytes(candidate) == new_bytes then
+        # 6 input ← replace_by_gap(input, start, end)
+        # 7 start ← end
+        # 8 input ← merge_adjacent_gaps(input)
+        pass
+
+    def generalize_and_save_if_has_new_coverage(
+        self,
+        input_data: bytes,
+        has_error: bool,
+        input_coverage: Set[Tuple[int, int]],
+        exec_time: float,
+    ):
+        """
+        Save an input to `self.saved_inputs` if it has new coverage and does not throw an AssertionError,
+        or to `self.failing_inputs` if it does throw an AssertionError.
+        """
+        def splitting_rule():
+            return NotImplemented
+
+        for edge in input_coverage:
+            if edge not in self.edges_covered and not has_error:
+                self.edges_covered = self.edges_covered.union(input_coverage)
+                self.saved_inputs.append(
+                    SavedInput(input_data, input_coverage, exec_time)
+                )
+                # this is the only new part here
+                self.generalized.append(
+                    self.generalize(input_data, edge, splitting_rule)
+                )
+                self.coverage_through_time.append(
+                    (
+                        time.time(),
+                        len(self.edges_covered),
+                        len(self.edges_covered_failing),
+                    )
+                )
+                log(f"Found new coverage. Total coverage: {len(self.edges_covered)}")
+                break
+            if edge not in self.edges_covered_failing and has_error:
+                self.edges_covered_failing = self.edges_covered_failing.union(
+                    input_coverage
+                )
+                self.failing_inputs.append(
+                    SavedInput(input_data, input_coverage, exec_time)
+                )
+                self.coverage_through_time.append(
+                    (
+                        time.time(),
+                        len(self.edges_covered),
+                        len(self.edges_covered_failing),
+                    )
+                )
+                log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
+                break
 
 """
 queue = [saved_input1, saved_input2, saved_input3, generalized_input1, generalized_input2, ...]
