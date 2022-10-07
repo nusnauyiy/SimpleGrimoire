@@ -51,6 +51,14 @@ def log(*args, **kwargs):
     current_time = time.strftime("%H:%M:%S", time.localtime())
     print(f"[{current_time}]", *args, **kwargs)
 
+class Blank:
+    def __init__(self):
+        pass
+
+class GeneralizedInput:
+    def __init__(self, input: List[bytes | Blank] = []):
+        self.input = input
+
 
 class Fuzzer(ABC):
     """
@@ -480,8 +488,7 @@ class GrimoireFuzzer(Fuzzer):
 
     def send_to_fuzzer(self, input):
         """
-        implies that the fuzzer executes
-        the target application with the mutated input. 
+        implies that the fuzzer executes the target application with the mutated input. 
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
@@ -589,16 +596,58 @@ class GrimoireFuzzer(Fuzzer):
                     saved_input.times_mutated += 1
         self.save_data()
 
-    def generalize(self, input, new_bytes, splitting_rule):
+    def generalize(self, input, new_edges, splitting_rule = None):
+        def merge_adjacent_gaps(generalized):
+            i = len(generalized.input)-1
+            while i >= 1:
+                elem = generalized.input[i]
+                prev_elem = generalized.input[i-1]
+                if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
+                    del generalized.input[i]
+                i -= 1
+            return generalized
+
+        def find_next_boundary(input, start, splitting_rule = None):
+            chunk_size = 2
+            if start + chunk_size - 1 >= len(input):
+                return len(input)-1
+            return start + chunk_size - 1
+            # return NotImplemented
+
+        def generator():
+            for i in range(10):
+                yield i
+
+        def remove_substring(input, start, end):
+            return (input[0:start] + input[end+1:], input[start:end+1])
+            
+        def get_new_bytes(candidate): # change to edges for the coverage library
+            _, edges, _ = self.exec_with_coverage(candidate)
+            return self.edges_covered.difference(edges)
+        
+        # def replace_by_gap(input, start, end):
+        #     return NotImplemented
+
         # 1 start ← 0
+        start = 0
+        generalized = GeneralizedInput()
         # 2 while start < input.length() do
-        # 3 end ← find_next_boundary(input, splitting_rule)
-        # 4 candidate ← remove_substring(input, start, end)
-        # 5 if get_new_bytes(candidate) == new_bytes then
-        # 6 input ← replace_by_gap(input, start, end)
-        # 7 start ← end
+        while start < len(input):
+            # 3 end ← find_next_boundary(input, splitting_rule)
+            end = find_next_boundary(input, start) # note: end is inclusive
+            # 4 candidate ← remove_substring(input, start, end)
+            candidate, substring = remove_substring(input, start, end)
+            # 5 if get_new_bytes(candidate) == new_bytes then
+            if get_new_bytes(candidate) == new_edges:
+                # 6 input ← replace_by_gap(input, start, end)
+                # input = replace_by_gap(input, start, end)
+                generalized.input.append(Blank())
+            else:
+                generalized.input.append(substring)
+            # 7 start ← end
+            start = end
         # 8 input ← merge_adjacent_gaps(input)
-        pass
+        generalized = merge_adjacent_gaps(generalized)
 
     def generalize_and_save_if_has_new_coverage(
         self,
