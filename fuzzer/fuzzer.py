@@ -415,9 +415,8 @@ class GrimoireFuzzer(Fuzzer):
         return base_children
 
     def get_content(input):
-        # possibly converts byte data to text content
-        # in paper, this is described as the 'original input string'
-        return NotImplemented
+        # return the 'original input string'
+        return input.decode("utf-8")
 
     def mutate_input(self, input_data: bytes) -> bytes:
         """
@@ -425,6 +424,9 @@ class GrimoireFuzzer(Fuzzer):
 
         Note: this function should not alter the original `input_data` object.
         """
+        def havoc_amount(input):
+            return NotImplemented
+
         # could this be where we're converting byte data to text content?
         # content <- input.content
         content = self.get_content(input)
@@ -432,7 +434,7 @@ class GrimoireFuzzer(Fuzzer):
         # but the paper mentioned that it's generally between 512 - 1024
         # perhaps some of the constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
         # n ← havoc_amount(input.performance())
-        n = 64
+        n = 512
         # 3 for i ← 0 to n do
         #     4 if input.is_generalized() then
         #         5 input_extension(input, generalized)
@@ -467,22 +469,27 @@ class GrimoireFuzzer(Fuzzer):
             """
             select a substring between two arbitrary in a generalized input
             """
-            return NotImplemented
+            chosen = random.choice(generalized)
+            start = random.randint(0, len(chosen) - 1)
+            end = random.randint(start, len(chosen))
+            return chosen[start:end]
 
         def random_token_or_string(generalized):
             """
-            randomly selects from the fragments from generalization
+            randomly selects fromtokens and strings from the dictionary
             """
+            # not implementing this as of now as we don't have a dictionary
             return NotImplemented
 
         def random_generalized_input(generalized):
             return random.choice(generalized)
 
         if random_coin():
-            if random_coin():
-                rand = random_slice(self.generalized)
-            else:
-                rand = random_token_or_string(self.generalized)
+            # if random_coin():
+            #     rand = random_slice(self.generalized)
+            # else:
+            #     rand = random_token_or_string(self.generalized)
+            rand = random_slice(self.generalized)
         else:
             rand = random_generalized_input(self.generalized)
 
@@ -492,7 +499,16 @@ class GrimoireFuzzer(Fuzzer):
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
-        return NotImplemented
+        input_string = ""
+        for s in input:
+            if isinstance(s, str):
+                input_string += s
+        has_error, input_cov, exec_time = self.exec_with_coverage(
+            bytes(input_string)
+        )
+        self.generalize_and_save_if_has_new_coverage(
+            input_string, has_error, input_cov, exec_time
+        )
 
     def input_extension(self, input):
         """
@@ -515,14 +531,16 @@ class GrimoireFuzzer(Fuzzer):
         # 5 send_to_fuzzer(input.content())
         def pad_with_gaps(input):
             # adding gaps to the beginning and the end of inputs
-            return NotImplemented
+            return [Blank()] + input + [Blank()]
         
         def random_power_of_two():
             # arbitrarily chosen
             return pow(2, random.randint(1, 10))
 
         def replace_random_gaps(input, rand):
-            return NotImplemented 
+            blank_pos = [ i for i in range(len(input)) if isinstance(input[i], Blank) ]
+            chosen = random.choice(blank_pos)
+            return rand[:chosen] + rand + input[chosen+1:] 
 
         input = pad_with_gaps(input)
         for i in range(0, random_power_of_two()):
@@ -539,6 +557,7 @@ class GrimoireFuzzer(Fuzzer):
         all occurrences of the substring with the same random string. Finally,
         the mutation sends both mutated inputs to the fuzzer.
         """
+        # we can't do this one since we don't have a dictionary
         # 1 sub ← find_random_substring(input, strings)
         # 2 if sub then
         # 3 rand ← random_string(strings)
@@ -563,7 +582,7 @@ class GrimoireFuzzer(Fuzzer):
 
         sub = find_random_substring(input, self.strings)
         if (sub):
-            rand = random_string(strings)
+            rand = random_string(self.strings)
             data = replace_random_instance(input, sub, rand)
             self.send_to_fuzzer(data)
             data = replace_all_instances(input, sub, rand)
