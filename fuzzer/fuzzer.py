@@ -23,6 +23,8 @@ import random
 import time
 from typing import Callable, Tuple, List, Set, Union
 
+from python_fuzzer.fuzzer.dictionary_builder import build_dictionary
+
 
 class SavedInput:
     """
@@ -378,9 +380,7 @@ class GrimoireFuzzer(Fuzzer):
         # set of all previously generalized input
         self.generalized = []
         # provided dictionary obtained from the binary
-        self.strings = []
-        # queue of inputs
-        self.queue = list(self.initial_inputs)
+        self.strings = build_dictionary(test_file_name)
 
 
     def fuzz_prob(self, saved_input: SavedInput) -> float:
@@ -476,9 +476,8 @@ class GrimoireFuzzer(Fuzzer):
 
         def random_token_or_string(generalized):
             """
-            randomly selects fromtokens and strings from the dictionary
+            randomly selects from tokens and strings from the dictionary
             """
-            # not implementing this as of now as we don't have a dictionary
             return NotImplemented
 
         def random_generalized_input(generalized):
@@ -775,6 +774,7 @@ def fuzz_main(args):
             module_under_test, test_file_name, cov, args.output_dir, inputs
         )
     elif args.fuzzer == "GRIMOIRE":
+        
         if args.input_dir is not None:
             inputs = _read_input_dir(args.input_dir)
         else:
