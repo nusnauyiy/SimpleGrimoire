@@ -2,3 +2,4 @@ output/
 output*/
 .coverage
 fuzzer/output/
+**/__pycache__

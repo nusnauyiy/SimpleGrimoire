@@ -425,7 +425,7 @@ class GrimoireFuzzer(Fuzzer):
         Note: this function should not alter the original `input_data` object.
         """
         def havoc_amount(input):
-            return NotImplemented
+            return 512 # TODO: change this to actual value
 
         # could this be where we're converting byte data to text content?
         # content <- input.content
@@ -478,7 +478,8 @@ class GrimoireFuzzer(Fuzzer):
             """
             randomly selects from tokens and strings from the dictionary
             """
-            return NotImplemented
+            n = len(self.dictionary)
+            return self.dictionary(random.randint(0, n-1))
 
         def random_generalized_input(generalized):
             return random.choice(generalized)
@@ -568,13 +569,19 @@ class GrimoireFuzzer(Fuzzer):
         def find_random_substring(input, strings):
             # locates all substrings in the input that match strings from
             # the obtained dictionary and chooses one randomly
+            # note: we can probably find all overlapping substrings,
+            # see https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring
             return NotImplemented
 
         def random_string(strings):
-            return NotImplemented
+            n = len(strings)
+            r = random.randint(0, n-1)
+            return strings[r]
 
         def replace_random_instance(input, sub, rand):
-            return NotImplemented
+            # assume that sub is (start_index, end_index)
+            (start, end) = sub
+            return input[0:start] + rand + input[end+1:]
 
         def replace_all_instances(input, sub, rand):
             return NotImplemented
@@ -630,7 +637,6 @@ class GrimoireFuzzer(Fuzzer):
             if start + chunk_size - 1 >= len(input):
                 return len(input)-1
             return start + chunk_size - 1
-            # return NotImplemented
 
         def generator():
             for i in range(10):
@@ -717,10 +723,6 @@ class GrimoireFuzzer(Fuzzer):
                 )
                 log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 break
-
-"""
-queue = [saved_input1, saved_input2, saved_input3, generalized_input1, generalized_input2, ...]
-"""
 
 def _read_input_dir(input_dir):
     """
