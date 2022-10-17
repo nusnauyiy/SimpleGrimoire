@@ -719,10 +719,6 @@ class GrimoireFuzzer(Fuzzer):
                 log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 break
 
-"""
-queue = [saved_input1, saved_input2, saved_input3, generalized_input1, generalized_input2, ...]
-"""
-
 def _read_input_dir(input_dir):
     """
     Read the data from the files in `input_dir` into an input set to seed coverage-guided fuzzing.
