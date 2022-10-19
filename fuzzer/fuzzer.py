@@ -17,7 +17,7 @@ import os
 import random
 import time
 from typing import Callable, Tuple, List, Set, Union
-from fuzzer.util import log
+from util import log
 
 class SavedInput:
     """
@@ -195,7 +195,6 @@ class Fuzzer(ABC):
         for time `search_time`.
         """
         return NotImplemented
-
 
 class RandomFuzzer(Fuzzer):
     """

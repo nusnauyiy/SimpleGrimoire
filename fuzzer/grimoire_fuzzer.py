@@ -16,9 +16,9 @@ import coverage
 import random
 import time
 from typing import Callable, Tuple, List, Set, Union
-from fuzzer.fuzzer import Fuzzer, SavedInput, log
+from fuzzer import Fuzzer, SavedInput, log
 
-from python_fuzzer.fuzzer.dictionary_builder import build_dictionary
+from dictionary_builder import build_dictionary
 
 class Blank:
     def __init__(self):

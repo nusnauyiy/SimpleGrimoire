@@ -4,9 +4,9 @@ import importlib
 import inspect
 import os
 
-from fuzzer.fuzzer import CoverageGuidedFuzzer, RandomFuzzer
-from fuzzer.grimoire_fuzzer import GrimoireFuzzer
-from fuzzer.util import log
+from fuzzer import CoverageGuidedFuzzer, RandomFuzzer
+from grimoire_fuzzer import GrimoireFuzzer
+from util import log
 
 def _read_input_dir(input_dir):
     """
