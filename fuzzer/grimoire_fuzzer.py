@@ -29,7 +29,6 @@ class GeneralizedInput:
         self.input = input
 
 class GrimoireFuzzer(Fuzzer):
-
     def __init__(
         self,
         module_under_test,
@@ -48,9 +47,9 @@ class GrimoireFuzzer(Fuzzer):
             self.save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
         
         # set of all previously generalized input
-        self.generalized = []
+        self.generalized: List[GeneralizedInput] = []
         # provided dictionary obtained from the binary
-        self.strings = build_dictionary(test_file_name)
+        self.strings: Set[bytes] = {bytes(s, "utf-8") for s in build_dictionary(test_file_name)}
 
 
     def fuzz_prob(self, saved_input: SavedInput) -> float:
@@ -84,7 +83,7 @@ class GrimoireFuzzer(Fuzzer):
         base_children = base_children * smaller_boost * faster_boost
         return base_children
 
-    def get_content(input):
+    def get_content(input: bytes) -> str:
         # return the 'original input string'
         return input.decode("utf-8")
 
@@ -94,7 +93,7 @@ class GrimoireFuzzer(Fuzzer):
 
         Note: this function should not alter the original `input_data` object.
         """
-        def havoc_amount(input):
+        def havoc_amount(input: bytes) -> int:
             return 512 # TODO: change this to actual value
 
         # could this be where we're converting byte data to text content?
@@ -117,7 +116,7 @@ class GrimoireFuzzer(Fuzzer):
                 self.recursive_replacement(input, self.generalized)
             self.string_replacement(content, self.strings)
 
-    def random_generalized(self):
+    def random_generalized(self) -> GeneralizedInput | bytes:
         """
         takes as input a set of all previously
         generalized inputs, tokens and strings from the dictionary and
@@ -132,49 +131,51 @@ class GrimoireFuzzer(Fuzzer):
         #         5 rand ← random_token_or_string(generalized)
         # 6 else
         # 7 rand ← random_generalized_input(generalized)
-        def random_coin():
+        def random_coin() -> int:
             return random.randint(0, 1)
 
-        def random_slice(generalized):
+        def random_slice(generalized: List[GeneralizedInput]) -> bytes:
             """
-            select a substring between two arbitrary in a generalized input
+            select a substring between two arbitrary blanks in a generalized input
             """
-            chosen = random.choice(generalized)
-            start = random.randint(0, len(chosen) - 1)
-            end = random.randint(start, len(chosen))
-            return chosen[start:end]
+            chosen = random.choice(generalized).input # [blank, "hello", blank, "goodbye", blank, "world", blank]
+            blank_indices = [i for i in range(len(chosen)) if isinstance(chosen[i], Blank)]
+            edges = random.sample(blank_indices, 2)
+            start = min(edges)
+            end = max(edges)
+            return GeneralizedInput(chosen[start+1:end]) # does not include start and end blanks
 
-        def random_token_or_string(generalized):
+        def random_token_or_string(tokens: List[bytes]) -> bytes:
             """
             randomly selects from tokens and strings from the dictionary
             """
-            n = len(self.dictionary)
-            return self.dictionary(random.randint(0, n-1))
+            return random.choice(tokens)
 
-        def random_generalized_input(generalized):
+        def random_generalized_input(generalized: List[GeneralizedInput]) -> GeneralizedInput:
             return random.choice(generalized)
 
         if random_coin():
-            # if random_coin():
-            #     rand = random_slice(self.generalized)
-            # else:
-            #     rand = random_token_or_string(self.generalized)
+            if random_coin():
+                rand = random_slice(self.generalized)
+            else:
+                rand = random_token_or_string(self.generalized)
             rand = random_slice(self.generalized)
         else:
             rand = random_generalized_input(self.generalized)
+        return rand
 
-    def send_to_fuzzer(self, input):
+    def send_to_fuzzer(self, input: GeneralizedInput):
         """
         implies that the fuzzer executes the target application with the mutated input. 
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
-        input_string = ""
-        for s in input:
-            if isinstance(s, str):
+        input_string = b""
+        for s in input.input:
+            if isinstance(s, bytes):
                 input_string += s
         has_error, input_cov, exec_time = self.exec_with_coverage(
-            bytes(input_string)
+            input_string
         )
         self.generalize_and_save_if_has_new_coverage(
             input_string, has_error, input_cov, exec_time
