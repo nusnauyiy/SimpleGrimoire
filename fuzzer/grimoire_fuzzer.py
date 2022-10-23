@@ -19,14 +19,9 @@ from typing import Callable, Tuple, List, Set, Union
 from fuzzer import Fuzzer, SavedInput, log
 
 from dictionary_builder import build_dictionary
-
-class Blank:
-    def __init__(self):
-        pass
-
-class GeneralizedInput:
-    def __init__(self, input: List[Union[bytes, Blank]] = []):
-        self.input = input
+from util import random_slice
+from models.GeneralizedInput import GeneralizedInput
+from models.Blank import Blank
 
 class GrimoireFuzzer(Fuzzer):
     def __init__(
@@ -116,7 +111,7 @@ class GrimoireFuzzer(Fuzzer):
                 self.recursive_replacement(input, self.generalized)
             self.string_replacement(content, self.strings)
 
-    def random_generalized(self) -> GeneralizedInput | bytes:
+    def random_generalized(self) -> Union[GeneralizedInput, bytes]:
         """
         takes as input a set of all previously
         generalized inputs, tokens and strings from the dictionary and
@@ -134,16 +129,16 @@ class GrimoireFuzzer(Fuzzer):
         def random_coin() -> int:
             return random.randint(0, 1)
 
-        def random_slice(generalized: List[GeneralizedInput]) -> bytes:
-            """
-            select a substring between two arbitrary blanks in a generalized input
-            """
-            chosen = random.choice(generalized).input # [blank, "hello", blank, "goodbye", blank, "world", blank]
-            blank_indices = [i for i in range(len(chosen)) if isinstance(chosen[i], Blank)]
-            edges = random.sample(blank_indices, 2)
-            start = min(edges)
-            end = max(edges)
-            return GeneralizedInput(chosen[start+1:end]) # does not include start and end blanks
+        # def random_slice(generalized: List[GeneralizedInput]) -> bytes:
+        #     """
+        #     select a substring between two arbitrary blanks in a generalized input
+        #     """
+        #     chosen = random.choice(generalized).input
+        #     blank_indices = [i for i in range(len(chosen)) if isinstance(chosen[i], Blank)]
+        #     boundaries = random.sample(blank_indices, 2)
+        #     start = min(boundaries)
+        #     end = max(boundaries)
+        #     return GeneralizedInput(chosen[start+1:end]) # does not include start and end blanks
 
         def random_token_or_string(tokens: List[bytes]) -> bytes:
             """
@@ -181,7 +176,7 @@ class GrimoireFuzzer(Fuzzer):
             input_string, has_error, input_cov, exec_time
         )
 
-    def input_extension(self, input):
+    def input_extension(self, input: GeneralizedInput):
         """
         we extend an generalized input by placing another randomly
         chosen generalized input, slice, token or string before and
@@ -191,8 +186,8 @@ class GrimoireFuzzer(Fuzzer):
         # 2 send_to_fuzzer(concat(input.content(), rand.content()))
         # 3 send_to_fuzzer(concat(rand.content(),input.content()))
         rand = self.random_generalized()
-        self.send_to_fuzzer(self.get_content(input) + self.get_content(rand))
-        self.send_to_fuzzer(self.get_content(rand) + self.get_content(input))
+        self.send_to_fuzzer(self.get_content(input.get_bytes) + self.get_content(rand))
+        self.send_to_fuzzer(self.get_content(rand) + self.get_content(input.get_bytes))
 
     def recursive_replacement(self, input):
         # 1 input ← pad_with_gaps(input)
