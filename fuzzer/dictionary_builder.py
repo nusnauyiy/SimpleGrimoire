@@ -7,7 +7,8 @@ class ConstantVisitor(ast.NodeVisitor):
     self.generic_visit(node)
     return self.constants
   def visit_Constant(self, node: ast.Constant):
-    self.constants.add(node.value)
+    if isinstance(node.value, str):
+      self.constants.add(node.value)
 
 def build_dictionary(filename):
     def parse_file(filename):
@@ -23,7 +24,7 @@ def build_dictionary(filename):
     return find_all_const(tree)
 
 def main(argv):
-  print(build_dictionary(argv[0]))
+  print(build_dictionary(argv[1]))
 
 if __name__ == "__main__":
   main(sys.argv)
