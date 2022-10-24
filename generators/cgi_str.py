@@ -2,8 +2,9 @@
 A generator of random CGI encoded strings
 """
 
-URL_VALID_CHARACTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~+"
-HEX_DIGITS="ABCDEFabcdef0123456789"
+URL_VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~+"
+HEX_DIGITS = "ABCDEFabcdef0123456789"
+
 
 class ByteBackedRandom:
     """
@@ -24,14 +25,15 @@ class ByteBackedRandom:
             # When random runs out, return 0. Ideally we should extend with 
             # an arbitrary (but deterministic given the `random_bytes`
             # provided) sequence of bytes 
-            return 0 
+            return 0
 
     def random_float_between_0_and_1(self):
-        return self.random_byte()/255
-    
+        return self.random_byte() / 255
+
     def random_choice(self, choice_domain):
         choice_idx = self.random_byte() % len(choice_domain)
         return choice_domain[choice_idx]
+
 
 def generate_valid_cgi_string(random_bytes: bytes) -> str:
     """
@@ -39,7 +41,7 @@ def generate_valid_cgi_string(random_bytes: bytes) -> str:
     """
     bbr = ByteBackedRandom(random_bytes)
 
-    string_len = bbr.random_choice([1,2,5,10,20,40,80])
+    string_len = bbr.random_choice([1, 2, 5, 10, 20, 40, 80])
     ret_string = ""
     for _ in range(string_len):
         # 1/4 of the time, generate a special character:
@@ -55,10 +57,10 @@ def generate_cgi_string(random_bytes: bytes) -> str:
     Using `random_bytes` as a source of randomness, generate a random string containing
     only characters that are valid in a CGI string. 
     """
-    
+
     bbr = ByteBackedRandom(random_bytes)
 
-    string_len = bbr.random_choice([1,2,5,10,20,40,80])
+    string_len = bbr.random_choice([1, 2, 5, 10, 20, 40, 80])
     ret_string = ""
     for _ in range(string_len):
         ret_string += bbr.random_choice(URL_VALID_CHARACTERS + "%")
