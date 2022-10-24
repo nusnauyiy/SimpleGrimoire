@@ -28,6 +28,9 @@ class UtilTest(unittest.TestCase):
         self.assertTrue(isinstance(answer[1], Blank))
         self.assertEqual(b"bye", answer[2])
 
+    def test_random_generalized(self):
+
+
 
 if __name__ == '__main__':
     unittest.main()

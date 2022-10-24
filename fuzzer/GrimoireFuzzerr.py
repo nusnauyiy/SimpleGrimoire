@@ -15,14 +15,14 @@ Took caroline 28 minutes to complete the programming assignment part of it.
 import coverage
 import random
 import time
-from typing import Callable, Tuple, List, Set, Union
+from typing import Tuple, Set, Union
 
 from models import SavedInput
 from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
 from models.Blank import Blank
 from util.dictionary_builder import build_dictionary
-from util.util import random_slice, log
+from util.util import log, random_generalized
 
 
 class GrimoireFuzzer(Fuzzer):
@@ -44,7 +44,7 @@ class GrimoireFuzzer(Fuzzer):
             self.save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
         # set of all previously generalized input
-        self.generalized: List[GeneralizedInput] = []
+        self.generalized: dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
         self.strings: Set[bytes] = {bytes(s, "utf-8") for s in build_dictionary(test_file_name)}
 
@@ -109,73 +109,21 @@ class GrimoireFuzzer(Fuzzer):
         # return bytes(mutated_data)
         for i in range(0, n):
             if self.is_generalized(input_data):
-                self.input_extension(input_data, self.generalized)
+                self.input_extension(input_data)
                 self.recursive_replacement(input, self.generalized)
             self.string_replacement(content, self.strings)
 
-    def random_generalized(self) -> Union[GeneralizedInput, bytes]:
-        """
-        takes as input a set of all previously
-        generalized inputs, tokens and strings from the dictionary and
-        returns—based on random coin flips—a random (slice of a )
-        generalized input, token or string. In case we pick an input
-        slice, we select a substring between two arbitrary [] in a generalized input.
-        """
-
-        # if random_coin() then
-        #     2 if random_coin() then
-        #         3 rand ← random_slice(generalized)
-        #     4 else
-        #         5 rand ← random_token_or_string(generalized)
-        # 6 else
-        # 7 rand ← random_generalized_input(generalized)
-        def random_coin() -> int:
-            return random.randint(0, 1)
-
-        # def random_slice(generalized: List[GeneralizedInput]) -> bytes:
-        #     """
-        #     select a substring between two arbitrary blanks in a generalized input
-        #     """
-        #     chosen = random.choice(generalized).input
-        #     blank_indices = [i for i in range(len(chosen)) if isinstance(chosen[i], Blank)]
-        #     boundaries = random.sample(blank_indices, 2)
-        #     start = min(boundaries)
-        #     end = max(boundaries)
-        #     return GeneralizedInput(chosen[start+1:end]) # does not include start and end blanks
-
-        def random_token_or_string(tokens: List[bytes]) -> bytes:
-            """
-            randomly selects from tokens and strings from the dictionary
-            """
-            return random.choice(tokens)
-
-        def random_generalized_input(generalized: List[GeneralizedInput]) -> GeneralizedInput:
-            return random.choice(generalized)
-
-        if random_coin():
-            if random_coin():
-                rand = random_slice(self.generalized)
-            else:
-                rand = random_token_or_string(self.strings)
-        else:
-            rand = random_generalized_input(self.generalized)
-        return rand
-
-    def send_to_fuzzer(self, input: GeneralizedInput):
+    def send_to_fuzzer(self, input: bytes):
         """
         implies that the fuzzer executes the target application with the mutated input.
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
-        input_string = b""
-        for s in input.input:
-            if isinstance(s, bytes):
-                input_string += s
         has_error, input_cov, exec_time = self.exec_with_coverage(
-            input_string
+            input
         )
         self.generalize_and_save_if_has_new_coverage(
-            input_string, has_error, input_cov, exec_time
+            input, has_error, input_cov, exec_time
         )
 
     def input_extension(self, input: GeneralizedInput):
@@ -187,7 +135,9 @@ class GrimoireFuzzer(Fuzzer):
         # 1 rand ← random_generalized(generalized_inputs)
         # 2 send_to_fuzzer(concat(input.content(), rand.content()))
         # 3 send_to_fuzzer(concat(rand.content(),input.content()))
-        rand = self.random_generalized()
+        rand = random_generalized(self.generalized.values(), self.strings)
+        if isinstance(rand, GeneralizedInput):
+            rand = rand.get_bytes()
         self.send_to_fuzzer(self.get_content(input.get_bytes) + self.get_content(rand))
         self.send_to_fuzzer(self.get_content(rand) + self.get_content(input.get_bytes))
 
@@ -212,7 +162,7 @@ class GrimoireFuzzer(Fuzzer):
 
         input = pad_with_gaps(input)
         for i in range(0, random_power_of_two()):
-            rand = self.random_generalized()
+            rand = random_generalized(self.generalize, self.strings)
             input = replace_random_gaps(input, rand)
         self.send_to_fuzzer(self.get_content(input))
 
@@ -226,7 +176,6 @@ class GrimoireFuzzer(Fuzzer):
         the mutation sends both mutated inputs to the fuzzer.
         """
 
-        # we can't do this one since we don't have a dictionary
         # 1 sub ← find_random_substring(input, strings)
         # 2 if sub then
         # 3 rand ← random_string(strings)
@@ -364,10 +313,9 @@ class GrimoireFuzzer(Fuzzer):
                     SavedInput(input_data, input_coverage, exec_time)
                 )
                 # this is the only new part here
-                self.generalized.append(
-                    # TODO does this have to be the set of all new edges?
-                    self.generalize(input_data, edge, splitting_rule)
-                )
+                self.generalized[input_data] = self.generalize(input_data, edge,
+                                                               splitting_rule)  # TODO does this have to be the set of all new edges?
+
                 self.coverage_through_time.append(
                     (
                         time.time(),
