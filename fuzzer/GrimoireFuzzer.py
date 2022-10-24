@@ -22,7 +22,7 @@ from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
 from models.Blank import Blank
 from util.dictionary_builder import build_dictionary
-from util.util import log
+from util.util import log, bytes_to_str
 from util.grimoire_util import random_generalized
 
 
@@ -50,7 +50,10 @@ class GrimoireFuzzer(Fuzzer):
         # mapping of original input to generalized input
         self.generalized_map: dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
-        self.strings: Set[bytes] = {bytes(s, "utf-8") for s in build_dictionary(test_file_name)}
+        self.strings: List[bytes] = [bytes(s, "utf-8") for s in build_dictionary(test_file_name)]
+
+    def is_generalized(self, input_bytes: bytes):
+        return input_bytes in self.generalized_map
 
     def fuzz_prob(self, saved_input: SavedInput) -> float:
         """
@@ -83,7 +86,7 @@ class GrimoireFuzzer(Fuzzer):
         base_children = base_children * smaller_boost * faster_boost
         return base_children
 
-    def mutate_input(self, input_data: bytes) -> bytes:
+    def mutate_input(self, input_bytes: bytes) -> bytes:
         """
         Produce a new byte-level input by mutating `input_data`.
 
@@ -95,12 +98,14 @@ class GrimoireFuzzer(Fuzzer):
 
         # could this be where we're converting byte data to text content?
         # content <- input.content
-        content = self.get_content(input)
+        # content = bytes_to_str(input_bytes) # TODO: do we need this?
+
         # this is supposedly a method from redqueen. However, I'm not exactly able to find it in the repo
         # but the paper mentioned that it's generally between 512 - 1024
         # perhaps some constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
         # n ← havoc_amount(input.performance())
         n = 512
+
         # 3 for i ← 0 to n do
         #     4 if input.is_generalized() then
         #         5 input_extension(input, generalized)
@@ -108,25 +113,26 @@ class GrimoireFuzzer(Fuzzer):
         #     string_replacement(content, strings)
         # return bytes(mutated_data)
         for i in range(0, n):
-            if self.is_generalized(input_data):
-                self.input_extension(input_data)
-                self.recursive_replacement(input, self.generalized)
-            self.string_replacement(content, self.strings)
+            if self.is_generalized(input_bytes):
+                generalized_input = self.generalized_map[input_bytes]
+                self.input_extension(generalized_input)
+                self.recursive_replacement(generalized_input, self.generalized)
+            self.string_replacement(input_bytes, self.strings)
 
-    def send_to_fuzzer(self, input: bytes):
+    def send_to_fuzzer(self, input_bytes: bytes):
         """
         implies that the fuzzer executes the target application with the mutated input.
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
         has_error, input_cov, exec_time = self.exec_with_coverage(
-            input
+            input_bytes
         )
         self.generalize_and_save_if_has_new_coverage(
-            input, has_error, input_cov, exec_time
+            input_bytes, has_error, input_cov, exec_time
         )
 
-    def input_extension(self, input: GeneralizedInput):
+    def input_extension(self, generalized_input: GeneralizedInput):
         """
         we extend an generalized input by placing another randomly
         chosen generalized input, slice, token or string before and
@@ -138,35 +144,41 @@ class GrimoireFuzzer(Fuzzer):
         rand = random_generalized(self.generalized, self.strings)
         if isinstance(rand, GeneralizedInput):
             rand = rand.get_bytes()
-        self.send_to_fuzzer(self.get_content(input.get_bytes) + self.get_content(rand))
-        self.send_to_fuzzer(self.get_content(rand) + self.get_content(input.get_bytes))
+        input_bytes: bytes = generalized_input.get_bytes()
+        self.send_to_fuzzer(input_bytes + rand)
+        self.send_to_fuzzer(rand + input_bytes)
 
-    def recursive_replacement(self, input):
+    def recursive_replacement(self, generalized_input: GeneralizedInput):
         # 1 input ← pad_with_gaps(input)
         # 2 for i ← 0 to random_power_of_two() do
         #     3 rand ← random_generalized(generalized_inputs)
         #     4 input ← replace_random_gap(input, rand)
         # 5 send_to_fuzzer(input.content())
-        def pad_with_gaps(input):
+        def pad_with_gaps(generalized_input: GeneralizedInput) -> GeneralizedInput:
             # adding gaps to the beginning and the end of inputs
-            return [Blank()] + input + [Blank()]
+            return GeneralizedInput([Blank()] + generalized_input.input + [Blank()])
 
-        def random_power_of_two():
+        def random_power_of_two() -> int:
             # arbitrarily chosen
             return pow(2, random.randint(1, 10))
 
-        def replace_random_gaps(input, rand):
-            blank_pos = [i for i in range(len(input)) if isinstance(input[i], Blank)]
+        def replace_random_gaps(generalized_input: GeneralizedInput, rand: Union[GeneralizedInput, bytes]) -> GeneralizedInput:
+            blank_pos = [i for i in range(len(generalized_input.input)) if isinstance(generalized_input.input[i], Blank)]
             chosen = random.choice(blank_pos)
-            return rand[:chosen] + rand + input[chosen + 1:]
+            rand_list = []
+            if isinstance(rand, GeneralizedInput):
+                rand_list = rand.input
+            else:
+                rand_list.append(rand)
+            return GeneralizedInput(generalized_input.input[:chosen] + rand_list + generalized_input.input[chosen + 1:])
 
-        input = pad_with_gaps(input)
+        generalized_input = pad_with_gaps(generalized_input)
         for i in range(0, random_power_of_two()):
-            rand = random_generalized(self.generalize, self.strings)
-            input = replace_random_gaps(input, rand)
-        self.send_to_fuzzer(self.get_content(input))
+            rand = random_generalized(self.generalized, self.strings)
+            generalized_input = replace_random_gaps(generalized_input, rand)
+        self.send_to_fuzzer(generalized_input.get_bytes())
 
-    def string_replacement(self, input):
+    def string_replacement(self, input_bytes: bytes, strings: List[bytes]):
         """
         Given an input, it locates all substrings in the input that match
         strings from the obtained dictionary and chooses one randomly.
@@ -184,32 +196,32 @@ class GrimoireFuzzer(Fuzzer):
         # 6 data ← replace_all_instances(input, sub, and)
         # 7 send_to_fuzzer(data)
 
-        def find_random_substring(input, strings):
+        def find_random_substring(input_bytes: bytes, strings: List[bytes]):
             # locates all substrings in the input that match strings from
             # the obtained dictionary and chooses one randomly
             # note: we can probably find all overlapping substrings,
             # see https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring
             return NotImplemented
 
-        def random_string(strings):
+        def random_string(strings: List[bytes]):
             n = len(strings)
             r = random.randint(0, n - 1)
             return strings[r]
 
-        def replace_random_instance(input, sub, rand):
+        def replace_random_instance(input_bytes: bytes, sub: Tuple[int, int], rand: bytes):
             # assume that sub is (start_index, end_index)
             (start, end) = sub
-            return input[0:start] + rand + input[end + 1:]
+            return input_bytes[0:start] + rand + input_bytes[end + 1:]
 
-        def replace_all_instances(input, sub, rand):
+        def replace_all_instances(input_bytes: bytes, sub: Tuple[int, int], rand: bytes):
             return NotImplemented
 
-        sub = find_random_substring(input, self.strings)
-        if (sub):
-            rand = random_string(self.strings)
-            data = replace_random_instance(input, sub, rand)
+        sub = find_random_substring(input_bytes, strings)
+        if sub:
+            rand = random_string(strings)
+            data = replace_random_instance(input_bytes, sub, rand)
             self.send_to_fuzzer(data)
-            data = replace_all_instances(input, sub, rand)
+            data = replace_all_instances(input_bytes, sub, rand)
             self.send_to_fuzzer(data)
 
     def fuzz(self, search_time: int):
@@ -314,7 +326,7 @@ class GrimoireFuzzer(Fuzzer):
                 )
                 # this is the only new part here
                 generalized_input: GeneralizedInput = self.generalize(input_data, edge,
-                                                               splitting_rule)  # TODO does this have to be the set of all new edges?
+                                                                      splitting_rule)  # TODO does this have to be the set of all new edges?
                 self.generalized.append(generalized_input)
                 self.generalized_map[input_data] = generalized_input
 
