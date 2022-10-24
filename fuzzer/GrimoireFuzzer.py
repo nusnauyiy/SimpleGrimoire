@@ -24,7 +24,7 @@ from models.Blank import Blank
 from util.dictionary_builder import build_dictionary
 from util.util import log, bytes_to_str, str_to_bytes, find_all_overlapping_substr, find_all_nonoverlapping_substr, \
     replace_all_instances, replace_random_instance, find_random_substring
-from util.grimoire_util import random_generalized
+from util.grimoire_util import random_generalized, generic_generalized
 
 
 class GrimoireFuzzer(Fuzzer):
@@ -97,12 +97,6 @@ class GrimoireFuzzer(Fuzzer):
         def havoc_amount(input: bytes) -> int:
             return 512  # TODO: change this to actual value
 
-        # could this be where we're converting byte data to text content?
-        # content <- input.content
-        # content = bytes_to_str(input_bytes) # TODO: do we need this?
-
-        # this is supposedly a method from redqueen. However, I'm not exactly able to find it in the repo
-        # but the paper mentioned that it's generally between 512 - 1024
         # perhaps some constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
         # n ← havoc_amount(input.performance())
         n = 512
@@ -166,8 +160,10 @@ class GrimoireFuzzer(Fuzzer):
             # arbitrarily chosen
             return pow(2, random.randint(1, 10))
 
-        def replace_random_gaps(generalized_input: GeneralizedInput, rand: Union[GeneralizedInput, bytes]) -> GeneralizedInput:
-            blank_pos = [i for i in range(len(generalized_input.input)) if isinstance(generalized_input.input[i], Blank)]
+        def replace_random_gaps(generalized_input: GeneralizedInput,
+                                rand: Union[GeneralizedInput, bytes]) -> GeneralizedInput:
+            blank_pos = [i for i in range(len(generalized_input.input)) if
+                         isinstance(generalized_input.input[i], Blank)]
             chosen = random.choice(blank_pos)
             rand_list = []
             if isinstance(rand, GeneralizedInput):
@@ -241,57 +237,16 @@ class GrimoireFuzzer(Fuzzer):
                     saved_input.times_mutated += 1
         self.save_data()
 
-    def generalize(self, input, new_edges, splitting_rule=None):
-        def merge_adjacent_gaps(generalized):
-            i = len(generalized.input) - 1
-            while i >= 1:
-                elem = generalized.input[i]
-                prev_elem = generalized.input[i - 1]
-                if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
-                    del generalized.input[i]
-                i -= 1
-            return generalized
-
-        def find_next_boundary(input, start, splitting_rule=None):
-            chunk_size = 2
-            if start + chunk_size - 1 >= len(input):
-                return len(input) - 1
-            return start + chunk_size - 1
-
-        def generator():
-            for i in range(10):
-                yield i
-
-        def remove_substring(input, start, end):
-            return (input[0:start] + input[end + 1:], input[start:end + 1])
+    def generalize(self, input_data: bytes, new_edges: Set[Tuple[int, int]], splitting_rule=None):
 
         def get_new_bytes(candidate):  # change to edges for the coverage library
             _, edges, _ = self.exec_with_coverage(candidate)
-            return self.edges_covered.difference(edges)
+            return edges.difference(self.edges_covered)
 
-        # def replace_by_gap(input, start, end):
-        #     return NotImplemented
+        def candidate_check(candidate: bytes):
+            return get_new_bytes(candidate) == new_edges
 
-        # 1 start ← 0
-        start = 0
-        generalized = GeneralizedInput()
-        # 2 while start < input.length() do
-        while start < len(input):
-            # 3 end ← find_next_boundary(input, splitting_rule)
-            end = find_next_boundary(input, start)  # note: end is inclusive
-            # 4 candidate ← remove_substring(input, start, end)
-            candidate, substring = remove_substring(input, start, end)
-            # 5 if get_new_bytes(candidate) == new_bytes then
-            if get_new_bytes(candidate) == new_edges:
-                # 6 input ← replace_by_gap(input, start, end)
-                # input = replace_by_gap(input, start, end)
-                generalized.input.append(Blank())
-            else:
-                generalized.input.append(substring)
-            # 7 start ← end
-            start = end
-        # 8 input ← merge_adjacent_gaps(input)
-        return merge_adjacent_gaps(generalized)
+        return generic_generalized(input_data, candidate_check)
 
     def generalize_and_save_if_has_new_coverage(
             self,
@@ -315,7 +270,8 @@ class GrimoireFuzzer(Fuzzer):
                     SavedInput(input_data, input_coverage, exec_time)
                 )
                 # this is the only new part here
-                generalized_input: GeneralizedInput = self.generalize(input_data, edge,
+                generalized_input: GeneralizedInput = self.generalize(input_data,
+                                                                      input_coverage.difference(self.edges_covered),
                                                                       splitting_rule)  # TODO does this have to be the set of all new edges?
                 self.generalized.append(generalized_input)
                 self.generalized_map[input_data] = generalized_input

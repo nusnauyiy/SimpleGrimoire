@@ -100,6 +100,7 @@ class UtilTest(unittest.TestCase):
             actual = replace_random_instance(input_bytes, pattern, replace_bytes)
             # print(f"actual: {actual}")
             self.assertTrue(actual in expected_possibilities)
+
     def test_replace_all_instances(self):
         input_bytes = b"ababababa"
         pattern = b"aba"
@@ -107,6 +108,10 @@ class UtilTest(unittest.TestCase):
         expected = b"cbcba"
         actual = replace_all_instances(input_bytes, pattern, replace_bytes)
         self.assertEqual(expected, actual)
+
+    def test_generic_generalized(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

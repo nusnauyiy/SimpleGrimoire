@@ -36,3 +36,12 @@ class GeneralizedInput:
                 continue
             res += token
         return res
+
+    def merge_adjacent_gaps(self):
+        i = len(self.input) - 1
+        while i >= 1:
+            elem = self.input[i]
+            prev_elem = self.input[i - 1]
+            if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
+                del self.input[i]
+            i -= 1
