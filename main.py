@@ -6,7 +6,7 @@ import os
 
 from fuzzer.CoverageGuidedFuzzer import CoverageGuidedFuzzer
 from fuzzer.RandomFuzzer import RandomFuzzer
-from fuzzer.GrimoireFuzzerr import GrimoireFuzzer
+from fuzzer.GrimoireFuzzer import GrimoireFuzzer
 from util.util import log
 
 

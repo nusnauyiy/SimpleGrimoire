@@ -4,13 +4,13 @@ import sys
 
 class ConstantVisitor(ast.NodeVisitor):
     def visit_Module(self, node: ast.Module):
-        self.constants = set()
+        self.constants = []
         self.generic_visit(node)
         return self.constants
 
     def visit_Constant(self, node: ast.Constant):
         if isinstance(node.value, str):
-            self.constants.add(node.value)
+            self.constants.append(node.value)
 
 
 def build_dictionary(filename):

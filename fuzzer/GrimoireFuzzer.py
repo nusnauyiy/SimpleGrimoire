@@ -15,14 +15,15 @@ Took caroline 28 minutes to complete the programming assignment part of it.
 import coverage
 import random
 import time
-from typing import Tuple, Set, Union
+from typing import Tuple, Set, Union, List
 
 from models import SavedInput
 from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
 from models.Blank import Blank
 from util.dictionary_builder import build_dictionary
-from util.util import log, random_generalized
+from util.util import log
+from util.grimoire_util import random_generalized
 
 
 class GrimoireFuzzer(Fuzzer):
@@ -43,8 +44,11 @@ class GrimoireFuzzer(Fuzzer):
             has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
             self.save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
-        # set of all previously generalized input
-        self.generalized: dict[bytes, GeneralizedInput] = {}
+        # list of all previously generalized input
+        self.generalized: List[GeneralizedInput] = []
+
+        # mapping of original input to generalized input
+        self.generalized_map: dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
         self.strings: Set[bytes] = {bytes(s, "utf-8") for s in build_dictionary(test_file_name)}
 
@@ -78,10 +82,6 @@ class GrimoireFuzzer(Fuzzer):
         )
         base_children = base_children * smaller_boost * faster_boost
         return base_children
-
-    def get_content(input: bytes) -> str:
-        # return the 'original input string'
-        return input.decode("utf-8")
 
     def mutate_input(self, input_data: bytes) -> bytes:
         """
@@ -135,7 +135,7 @@ class GrimoireFuzzer(Fuzzer):
         # 1 rand ← random_generalized(generalized_inputs)
         # 2 send_to_fuzzer(concat(input.content(), rand.content()))
         # 3 send_to_fuzzer(concat(rand.content(),input.content()))
-        rand = random_generalized(self.generalized.values(), self.strings)
+        rand = random_generalized(self.generalized, self.strings)
         if isinstance(rand, GeneralizedInput):
             rand = rand.get_bytes()
         self.send_to_fuzzer(self.get_content(input.get_bytes) + self.get_content(rand))
@@ -313,8 +313,10 @@ class GrimoireFuzzer(Fuzzer):
                     SavedInput(input_data, input_coverage, exec_time)
                 )
                 # this is the only new part here
-                self.generalized[input_data] = self.generalize(input_data, edge,
+                generalized_input: GeneralizedInput = self.generalize(input_data, edge,
                                                                splitting_rule)  # TODO does this have to be the set of all new edges?
+                self.generalized.append(generalized_input)
+                self.generalized_map[input_data] = generalized_input
 
                 self.coverage_through_time.append(
                     (

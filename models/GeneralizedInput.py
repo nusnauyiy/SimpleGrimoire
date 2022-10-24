@@ -1,11 +1,32 @@
 from typing import List, Union
 
 from models.Blank import Blank
+from util.util import bytes_to_str
 
 
 class GeneralizedInput:
     def __init__(self, input: List[Union[bytes, Blank]] = []):
         self.input = input
+
+    def __eq__(self, other):
+        if isinstance(other, GeneralizedInput):
+            if len(self.input) != len(other.input):
+                return False
+            for i in range(len(self.input)):
+                if self.input[i] != other.input[i]:
+                    return False
+            return True
+        return False
+
+    def __str__(self):
+        res = "GeneralizedInput["
+        for token in self.input:
+            if isinstance(token, bytes):
+                res += bytes_to_str(token) + " "
+            else:
+                res += "Blank "
+        res += "]"
+        return res
 
     # replace all blanks with empty string and return the input as bytes
     def get_bytes(self) -> bytes:
