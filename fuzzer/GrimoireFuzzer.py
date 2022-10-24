@@ -17,12 +17,13 @@ import random
 import time
 from typing import Tuple, Set, Union, List
 
-from models import SavedInput
+from models.SavedInput import SavedInput
 from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
 from models.Blank import Blank
 from util.dictionary_builder import build_dictionary
-from util.util import log, bytes_to_str
+from util.util import log, bytes_to_str, str_to_bytes, find_all_overlapping_substr, find_all_nonoverlapping_substr, \
+    replace_all_instances, replace_random_instance, find_random_substring
 from util.grimoire_util import random_generalized
 
 
@@ -50,7 +51,7 @@ class GrimoireFuzzer(Fuzzer):
         # mapping of original input to generalized input
         self.generalized_map: dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
-        self.strings: List[bytes] = [bytes(s, "utf-8") for s in build_dictionary(test_file_name)]
+        self.strings: List[bytes] = [str_to_bytes(s) for s in build_dictionary(test_file_name)]
 
     def is_generalized(self, input_bytes: bytes):
         return input_bytes in self.generalized_map
@@ -112,6 +113,8 @@ class GrimoireFuzzer(Fuzzer):
         #         6 recursive_replacement(input, generalized)
         #     string_replacement(content, strings)
         # return bytes(mutated_data)
+
+        print(f"!!! MUTATING INPUT: {input_bytes}")
         for i in range(0, n):
             if self.is_generalized(input_bytes):
                 generalized_input = self.generalized_map[input_bytes]
@@ -125,6 +128,7 @@ class GrimoireFuzzer(Fuzzer):
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
+        print(f"!!! SENDING TO FUZZER: {input_bytes}")
         has_error, input_cov, exec_time = self.exec_with_coverage(
             input_bytes
         )
@@ -196,26 +200,11 @@ class GrimoireFuzzer(Fuzzer):
         # 6 data ← replace_all_instances(input, sub, and)
         # 7 send_to_fuzzer(data)
 
-        def find_random_substring(input_bytes: bytes, strings: List[bytes]):
-            # locates all substrings in the input that match strings from
-            # the obtained dictionary and chooses one randomly
-            # note: we can probably find all overlapping substrings,
-            # see https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring
-            return NotImplemented
-
         def random_string(strings: List[bytes]):
-            n = len(strings)
-            r = random.randint(0, n - 1)
-            return strings[r]
+            return random.choice(strings)
 
-        def replace_random_instance(input_bytes: bytes, sub: Tuple[int, int], rand: bytes):
-            # assume that sub is (start_index, end_index)
-            (start, end) = sub
-            return input_bytes[0:start] + rand + input_bytes[end + 1:]
-
-        def replace_all_instances(input_bytes: bytes, sub: Tuple[int, int], rand: bytes):
-            return NotImplemented
-
+        # note that currently find_random_substring finds all among overlapping substrings,
+        # but replace_all_instances will replace non-overlapping instances
         sub = find_random_substring(input_bytes, strings)
         if sub:
             rand = random_string(strings)
@@ -241,6 +230,7 @@ class GrimoireFuzzer(Fuzzer):
                     num_mutants = self.num_mutants(saved_input)
                     for _ in range(0, num_mutants):
                         mutated_input = self.mutate_input(saved_input.data)
+                        print(f"!!! MUTATED INPUT: {mutated_input}")
                         has_error, input_cov, exec_time = self.exec_with_coverage(
                             mutated_input
                         )

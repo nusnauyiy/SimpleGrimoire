@@ -74,6 +74,7 @@ def fuzz_main(args):
     # Run all the fuzzing
     log("Starting fuzzing session.")
     fuzzer.fuzz(args.time)
+    log("Ending fuzzing session.")
 
 
 if __name__ == "__main__":
