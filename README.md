@@ -3,7 +3,7 @@ hihihihi
 yayyyyyyy
 
 hello~~~~~~~~
-
+benchmarks.mimid output --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
 
 ## things to do
 - [ ] finish debugging
