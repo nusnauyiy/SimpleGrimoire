@@ -68,23 +68,25 @@ def random_generalized(generalized: List[GeneralizedInput], strings: List[bytes]
     return rand
 
 
-def generic_generalized(input_data: bytes, candidate_check: Callable[[bytes], bool], splitting_rule=None):
+def generic_generalized(input_data: bytes, candidate_check: Callable[[bytes], bool],
+                        splitting_rule=None) -> GeneralizedInput:
     def find_next_boundary(input, start, splitting_rule=None):
         chunk_size = 2
         if start + chunk_size - 1 >= len(input):
-            return len(input) - 1
-        return start + chunk_size - 1
+            return len(input)
+        return start + chunk_size
 
     def remove_substring(input: bytes, start: int, end: int) -> Tuple[bytes, bytes]:
-        return input[0:start] + input[end + 1:], input[start:end + 1]
+        return input[0:start] + input[end:], input[start:end]
 
         # 1 start ← 0
+
     start = 0
     generalized = GeneralizedInput()
     # 2 while start < input.length() do
     while start < len(input_data):
         # 3 end ← find_next_boundary(input, splitting_rule)
-        end = find_next_boundary(input_data, start)  # note: end is inclusive
+        end = find_next_boundary(input_data, start)  # note: end is exclusive
         # 4 candidate ← remove_substring(input, start, end)
         candidate, substring = remove_substring(input_data, start, end)
         # 5 if get_new_bytes(candidate) == new_bytes then
@@ -97,4 +99,5 @@ def generic_generalized(input_data: bytes, candidate_check: Callable[[bytes], bo
         # 7 start ← end
         start = end
     # 8 input ← merge_adjacent_gaps(input)
-    return generalized.merge_adjacent_gaps()
+    generalized.merge_adjacent_gaps()
+    return generalized

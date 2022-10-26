@@ -4,7 +4,7 @@ from typing import List, Set
 
 from models.Blank import Blank
 from models.GeneralizedInput import GeneralizedInput
-from util.grimoire_util import random_slice, random_generalized
+from util.grimoire_util import random_slice, random_generalized, generic_generalized
 from util.util import find_all_overlapping_substr, find_all_nonoverlapping_substr, replace_all_instances, \
     replace_random_instance, find_random_substring
 
@@ -85,7 +85,7 @@ class UtilTest(unittest.TestCase):
 
         strings = [b'z']
         actual = find_random_substring(input_bytes, strings)
-        self.assertEquals(None, actual)
+        self.assertEqual(None, actual)
 
     def test_replace_random_instance(self):
         # not the most robust test but should catch most cases
@@ -110,6 +110,25 @@ class UtilTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_generic_generalized(self):
+        def generator() -> bool:
+            results = [True, False, True, False, True, False]
+            for result in results:
+                yield result
+
+        input_data = b"hello world"
+        gen = generator()
+
+        def candidate_check(input_bytes: bytes) -> bool:
+            return next(gen)
+
+        result = generic_generalized(input_data, candidate_check).input
+        self.assertTrue(isinstance(result[0], Blank)) # eyyyyy :D
+        self.assertTrue(isinstance(result[2], Blank))
+        self.assertTrue(isinstance(result[4], Blank))
+        self.assertEqual(result[1], b"ll")
+        self.assertEqual(result[3], b"wo")
+        self.assertEqual(result[5], b"d")
+
         pass
 
 
