@@ -165,6 +165,8 @@ class GrimoireFuzzer(Fuzzer):
                                 rand: Union[GeneralizedInput, bytes]) -> GeneralizedInput:
             blank_pos = [i for i in range(len(generalized_input.input)) if
                          isinstance(generalized_input.input[i], Blank)]
+            if len(blank_pos) == 0:
+                return GeneralizedInput(generalized_input.input[:])
             chosen = random.choice(blank_pos)
             rand_list = []
             if isinstance(rand, GeneralizedInput):
@@ -197,7 +199,9 @@ class GrimoireFuzzer(Fuzzer):
         # 6 data ← replace_all_instances(input, sub, and)
         # 7 send_to_fuzzer(data)
 
-        def random_string(strings: List[bytes]):
+        def random_string(strings: List[bytes]) -> Union[bytes, None]:
+            if len(strings) == 0:
+                return None
             return random.choice(strings)
 
         # note that currently find_random_substring finds all among overlapping substrings,
