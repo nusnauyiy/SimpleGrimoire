@@ -40,10 +40,6 @@ class GrimoireFuzzer(Fuzzer):
         # Start with an input of 20 null bytes if no initial inputs are provided.
         if initial_inputs is None:
             initial_inputs = {b"\x00" * 20}
-        # Set up the initial inputs to populate `self.saved_inputs`
-        for input_data in initial_inputs:
-            has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
-            self.save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
         # list of all previously generalized input
         self.generalized: List[GeneralizedInput] = []
@@ -52,6 +48,11 @@ class GrimoireFuzzer(Fuzzer):
         self.generalized_map: dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
         self.strings: List[bytes] = [str_to_bytes(s) for s in build_dictionary(test_file_name)]
+
+        # Set up the initial inputs to populate `self.saved_inputs`
+        for input_data in initial_inputs:
+            has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
+            self.generalize_and_save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
     def is_generalized(self, input_bytes: bytes):
         return input_bytes in self.generalized_map
@@ -94,12 +95,12 @@ class GrimoireFuzzer(Fuzzer):
         Note: this function should not alter the original `input_data` object.
         """
 
-        def havoc_amount(input: bytes) -> int:
-            return 512  # TODO: change this to actual value
+        def havoc_amount() -> int: # note: removed input_bytes parameter
+            return 1 << random.randint(1, 7)
 
         # perhaps some constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
         # n ← havoc_amount(input.performance())
-        n = 512
+        n = havoc_amount()
 
         # 3 for i ← 0 to n do
         #     4 if input.is_generalized() then
@@ -113,7 +114,7 @@ class GrimoireFuzzer(Fuzzer):
             if self.is_generalized(input_bytes):
                 generalized_input = self.generalized_map[input_bytes]
                 self.input_extension(generalized_input)
-                self.recursive_replacement(generalized_input, self.generalized)
+                self.recursive_replacement(generalized_input)
             self.string_replacement(input_bytes, self.strings)
 
     def send_to_fuzzer(self, input_bytes: bytes):
@@ -223,16 +224,7 @@ class GrimoireFuzzer(Fuzzer):
                 # chance of fuzzing `saved_input` if `fuzz_prob(saved_input)`
                 # is near 1.
                 if random.random() < self.fuzz_prob(saved_input):
-                    num_mutants = self.num_mutants(saved_input)
-                    for _ in range(0, num_mutants):
-                        mutated_input = self.mutate_input(saved_input.data)
-                        print(f"!!! MUTATED INPUT: {mutated_input}")
-                        has_error, input_cov, exec_time = self.exec_with_coverage(
-                            mutated_input
-                        )
-                        self.generalize_and_save_if_has_new_coverage(
-                            mutated_input, has_error, input_cov, exec_time
-                        )
+                    self.mutate_input(saved_input.data) # performs different mutations one at a time and sends each to fuzzer
 
                     saved_input.times_mutated += 1
         self.save_data()
