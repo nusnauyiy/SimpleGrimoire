@@ -25,6 +25,11 @@ from util.dictionary_builder import build_dictionary
 from util.util import log, bytes_to_str, str_to_bytes, find_all_overlapping_substr, find_all_nonoverlapping_substr, \
     replace_all_instances, replace_random_instance, find_random_substring
 from util.grimoire_util import random_generalized, generic_generalized
+import logging
+
+logging.basicConfig(filename='grimoire.log', filemode='w',
+                    format='%(name)s - %(levelname)s - %(message)s',
+                    level=logging.DEBUG)
 
 
 class GrimoireFuzzer(Fuzzer):
@@ -95,7 +100,7 @@ class GrimoireFuzzer(Fuzzer):
         Note: this function should not alter the original `input_data` object.
         """
 
-        def havoc_amount() -> int: # note: removed input_bytes parameter
+        def havoc_amount() -> int:  # note: removed input_bytes parameter
             return 1 << random.randint(1, 7)
 
         # perhaps some constants here are related https://github.com/RUB-SysSec/redqueen/search?l=Python&q=havoc
@@ -109,7 +114,7 @@ class GrimoireFuzzer(Fuzzer):
         #     string_replacement(content, strings)
         # return bytes(mutated_data)
 
-        print(f"!!! MUTATING INPUT: {input_bytes}")
+        logging.debug(f"!!! MUTATING INPUT: {input_bytes}")
         for i in range(0, n):
             if self.is_generalized(input_bytes):
                 generalized_input = self.generalized_map[input_bytes]
@@ -123,7 +128,7 @@ class GrimoireFuzzer(Fuzzer):
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
-        print(f"!!! SENDING TO FUZZER: {input_bytes}")
+        logging.debug(f"!!! SENDING TO FUZZER: {input_bytes}")
         has_error, input_cov, exec_time = self.exec_with_coverage(
             input_bytes
         )
@@ -144,7 +149,9 @@ class GrimoireFuzzer(Fuzzer):
         if isinstance(rand, GeneralizedInput):
             rand = rand.get_bytes()
         input_bytes: bytes = generalized_input.get_bytes()
+        logging.debug("input extension 1")
         self.send_to_fuzzer(input_bytes + rand)
+        logging.debug("input extension 2")
         self.send_to_fuzzer(rand + input_bytes)
 
     def recursive_replacement(self, generalized_input: GeneralizedInput):
@@ -179,6 +186,7 @@ class GrimoireFuzzer(Fuzzer):
         for i in range(0, random_power_of_two()):
             rand = random_generalized(self.generalized, self.strings)
             generalized_input = replace_random_gaps(generalized_input, rand)
+        logging.debug("recursive replacement")
         self.send_to_fuzzer(generalized_input.get_bytes())
 
     def string_replacement(self, input_bytes: bytes, strings: List[bytes]):
@@ -210,8 +218,10 @@ class GrimoireFuzzer(Fuzzer):
         if sub:
             rand = random_string(strings)
             data = replace_random_instance(input_bytes, sub, rand)
+            logging.debug("string replacement 1")
             self.send_to_fuzzer(data)
             data = replace_all_instances(input_bytes, sub, rand)
+            logging.debug("string replacement 2")
             self.send_to_fuzzer(data)
 
     def fuzz(self, search_time: int):
@@ -228,7 +238,8 @@ class GrimoireFuzzer(Fuzzer):
                 # chance of fuzzing `saved_input` if `fuzz_prob(saved_input)`
                 # is near 1.
                 if random.random() < self.fuzz_prob(saved_input):
-                    self.mutate_input(saved_input.data) # performs different mutations one at a time and sends each to fuzzer
+                    self.mutate_input(
+                        saved_input.data)  # performs different mutations one at a time and sends each to fuzzer
 
                     saved_input.times_mutated += 1
         self.save_data()
