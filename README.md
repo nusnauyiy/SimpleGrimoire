@@ -3,7 +3,11 @@ hihihihi
 yayyyyyyy
 
 hello~~~~~~~~
-benchmarks.mimid output --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
+
+Run mimid example with:
+```
+python3 main.py benchmarks.mimid output --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
+````
 
 ## things to do
 - [ ] finish debugging
