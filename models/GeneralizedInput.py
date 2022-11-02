@@ -18,15 +18,15 @@ class GeneralizedInput:
             return True
         return False
 
-    def __str__(self):
-        res = "GeneralizedInput["
-        for token in self.input:
-            if isinstance(token, bytes):
-                res += bytes_to_str(token) + " "
-            else:
-                res += "Blank "
-        res += "]"
-        return res
+    # def __str__(self):
+    #     res = "GeneralizedInput["
+    #     for token in self.input:
+    #         if isinstance(token, bytes):
+    #             res += bytes_to_str(token) + " "
+    #         else:
+    #             res += "Blank "
+    #     res += "]"
+    #     return res
 
     # replace all blanks with empty string and return the input as bytes
     def get_bytes(self) -> bytes:

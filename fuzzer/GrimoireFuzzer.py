@@ -246,6 +246,7 @@ class GrimoireFuzzer(Fuzzer):
             return edges.difference(self.edges_covered)
 
         def candidate_check(candidate: bytes):
+            logging.debug(f"checking candidate: {candidate}")
             return get_new_bytes(candidate) == new_edges
 
         return generic_generalized(input_data, candidate_check)
@@ -275,7 +276,8 @@ class GrimoireFuzzer(Fuzzer):
                 generalized_input: GeneralizedInput = self.generalize(input_data,
                                                                       input_coverage.difference(self.edges_covered),
                                                                       splitting_rule)  # TODO does this have to be the set of all new edges?
-                logging.debug(f"{input_data} ---generalized to---> {generalized_input.input}")
+                # TODO: investigate why this line is performing weird
+                logging.debug(f"{input_data} ---generalized to---> {generalized_input.input} = {generalized_input}")
                 self.generalized.append(generalized_input)
                 self.generalized_map[input_data] = generalized_input
 
@@ -286,7 +288,7 @@ class GrimoireFuzzer(Fuzzer):
                         len(self.edges_covered_failing),
                     )
                 )
-                log(f"Found new coverage. Total coverage: {len(self.edges_covered)}")
+                logging.info(f"Found new coverage. Total coverage: {len(self.edges_covered)}")
                 break
             if edge not in self.edges_covered_failing and has_error:
                 self.edges_covered_failing = self.edges_covered_failing.union(
@@ -302,5 +304,5 @@ class GrimoireFuzzer(Fuzzer):
                         len(self.edges_covered_failing),
                     )
                 )
-                log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
+                logging.info(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 break
