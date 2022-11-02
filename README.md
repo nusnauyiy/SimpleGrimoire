@@ -6,7 +6,7 @@ hello~~~~~~~~
 
 Run mimid example with:
 ```
-python3 main.py benchmarks.mimid output --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
+python3 main.py benchmarks.mimid --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
 ````
 
 ## things to do

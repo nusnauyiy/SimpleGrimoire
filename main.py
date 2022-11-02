@@ -3,6 +3,7 @@ import coverage
 import importlib
 import inspect
 import os
+import datetime
 
 from fuzzer.CoverageGuidedFuzzer import CoverageGuidedFuzzer
 from fuzzer.RandomFuzzer import RandomFuzzer
@@ -33,7 +34,10 @@ def fuzz_main(args):
     """
     log("Setting up fuzzing session...")
     # Set up output directory
-    output_dir_name = args.output_dir
+    if not os.path.isdir("output"):
+        os.mkdir("output")
+    curr_timestamp = datetime.datetime.now().strftime("%m-%d_%H:%M:%S")
+    output_dir_name = f"output/output_{curr_timestamp}"
     if os.path.isdir(output_dir_name):
         raise ValueError(f"{output_dir_name} already exists, not overwriting")
     os.mkdir(output_dir_name)
@@ -52,14 +56,14 @@ def fuzz_main(args):
     )
 
     if args.fuzzer == "RANDOM":
-        fuzzer = RandomFuzzer(module_under_test, test_file_name, cov, args.output_dir)
+        fuzzer = RandomFuzzer(module_under_test, test_file_name, cov, output_dir_name)
     elif args.fuzzer == "COVERAGE":
         if args.input_dir is not None:
             inputs = _read_input_dir(args.input_dir)
         else:
             inputs = None
         fuzzer = CoverageGuidedFuzzer(
-            module_under_test, test_file_name, cov, args.output_dir, inputs
+            module_under_test, test_file_name, cov, output_dir_name, inputs
         )
     elif args.fuzzer == "GRIMOIRE":
 
@@ -68,7 +72,7 @@ def fuzz_main(args):
         else:
             inputs = None
         fuzzer = GrimoireFuzzer(
-            module_under_test, test_file_name, cov, args.output_dir, inputs
+            module_under_test, test_file_name, cov, output_dir_name, inputs
         )
 
     # Run all the fuzzing
@@ -87,10 +91,6 @@ if __name__ == "__main__":
         type=str,
         help="the module to fuzz. Must contain function named `test_one_input`. Base directory for module must be on your PYTHONPATH",
     )
-    parser.add_argument(
-        "output_dir", type=str, help="directory in which to put output results"
-    )
-
     parser.add_argument(
         "--fuzzer",
         type=str,
