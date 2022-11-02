@@ -27,11 +27,6 @@ from util.util import log, bytes_to_str, str_to_bytes, find_all_overlapping_subs
 from util.grimoire_util import random_generalized, generic_generalized
 import logging
 
-logging.basicConfig(filename='grimoire.log', filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
-
-
 class GrimoireFuzzer(Fuzzer):
     def __init__(
             self,

@@ -4,6 +4,7 @@ import importlib
 import inspect
 import os
 import datetime
+import logging
 
 from fuzzer.CoverageGuidedFuzzer import CoverageGuidedFuzzer
 from fuzzer.RandomFuzzer import RandomFuzzer
@@ -54,6 +55,11 @@ def fuzz_main(args):
     cov = coverage.Coverage(
         branch=True, data_file=os.path.join(output_dir_name, ".coverage")
     )
+
+    # configure logging file
+    logging.basicConfig(filename=os.path.join(output_dir_name, f'{args.fuzzer}.log'), filemode='w',
+                        format='%(name)s - %(levelname)s - %(message)s',
+                        level=logging.DEBUG)
 
     if args.fuzzer == "RANDOM":
         fuzzer = RandomFuzzer(module_under_test, test_file_name, cov, output_dir_name)
