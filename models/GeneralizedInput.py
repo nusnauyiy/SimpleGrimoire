@@ -5,7 +5,9 @@ from util.util import bytes_to_str
 
 
 class GeneralizedInput:
-    def __init__(self, input: List[Union[bytes, Blank]] = []):
+    def __init__(self, input=None):
+        if input is None:
+            input = []
         self.input = input
 
     def __eq__(self, other):
