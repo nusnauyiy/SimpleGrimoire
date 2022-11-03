@@ -100,5 +100,5 @@ def generic_generalized(input_data: bytes, candidate_check: Callable[[bytes], bo
         # 7 start ← end
         start = end
     # 8 input ← merge_adjacent_gaps(input)
-    generalized.merge_adjacent_gaps()
+    generalized.merge_adjacent_gaps_and_bytes()
     return generalized

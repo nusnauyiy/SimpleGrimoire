@@ -20,15 +20,15 @@ class GeneralizedInput:
             return True
         return False
 
-    # def __str__(self):
-    #     res = "GeneralizedInput["
-    #     for token in self.input:
-    #         if isinstance(token, bytes):
-    #             res += bytes_to_str(token) + " "
-    #         else:
-    #             res += "Blank "
-    #     res += "]"
-    #     return res
+    def __str__(self):
+        res = "GeneralizedInput["
+        for token in self.input:
+            if isinstance(token, bytes):
+                res += bytes_to_str(token) + " "
+            else:
+                res += "Blank "
+        res += "]"
+        return res
 
     # replace all blanks with empty string and return the input as bytes
     def get_bytes(self) -> bytes:
@@ -39,11 +39,14 @@ class GeneralizedInput:
             res += token
         return res
 
-    def merge_adjacent_gaps(self):
+    def merge_adjacent_gaps_and_bytes(self):
         i = len(self.input) - 1
         while i >= 1:
             elem = self.input[i]
             prev_elem = self.input[i - 1]
             if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
+                del self.input[i]
+            elif isinstance(elem, bytes) and isinstance(prev_elem, bytes):
+                self.input[i-1] += elem
                 del self.input[i]
             i -= 1

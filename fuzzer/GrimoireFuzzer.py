@@ -276,7 +276,6 @@ class GrimoireFuzzer(Fuzzer):
                 generalized_input: GeneralizedInput = self.generalize(input_data,
                                                                       input_coverage.difference(self.edges_covered),
                                                                       splitting_rule)  # TODO does this have to be the set of all new edges?
-                # TODO: investigate why this line is performing weird
                 logging.debug(f"{input_data} ---generalized to---> {generalized_input.input} = {generalized_input}")
                 self.generalized.append(generalized_input)
                 self.generalized_map[input_data] = generalized_input
