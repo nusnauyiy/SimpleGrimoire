@@ -144,9 +144,9 @@ class GrimoireFuzzer(Fuzzer):
         if isinstance(rand, GeneralizedInput):
             rand = rand.get_bytes()
         input_bytes: bytes = generalized_input.get_bytes()
-        logging.debug("input extension 1")
+        logging.debug(f"input extension 1: input_bytes={input_bytes}, rand={rand}, new={input_bytes + rand}")
         self.send_to_fuzzer(input_bytes + rand)
-        logging.debug("input extension 2")
+        logging.debug(f"input extension 2: input_bytes={input_bytes}, rand={rand}, new={rand + input_bytes}")
         self.send_to_fuzzer(rand + input_bytes)
 
     def recursive_replacement(self, generalized_input: GeneralizedInput):
@@ -291,6 +291,7 @@ class GrimoireFuzzer(Fuzzer):
                     )
                 )
                 logging.info(f"Found new coverage. Total coverage: {len(self.edges_covered)}")
+                log(f"Found new coverage. Total coverage: {len(self.edges_covered)}")
                 break
             if edge not in self.edges_covered_failing and has_error:
                 self.edges_covered_failing = self.edges_covered_failing.union(
@@ -307,4 +308,5 @@ class GrimoireFuzzer(Fuzzer):
                     )
                 )
                 logging.info(f"Found new crash. Total coverage: {len(self.edges_covered)}")
+                log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 break
