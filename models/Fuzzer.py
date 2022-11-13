@@ -97,9 +97,7 @@ class Fuzzer(ABC):
         self.cov.start()
         try:
             self.module_under_test.test_one_input(input_data)
-        except (AssertionError, IndexError):
-            # We will let other errors percolate up for debugging purposes,
-            # but they may reflect bugs found in the program under test.
+        except Exception:  # now excepting any error that causes the program to crash
             has_error = True
         self.cov.stop()
         exec_time = time.time() - start_time
