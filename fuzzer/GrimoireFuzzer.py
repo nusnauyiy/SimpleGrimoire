@@ -12,20 +12,20 @@ Authors: Caroline Lemieux + <YOURNAME> for CPSC 539L
 Took caroline 28 minutes to complete the programming assignment part of it.
 """
 
-import coverage
+import logging
 import random
 import time
 from typing import Tuple, Set, Union, List
 
-from models.SavedInput import SavedInput
+import coverage
+
+from models.Blank import Blank
 from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
-from models.Blank import Blank
+from models.SavedInput import SavedInput
 from util.dictionary_builder import build_dictionary
-from util.util import log, bytes_to_str, str_to_bytes, find_all_overlapping_substr, find_all_nonoverlapping_substr, \
-    replace_all_instances, replace_random_instance, find_random_substring
 from util.grimoire_util import random_generalized, generic_generalized
-import logging
+from util.util import log, str_to_bytes, replace_all_instances, replace_random_instance, find_random_substring
 
 
 class GrimoireFuzzer(Fuzzer):

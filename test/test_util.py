@@ -1,6 +1,6 @@
-import unittest
 import random
-from typing import List, Set
+import unittest
+from typing import List
 
 from models.Blank import Blank
 from models.GeneralizedInput import GeneralizedInput
