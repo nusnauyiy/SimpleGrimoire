@@ -109,9 +109,17 @@ class UtilTest(unittest.TestCase):
         actual = replace_all_instances(input_bytes, pattern, replace_bytes)
         self.assertEqual(expected, actual)
 
+    # TODO: fix test to work with different splitting rules
     def test_generic_generalized(self):
         def generator() -> bool:
-            results = [True, False, True, False, True, False]
+            results = [
+                False, # 256
+                False, # 128
+                False, # 64
+                False, # 32
+                True, False, True, False, True, False, # 2
+                False, False, False, False, False # 1
+            ]
             for result in results:
                 yield result
 
