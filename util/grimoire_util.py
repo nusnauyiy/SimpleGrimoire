@@ -54,8 +54,8 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
     def find_next_boundary(input_bytes: bytes, start: int, splitting_rule: Callable[[bytes, int], int]):
         return splitting_rule(input_bytes, start)
 
-    def remove_substring(input_bytes: bytes, end: int) -> Tuple[bytes, bytes]:
-        return input_bytes[end:], input_bytes[0:end]
+    def remove_substring(input: bytes, start: int, end: int) -> Tuple[bytes, bytes]:
+        return input[0:start] + input[end:], input[start:end]
 
     # Because of the way we represent generalized inputs
     # (GeneralizedInput obj containing list of bytes and Blank),
@@ -83,8 +83,9 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
 
             else:
                 # apply splitting rule to token
-                while len(token) > 0:
-                    end = find_next_boundary(token, 0, splitting_rule)  # note: end is exclusive
+                start = 0
+                while start < len(token):
+                    end = find_next_boundary(token, start, splitting_rule)  # note: end is exclusive
 
                     # since we are splitting a token and not the entire input,
                     # but we still want to consider the entire input as a candidate,
@@ -96,10 +97,9 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
                     # "hello" + "rld" + "goodbye" = "hellorldgoodbye"
                     # "hello" + "wod" + "goodbye" = "hellowodgoodbye"
                     # "hello" + "worl" + "goodbye" = "helloworlgoodbye"
-                    candidate_token, substring = remove_substring(token, end)
-                    candidate = GeneralizedInput(
-                                    next_generalized.input[0:] + [candidate_token] + generalized.input[i+1:]
-                                ).get_bytes()
+                    candidate_token, substring = remove_substring(token, start, end)
+                    candidate = GeneralizedInput(generalized.input[0:i] + [candidate_token] + generalized.input[i+1:])\
+                                    .get_bytes()
                     logging.debug(f"Candidate: {candidate}")
                     if candidate_check(candidate):
                         logging.debug(f"Adding blank")
@@ -107,7 +107,7 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
                     else:
                         logging.debug(f"Adding substring")
                         next_generalized.input.append(substring)
-                    token = token[end:]
+                    start = end
                     logging.debug(f"next_generalized={next_generalized}")
 
         generalized = next_generalized
