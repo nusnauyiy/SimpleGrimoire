@@ -1,14 +1,12 @@
-from typing import List, Union
-
 from models.Blank import Blank
 from util.util import bytes_to_str
 
 
 class GeneralizedInput:
-    def __init__(self, input=None):
-        if input is None:
-            input = []
-        self.input = input
+    def __init__(self, input_data=None):
+        if input_data is None:
+            input_data = []
+        self.input = input_data
 
     def __eq__(self, other):
         if isinstance(other, GeneralizedInput):
@@ -47,6 +45,11 @@ class GeneralizedInput:
             if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
                 del self.input[i]
             elif isinstance(elem, bytes) and isinstance(prev_elem, bytes):
-                self.input[i-1] += elem
+                self.input[i - 1] += elem
                 del self.input[i]
             i -= 1
+
+    def to_map(self):
+        return {
+            "input": [{} if isinstance(i, Blank) else bytes_to_str(i) for i in self.input]
+        }

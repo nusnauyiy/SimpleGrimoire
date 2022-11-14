@@ -1,8 +1,9 @@
-from abc import ABC, abstractmethod
-from typing import Callable, Tuple, List, Set, Union
-import coverage
-import time
 import os
+import time
+from abc import ABC, abstractmethod
+from typing import Tuple, List, Set
+
+import coverage
 
 from models.SavedInput import SavedInput
 from util.util import log

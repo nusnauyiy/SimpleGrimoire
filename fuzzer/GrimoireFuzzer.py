@@ -13,9 +13,11 @@ Took caroline 28 minutes to complete the programming assignment part of it.
 """
 
 import logging
+import os
 import random
 import time
-from typing import Tuple, Set, Union, List
+import json
+from typing import Tuple, Set, Union, List, Dict
 
 import coverage
 
@@ -46,7 +48,7 @@ class GrimoireFuzzer(Fuzzer):
         self.generalized: List[GeneralizedInput] = []
 
         # mapping of original input to generalized input
-        self.generalized_map: dict[bytes, GeneralizedInput] = {}
+        self.generalized_map: Dict[bytes, GeneralizedInput] = {}
         # provided dictionary obtained from the binary
         self.strings: List[bytes] = [str_to_bytes(s) for s in build_dictionary(test_file_name)]
 
@@ -254,7 +256,7 @@ class GrimoireFuzzer(Fuzzer):
                                                                       splitting_rule)
                 self.edges_covered = self.edges_covered.union(input_coverage)
                 self.saved_inputs.append(
-                    SavedInput(input_data, input_coverage, exec_time)
+                    SavedInput(input_data, input_coverage, exec_time, generalized_input)
                 )
                 # this is the only new part here
                 logging.debug(f"{input_data} ---generalized to---> {generalized_input.input} = {generalized_input}")
@@ -288,3 +290,14 @@ class GrimoireFuzzer(Fuzzer):
                 logging.info(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 log(f"Found new crash. Total coverage: {len(self.edges_covered)}")
                 break
+
+    def save_data(self):
+        super().save_data()
+        log("Saving generalized input...")
+        generalized_file_name = os.path.join(
+            self.output_dir, "generalized_input.json"
+        )
+        with open(generalized_file_name, "w") as input_file:
+            input_file.write(json.dumps(
+                [g.to_map() for g in self.saved_inputs]
+            ))

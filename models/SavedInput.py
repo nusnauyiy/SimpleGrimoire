@@ -1,6 +1,9 @@
 import time
 from typing import Tuple, Set
 
+from models.GeneralizedInput import GeneralizedInput
+from util.util import bytes_to_str
+
 
 class SavedInput:
     """
@@ -10,7 +13,7 @@ class SavedInput:
     """
 
     def __init__(
-            self, input_data: bytes, edge_coverage: Set[Tuple[int, int]], runtime: float
+        self, input_data: bytes, edge_coverage: Set[Tuple[int, int]], runtime: float, generalized: GeneralizedInput = None
     ):
         # The actual input
         self.data = input_data
@@ -22,3 +25,10 @@ class SavedInput:
         self.time_discovered = time.time()
         # Tracks the number of times the input has been chosen as a parent for mutation
         self.times_mutated = 0
+        self.generalized = generalized
+
+    def to_map(self):
+        return {
+            "data": bytes_to_str(self.data),
+            "generalized": self.generalized.to_map() if self.generalized is not None else {}
+        }
