@@ -68,7 +68,7 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
     logging.debug("GENERALIZING... ===================================")
     # apply each splitting rule
     for splitting_rule in splitting_rules.split_overlapping_chunk_size_rules:
-        logging.debug("New splitting rule!!")
+        logging.debug("New spitting rule!!")
         # temporary obj so we do not alter our `generalized` object
         # while iterating through its tokens
         next_generalized = GeneralizedInput()
