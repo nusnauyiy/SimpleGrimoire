@@ -18,12 +18,12 @@ class SplittingRulesTest(unittest.TestCase):
             actual = split_fn(input_bytes, start)
             self.assertEqual(expected, actual)
 
-    def test_split_overlapping_chunksize(self):
-        self._test_split_overlapping_chunksize(b"hello", 0)
-        self._test_split_overlapping_chunksize(b"hello", 1)
-        self._test_split_overlapping_chunksize(b"hello", 4)
-        self._test_split_overlapping_chunksize(b"a" * 1000, 0)
-        self._test_split_overlapping_chunksize(b"a" * 1000, 800)
+    def test_split_overlapping_chunk_size(self):
+        self._test_split_overlapping_chunk_size(b"hello", 0)
+        self._test_split_overlapping_chunk_size(b"hello", 1)
+        self._test_split_overlapping_chunk_size(b"hello", 4)
+        self._test_split_overlapping_chunk_size(b"a" * 1000, 0)
+        self._test_split_overlapping_chunk_size(b"a" * 1000, 800)
 
     def test_find_next_char(self):
         #             0    1    2    3     4    5    6    7    8    9    10   11    12    13   14   15   16
