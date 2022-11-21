@@ -18,7 +18,6 @@ def bytes_to_str(input_bytes: bytes) -> str:
 def str_to_bytes(input_str: str) -> bytes:
     return bytes(input_str, "utf-8")
 
-
 # referencing https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring
 # TODO: maybe we don't need to find overlapping occurrences?
 def find_all_overlapping_substr(input_bytes: bytes, pattern: bytes) -> List[Tuple[int, int]]:

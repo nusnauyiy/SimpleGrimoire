@@ -27,6 +27,7 @@ from models.GeneralizedInput import GeneralizedInput
 from models.SavedInput import SavedInput
 from util.dictionary_builder import build_dictionary
 from util.grimoire_util import random_generalized, generic_generalized
+from util.splitting_rules import increment_by_offset, find_gaps, find_next_char
 from util.util import log, str_to_bytes, replace_all_instances, replace_random_instance, find_random_substring
 
 
@@ -231,7 +232,20 @@ class GrimoireFuzzer(Fuzzer):
             logging.warning(f"ORIGINAL BYTES {sorted(new_edges)}")
             return get_new_bytes(candidate) == new_edges
 
-        return generic_generalized(input_data, candidate_check)
+        generalized_input = GeneralizedInput([input_data]).to_exploded_input()
+        generalized_input = find_gaps(generalized_input, candidate_check, increment_by_offset, 256)
+        generalized_input = find_gaps(generalized_input, candidate_check, increment_by_offset, 128)
+        generalized_input = find_gaps(generalized_input, candidate_check, increment_by_offset, 64)
+        generalized_input = find_gaps(generalized_input, candidate_check, increment_by_offset, 32)
+        generalized_input = find_gaps(generalized_input, candidate_check, increment_by_offset, 1)
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '.')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, ';')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, ',')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '\n')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '\r')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '#')
+        generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, ' ')
+        return GeneralizedInput(generalized_input, is_exploded_data=True)
 
     def generalize_and_save_if_has_new_coverage(
             self,

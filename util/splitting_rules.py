@@ -62,8 +62,8 @@ def find_closures(l, index, opening_char, closing_char):
 
 
 def find_gaps(exploded_input: List[Union[str, None]],
-              find_next_index: Callable[[List[Union[str, None]], int, str], int],
               candidate_check: Callable[[bytes], bool],
+              find_next_index: Callable[[List[Union[str, None]], int, Union[int, str]], int],
               split_char: str):
     index = 0
     while index < len(exploded_input):
