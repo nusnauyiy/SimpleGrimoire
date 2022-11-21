@@ -27,7 +27,7 @@ from models.GeneralizedInput import GeneralizedInput
 from models.SavedInput import SavedInput
 from util.dictionary_builder import build_dictionary
 from util.grimoire_util import random_generalized, generic_generalized
-from util.splitting_rules import increment_by_offset, find_gaps, find_next_char
+from util.splitting_rules import increment_by_offset, find_gaps, find_next_char, find_closures, find_gaps_in_closures
 from util.util import log, str_to_bytes, replace_all_instances, replace_random_instance, find_random_substring
 
 
@@ -228,8 +228,12 @@ class GrimoireFuzzer(Fuzzer):
 
         def candidate_check(candidate: bytes):
             logging.debug(f"checking candidate: {candidate}")
-            logging.warning(f"CANDIDATE BYTES {sorted(get_new_bytes(candidate))}")
-            logging.warning(f"ORIGINAL BYTES {sorted(new_edges)}")
+            original_edges = new_edges
+            candidate_edges = get_new_bytes(candidate)
+            logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
+            logging.warning(f"ORIGINAL BYTES {sorted(original_edges)}")
+            logging.warning(f"ORIGINAL-CANDIDATE {original_edges.difference(candidate_edges)}")
+            logging.warning(f"CANDIDATE-ORIGINAL {candidate_edges.difference(original_edges)}")
             return get_new_bytes(candidate) == new_edges
 
         generalized_input = GeneralizedInput([input_data]).to_exploded_input()
@@ -245,6 +249,12 @@ class GrimoireFuzzer(Fuzzer):
         generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '\r')
         generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, '#')
         generalized_input = find_gaps(generalized_input, candidate_check, find_next_char, ' ')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '(', ')')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '[', ']')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '{', '}')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '<', '>')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '\'', '\'')
+        generalized_input = find_gaps_in_closures(generalized_input, candidate_check, find_closures, '"', '"')
         return GeneralizedInput(generalized_input, is_exploded_data=True)
 
     def generalize_and_save_if_has_new_coverage(

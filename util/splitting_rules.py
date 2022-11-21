@@ -41,6 +41,7 @@ def find_next_char(exploded_input: List[Union[str, None]], index: int, char: str
         index += 1
     return index
 
+
 def find_closures(l, index, opening_char, closing_char):
     endings = []
 
