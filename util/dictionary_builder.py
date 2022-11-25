@@ -1,6 +1,8 @@
 import ast
 import sys
 
+max_chunk = 10
+
 
 class ConstantVisitor(ast.NodeVisitor):
     def visit_Module(self, node: ast.Module):
@@ -24,7 +26,15 @@ def build_dictionary(filename):
 
     tree = parse_file(filename)
 
-    return find_all_const(tree)
+    all_const = find_all_const(tree)
+    return [s for const in all_const for s in split_by_n(const, max_chunk)]
+
+
+def split_by_n(str, n):
+    if (len(str) > n):
+        return [str[i:i + n] for i in range(0, len(str), n)]
+    else:
+        return [str]
 
 
 def main(argv):
