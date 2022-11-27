@@ -1079,6 +1079,7 @@ def splitvalue(attr):
 
 def test_one_input(input_data: bytes):
     try:
+        clear_cache()
         input_str = input_data.decode("UTF-8")
         urlparse(input_str)
     except ValueError:
