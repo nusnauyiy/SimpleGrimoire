@@ -4,7 +4,7 @@ A buggy implementation of cgi_decode, slightly modified from that in the Fuzzing
 "Software Testing and Analysis" (http://ix.cs.uoregon.edu/~michal/book/)
 """
 
-from generators.cgi_str import generate_cgi_string
+from benchmarks.generators.cgi_str import generate_cgi_string
 
 URL_VALID_CHARACTERS="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
 
