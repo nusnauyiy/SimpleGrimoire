@@ -1,13 +1,13 @@
-hihihihi
+# Simple Grimoire
 
-yayyyyyyy
+A version of the Grimoire algorithm implemented on top of a simple python coverage fuzzer.
 
-hello~~~~~~~~
-
-Run mimid example with:
+Run calculator example with:
 ```
-python3 main.py benchmarks.mimid --fuzzer GRIMOIRE --time 10 --input_dir seeds/mimid
+python3 main.py benchmarks.calculator --fuzzer GRIMOIRE --time 10 --input_dir seeds/calculator
 ````
+
+The source code contains modifications of code found within the original Grimoire repository (https://github.com/RUB-SysSec/grimoire), which is licensed under the [AGPL-3.0 license](LICENSE). 
 
 ## things to do
 - [ ] finish debugging
