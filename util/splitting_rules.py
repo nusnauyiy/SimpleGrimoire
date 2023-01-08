@@ -61,6 +61,11 @@ def find_closures(l, index, opening_char, closing_char):
         index += 1
     return start_index, endings
 
+"""
+generalized = ['hel', Blank("hi"), 'lo']
+exploded = ['h', 'e', 'l', None, 'l', 'o']
+candidate = "heo"
+"""
 
 def find_gaps(exploded_input: List[Union[str, None]],
               candidate_check: Callable[[bytes], bool],
@@ -72,6 +77,7 @@ def find_gaps(exploded_input: List[Union[str, None]],
         candidate = GeneralizedInput(exploded_input[0:index] + exploded_input[resume_index:], True).get_bytes()
 
         if candidate_check(candidate):
+            # save the removed part here
             res = None
             exploded_input[index:resume_index] = [res] * (resume_index - index)
 

@@ -1,3 +1,4 @@
+import re
 import sys
 import json
 from lark import Lark
@@ -39,8 +40,26 @@ def generate_ebnf(filename):
     return "".join([grammar, TERMINAL_STRING])
 
 
+def generalized_input_to_rule_v2(input):
+    expr = "".join([re.escape(s) if isinstance(s, str) else ".+" for s in input])
+    return "".join(["/", expr, "/"])
+
+
+def generate_ebnf_v2(filename):
+    data = get_json(filename)
+    grammar = f"?{START_NAME}:"
+
+    def format_entry(entry):
+        return "".join([" ", generalized_input_to_rule_v2(entry.get("generalized").get("input"))])
+    rules_str = map(format_entry, data)
+    grammar += "\n|".join(rules_str)
+    # for entry in data:
+    #     grammar = "".join([grammar, "\t| ", generalized_input_to_rule(entry.get("generalized").get("input")), "\n"])
+    return grammar
+
+
 def main(argv):
-    print(generate_ebnf(argv[1]))
+    print(generate_ebnf_v2(argv[1]))
 
 
 if __name__ == "__main__":

@@ -1,30 +1,9 @@
 import sys
 from lark import Lark, Transformer
 
-from ebnf_generator import generate_ebnf, START_NAME
+from ebnf_generator import generate_ebnf_v2, START_NAME
 
 grammar = None
-# json_grammar = r"""
-#     ?value: dict
-#           | list
-#           | string
-#           | SIGNED_NUMBER      -> number
-#           | "true"             -> true
-#           | "false"            -> false
-#           | "null"             -> null
-#
-#     list : "[" [value ("," value)*] "]"
-#
-#     dict : "{" [pair ("," pair)*] "}"
-#     pair : string ":" value
-#
-#     string : ESCAPED_STRING
-#
-#     %import common.ESCAPED_STRING
-#     %import common.SIGNED_NUMBER
-#     %import common.WS
-#     %ignore WS
-#     """
 
 class TreeToJson(Transformer):
     def string(self, s):
@@ -48,15 +27,15 @@ def main(argv):
     # takes in two files: first is the generalized inputs that we make the parser from
     # second is the new string we want to parse
     global grammar
-    grammar = generate_ebnf(argv[1])
-    print(grammar)
+    grammar = generate_ebnf_v2(argv[1])
+    # print(grammar)
     # print(json_grammar)
     parser = Lark(grammar, start=START_NAME, ambiguity='explicit')
     with open(sys.argv[2]) as f:
         # f here is contains new string
-        tree = parser.parse(f.read()).pretty()
+        tree = parser.parse(f.read())
         print(tree)
-        # print(TreeToJson().transform(tree))
+        print(TreeToJson().transform(tree))
 
 
 if __name__ == '__main__':
