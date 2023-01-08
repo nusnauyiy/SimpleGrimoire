@@ -11,10 +11,10 @@ we want two things here
 START_NAME = "start"
 TERMINAL_NAME = "terminal"
 TERMINAL_STRING = f"""
-{TERMINAL_NAME}: STRING | NUMBER
+{TERMINAL_NAME}: (DIGIT | LETTER)+
 
-%import common.ESCAPED_STRING   -> STRING
-%import common.SIGNED_NUMBER    -> NUMBER
+%import common.DIGIT
+%import common.LETTER
     """
 
 def get_json(filename):
@@ -28,9 +28,14 @@ def generalized_input_to_rule(input):
 
 def generate_ebnf(filename):
     data = get_json(filename)
-    grammar = f"{START_NAME}: {TERMINAL_NAME}\n"
-    for entry in data:
-        grammar = "".join([grammar, "\t| ", generalized_input_to_rule(entry.get("generalized").get("input")), "\n"])
+    grammar = f"?{START_NAME}:"
+
+    def format_entry(entry):
+        return "".join([" ", generalized_input_to_rule(entry.get("generalized").get("input"))])
+    rules_str = map(format_entry, data)
+    grammar += "\n|".join(rules_str)
+    # for entry in data:
+    #     grammar = "".join([grammar, "\t| ", generalized_input_to_rule(entry.get("generalized").get("input")), "\n"])
     return "".join([grammar, TERMINAL_STRING])
 
 
