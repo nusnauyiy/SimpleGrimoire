@@ -1,3 +1,5 @@
+from copy import copy
+
 from models.Blank import Blank
 from util.util import bytes_to_str, str_to_bytes
 
@@ -7,7 +9,7 @@ class GeneralizedInput:
         if input_data is None:
             input_data = []
         if is_exploded_data:
-            self.input = [str_to_bytes(c) if c is not None else Blank() for c in input_data]
+            self.input = [str_to_bytes(c) if isinstance(c, str) else copy(c) for c in input_data]
             self.merge_adjacent_gaps_and_bytes()
         else:
             self.input = input_data
@@ -28,7 +30,7 @@ class GeneralizedInput:
             if isinstance(token, bytes):
                 res += bytes_to_str(token) + " "
             else:
-                res += "Blank "
+                res += f"{token} "
         res += "]"
         return res
 
@@ -47,6 +49,7 @@ class GeneralizedInput:
             elem = self.input[i]
             prev_elem = self.input[i - 1]
             if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
+                prev_elem.removed += elem.removed
                 del self.input[i]
             elif isinstance(elem, bytes) and isinstance(prev_elem, bytes):
                 self.input[i - 1] += elem
@@ -55,14 +58,14 @@ class GeneralizedInput:
 
     def to_map(self):
         return {
-            "input": [{} if isinstance(i, Blank) else bytes_to_str(i) for i in self.input]
+            "input": [i.to_map() if isinstance(i, Blank) else bytes_to_str(i) for i in self.input]
         }
 
     def to_exploded_input(self):
         res = []
         for token in self.input:
             if isinstance(token, Blank):
-                res.append(None)
+                res.append(token)
             else:
                 token_str = bytes_to_str(token)
                 for c in token_str:
