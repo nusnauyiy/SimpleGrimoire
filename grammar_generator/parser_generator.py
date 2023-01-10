@@ -1,7 +1,7 @@
 import sys
 from lark import Lark, Transformer
 
-from ebnf_generator import START_NAME, generate_ebnf
+from ebnf_generator import START_NAME, generate_ebnf, generate_ebnf_v3
 
 grammar = None
 
@@ -27,7 +27,7 @@ def main(argv):
     # takes in two files: first is the generalized inputs that we make the parser from
     # second is the new string we want to parse
     global grammar
-    grammar = generate_ebnf(argv[1])
+    grammar = generate_ebnf_v3(argv[1])
     print(grammar)
     # print(json_grammar)
     parser = Lark(grammar, start=START_NAME, ambiguity='explicit')
