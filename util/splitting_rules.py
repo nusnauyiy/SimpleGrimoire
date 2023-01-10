@@ -1,5 +1,6 @@
 from typing import List, Union, Callable, Tuple
 
+from models.Blank import Blank
 from models.GeneralizedInput import GeneralizedInput
 
 
@@ -34,7 +35,7 @@ def increment_by_offset(_, index, offset):
     return index + offset
 
 
-def find_next_char(exploded_input: List[Union[str, None]], index: int, char: str):
+def find_next_char(exploded_input: List[Union[str, Blank]], index: int, char: str):
     while index < len(exploded_input):
         if exploded_input[index] == char:
             return index + 1
@@ -61,15 +62,35 @@ def find_closures(l, index, opening_char, closing_char):
         index += 1
     return start_index, endings
 
+
 """
 generalized = ['hel', Blank("hi"), 'lo']
 exploded = ['h', 'e', 'l', None, 'l', 'o']
 candidate = "heo"
 """
 
-def find_gaps(exploded_input: List[Union[str, None]],
+'''
+Adds gap in exploded input while retaining information of the removed text.
+For example, for:
+    exploded_input=['h','e','l','l','o']
+    start_index=0
+    end_index=3 (non-inclusive)
+the exploded_input will be modified to:
+    [Blank('hel'), Blank(), Blank(), 'l', 'o']
+'''
+def add_gap_in_exploded_input(exploded_input, start_index, end_index):
+    removed = exploded_input[start_index:end_index]
+    removed_blank = Blank()
+    for token in removed:
+        removed_blank.append(token)
+    # fill the removed range with Blank objects, with the first Blank containing
+    # the removed text (blanks will be merged later)
+    exploded_input[start_index:end_index] = [removed_blank] + ([Blank()] * (end_index - start_index - 1))
+
+
+def find_gaps(exploded_input: List[Union[str, Blank]],
               candidate_check: Callable[[bytes], bool],
-              find_next_index: Callable[[List[Union[str, None]], int, Union[int, str]], int],
+              find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
               split_char: str):
     index = 0
     while index < len(exploded_input):
@@ -77,9 +98,7 @@ def find_gaps(exploded_input: List[Union[str, None]],
         candidate = GeneralizedInput(exploded_input[0:index] + exploded_input[resume_index:], True).get_bytes()
 
         if candidate_check(candidate):
-            # save the removed part here
-            res = None
-            exploded_input[index:resume_index] = [res] * (resume_index - index)
+            add_gap_in_exploded_input(exploded_input, index, resume_index)
 
         index = resume_index
 
@@ -106,8 +125,7 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
             candidate = GeneralizedInput(exploded_input[0:index] + exploded_input[ending:], True).get_bytes()
 
             if candidate_check(candidate):
-                res = None
-                exploded_input[index:ending] = [res] * (ending - index)
+                add_gap_in_exploded_input(exploded_input, index, ending)
                 break
 
         index = ending
