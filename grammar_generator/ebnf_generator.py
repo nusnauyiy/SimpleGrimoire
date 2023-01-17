@@ -96,7 +96,7 @@ def generate_ebnf_v4(filename):
 
     terminals = []
     for entry in data:
-        terminals.append(generalized_input_to_terminals_v3(entry.get("generalized").get("input")))
+        terminals.append(generalized_input_to_terminals_v4(entry.get("generalized").get("input")))
     terminal_str = f"\n{TERMINAL_NAME}:" + "\n| ".join(terminals)
 
     return "".join([grammar, terminal_str])

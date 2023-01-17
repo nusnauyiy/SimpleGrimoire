@@ -2,6 +2,7 @@ import sys
 from lark import Lark, Transformer
 
 from ebnf_generator import START_NAME, generate_ebnf, generate_ebnf_v3, generate_ebnf_v4
+from ebnf_generator_v5 import generate_ebnf_v5
 
 grammar = None
 
@@ -27,16 +28,16 @@ def main(argv):
     # takes in two files: first is the generalized inputs that we make the parser from
     # second is the new string we want to parse
     global grammar
-    grammar = generate_ebnf_v4(argv[1])
+    grammar = generate_ebnf_v5(argv[1], argv[2])
     print(grammar)
     # print(json_grammar)
     parser = Lark(grammar, start=START_NAME, ambiguity='explicit')
-    with open(sys.argv[2]) as f:
+    with open(sys.argv[3]) as f:
         # f here is contains new string
         inp = f.read()
         print(f"input: {inp}")
         tree = parser.parse(inp)
-        print(f"output: {tree}")
+        print(f"output: {tree.pretty()}")
         # print(TreeToJson().transform(tree))
 
 
