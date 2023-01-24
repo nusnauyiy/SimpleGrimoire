@@ -28,19 +28,15 @@ def main(argv):
     # takes in two files: first is the generalized inputs that we make the parser from
     # second is the new string we want to parse
     global grammar
-    # grammar = generate_ebnf_v5(argv[1], argv[2])
-    grammar = generate_ebnf_v5("test_files/generalized_input", "test_files/valid_input")
+    grammar = generate_ebnf_v5(argv[1], argv[2])
     print(grammar)
-    # print(json_grammar)
     parser = Lark(grammar, start=START_NAME, ambiguity='explicit')
-    # with open(sys.argv[3]) as f:
-    with open("test_files/test") as f:
+    with open(sys.argv[3]) as f:
         # f here is contains new string
         inp = f.read()
         print(f"input: {inp}")
         tree = parser.parse(inp)
-        print(f"output: {tree.pretty()}")
-        # print(TreeToJson().transform(tree))
+        print(f"output:\n{tree.pretty()}")
 
 
 if __name__ == '__main__':
