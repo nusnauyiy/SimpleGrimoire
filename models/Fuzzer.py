@@ -22,9 +22,9 @@ class Fuzzer(ABC):
             output_dir: str,
     ):
         # Keep track of coverage from non-error inputs
-        self.edges_covered: Set[Tuple[int, int]] = set()
+        self.edges_covered: Set[Tuple[str, int, int]] = set()
         # Keep track of coverage from error inputs
-        self.edges_covered_failing: Set[Tuple[int, int]] = set()
+        self.edges_covered_failing: Set[Tuple[str, int, int]] = set()
         # Keep track of coverage achieved through time
         self.coverage_through_time: List[Tuple[float, int, int]] = []
         # Coverage-increasing non-error inputs
@@ -44,7 +44,7 @@ class Fuzzer(ABC):
             self,
             input_data: bytes,
             has_error: bool,
-            input_coverage: Set[Tuple[int, int]],
+            input_coverage: Set[Tuple[str, int, int]],
             exec_time: float,
     ):
         """

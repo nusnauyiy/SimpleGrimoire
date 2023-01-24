@@ -13,7 +13,7 @@ class SavedInput:
     """
 
     def __init__(
-        self, input_data: bytes, edge_coverage: Set[Tuple[int, int]], runtime: float, generalized: GeneralizedInput = None
+        self, input_data: bytes, edge_coverage: Set[Tuple[str, int, int]], runtime: float, generalized: GeneralizedInput = None
     ):
         # The actual input
         self.data = input_data
