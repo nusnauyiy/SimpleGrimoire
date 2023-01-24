@@ -23,15 +23,18 @@ def get_json(filename):
     f = open(filename, 'r')
     return json.load(f)
 
+def escape_regex(str):
+    return re.escape(str).replace("/", "\\/")
+
 def generalized_input_to_regex(input):
     regex = "".join([re.escape(s) if isinstance(s, str) else "(.+)" for s in input])
     return re.compile(regex)
 
 def generalized_input_to_rule_v5(input):
-    return " ".join([f"/{re.escape(s)}/" if isinstance(s, str) else TERM_NAME for s in input])
+    return " ".join([f"/{escape_regex(s)}/" if isinstance(s, str) else TERM_NAME for s in input])
 
 def generalized_input_to_terminals_v5(input):
-    return "\n| ".join(set([f"/{re.escape(s.get('removed'))}/" for s in input if not isinstance(s, str)]))
+    return "\n| ".join(set([f"/{escape_regex(s.get('removed'))}/" for s in input if not isinstance(s, str)]))
 
 def generate_ebnf_v5(saved_inputs_filename, valid_inputs_filename):
     def format_entry(entry):
@@ -55,11 +58,12 @@ def generate_ebnf_v5(saved_inputs_filename, valid_inputs_filename):
         for pattern in generalized_input_regexes:
             m = pattern.match(valid_input)
             if m is None:
-                print("m is None")
+                # print("m is None")
+                pass
             else:
-                print(m.groups())
+                # print(m.groups())
                 terminals = terminals.union(m.groups())
-    terminal_str = f"\n{TERMINAL_NAME}:" + "\n| ".join([f"/{re.escape(t)}/" for t in terminals])
+    terminal_str = f"\n{TERMINAL_NAME}:" + "\n| ".join([f"/{escape_regex(t)}/" for t in terminals])
 
     grammar = f"?{START_NAME}:"
     grammar += "\n|".join(start_str)

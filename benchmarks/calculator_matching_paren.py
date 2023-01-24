@@ -2,7 +2,7 @@
 import sys
 
 def digit(i) :
-    return i in "01234567"
+    return i in "0123456789"
 
 def parse_num(s, i):
     n = ''
