@@ -26,7 +26,7 @@ from models.Fuzzer import Fuzzer
 from models.GeneralizedInput import GeneralizedInput
 from models.SavedInput import SavedInput
 from util.dictionary_builder import build_dictionary
-from util.grimoire_util import random_generalized, generic_generalized
+from util.grimoire_util import random_generalized
 from util.splitting_rules import increment_by_offset, find_gaps, find_next_char, find_closures, find_gaps_in_closures
 from util.util import log, str_to_bytes, replace_all_instances, replace_random_instance, find_random_substring
 
@@ -59,6 +59,7 @@ class GrimoireFuzzer(Fuzzer):
         # Set up the initial inputs to populate `self.saved_inputs`
         for input_data in initial_inputs:
             has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
+            logging.warning("fuzzing seed")
             self.generalize_and_save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
     def is_generalized(self, input_bytes: bytes):
@@ -223,7 +224,7 @@ class GrimoireFuzzer(Fuzzer):
                     saved_input.times_mutated += 1
         self.save_data()
 
-    def generalize(self, input_data: bytes, new_edges: Set[Tuple[int, int]], splitting_rule=None):
+    def generalize(self, input_data: bytes, new_edges: Set[Tuple[str, int, int]], splitting_rule=None):
 
         def get_new_bytes(candidate):  # change to edges for the coverage library
             _, edges, _ = self.exec_with_coverage(candidate)
@@ -264,7 +265,7 @@ class GrimoireFuzzer(Fuzzer):
             self,
             input_data: bytes,
             has_error: bool,
-            input_coverage: Set[Tuple[int, int]],
+            input_coverage: Set[Tuple[str, int, int]],
             exec_time: float,
     ):
         """

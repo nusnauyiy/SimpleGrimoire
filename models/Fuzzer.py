@@ -22,9 +22,9 @@ class Fuzzer(ABC):
             output_dir: str,
     ):
         # Keep track of coverage from non-error inputs
-        self.edges_covered: Set[Tuple[int, int]] = set()
+        self.edges_covered: Set[Tuple[str, int, int]] = set()
         # Keep track of coverage from error inputs
-        self.edges_covered_failing: Set[Tuple[int, int]] = set()
+        self.edges_covered_failing: Set[Tuple[str, int, int]] = set()
         # Keep track of coverage achieved through time
         self.coverage_through_time: List[Tuple[float, int, int]] = []
         # Coverage-increasing non-error inputs
@@ -44,7 +44,7 @@ class Fuzzer(ABC):
             self,
             input_data: bytes,
             has_error: bool,
-            input_coverage: Set[Tuple[int, int]],
+            input_coverage: Set[Tuple[str, int, int]],
             exec_time: float,
     ):
         """
@@ -85,7 +85,7 @@ class Fuzzer(ABC):
 
     def exec_with_coverage(
             self, input_data: bytes
-    ) -> Tuple[bool, Set[Tuple[int, int]], float]:
+    ) -> Tuple[bool, Set[Tuple[str, int, int]], float]:
         """
         Runs the test_one_input function from `self.module_under_test` defined in `self.test_file_name` on the input `input_data`.
 
@@ -102,9 +102,14 @@ class Fuzzer(ABC):
             has_error = True
         self.cov.stop()
         exec_time = time.time() - start_time
-        edges_covered = self.cov.get_data().arcs(self.test_file_name)
+        coverage_data = self.cov.get_data()
+        edges_covered = set()
+        for i, file in enumerate(coverage_data.measured_files()):
+            edges_covered_in_file = coverage_data.arcs(file)
+            edges_covered.update([(i,) + t for t in edges_covered_in_file])
+        # edges_covered = self.cov.get_data().arcs(self.test_file_name)
 
-        return has_error, set(edges_covered), exec_time
+        return has_error, edges_covered, exec_time
 
     def save_data(self):
         """
