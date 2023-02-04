@@ -35,10 +35,13 @@ def fuzz_main(args):
     """
     log("Setting up fuzzing session...")
     # Set up output directory
-    if not os.path.isdir("output"):
-        os.mkdir("output")
+    output_parent_dir = "output"
+    if args.output_dir is not None:
+        output_parent_dir = args.output_dir
+    if not os.path.isdir(output_parent_dir):
+        os.mkdir(output_parent_dir)
     curr_timestamp = datetime.datetime.now().strftime("%m-%d_%H:%M:%S")
-    output_dir_name = f"output/output_{curr_timestamp}"
+    output_dir_name = f"{output_parent_dir}/{curr_timestamp}_{args.module_to_fuzz}"
     if os.path.isdir(output_dir_name):
         raise ValueError(f"{output_dir_name} already exists, not overwriting")
     os.mkdir(output_dir_name)
@@ -85,6 +88,7 @@ def fuzz_main(args):
     log("Starting fuzzing session.")
     fuzzer.fuzz(args.time)
     log("Ending fuzzing session.")
+    return output_dir_name
 
 
 if __name__ == "__main__":
@@ -103,6 +107,12 @@ if __name__ == "__main__":
         choices=["RANDOM", "COVERAGE", "GRIMOIRE"],
         help="Which type of fuzzer to run",
         default="RANDOM",
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        help="parent directory containing output directories from grimoire runs",
+        default="output",
     )
     parser.add_argument(
         "--input_dir",
