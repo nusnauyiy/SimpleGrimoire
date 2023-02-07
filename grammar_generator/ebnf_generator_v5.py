@@ -51,11 +51,11 @@ def generate_ebnf_v5(saved_inputs_filename, valid_inputs_filename):
     for terminal in terminals:
         terminal_rule.add_body([f"/{escape_regex(terminal)}/"])
     grammar.add_rule(terminal_rule)
-
-    return grammar.pretty_print()
+    print(str(grammar))
+    return grammar
 
 def main(argv):
-    print(generate_ebnf_v5(argv[1], argv[2]))
+    generate_ebnf_v5(argv[1], argv[2])
 
 
 if __name__ == "__main__":
