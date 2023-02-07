@@ -1,1 +1,74 @@
-[{"data": "{\"qwe\": {\"bjkpa\": 123085, \"njkaz\": \"087sb?h\"}, \"rbuo\": {\"xjnb09621n\": {\"plif\": true,\"piljw\": false}}}", "generalized": {"input": ["{\"", {"removed": "qwe"}, "\":", {"removed": " "}, "{\"", {"removed": "bjkpa"}, "\":", {"removed": " 12308"}, "5,", {"removed": " "}, "\"", {"removed": "njkaz"}, "\":", {"removed": " "}, "\"", {"removed": "087sb?h"}, "\"},", {"removed": " "}, "\"", {"removed": "rbuo"}, "\":", {"removed": " "}, "{\"", {"removed": "xjnb09621n"}, "\":", {"removed": " "}, "{\"", {"removed": "plif"}, "\":", {"removed": " "}, "true,\"", {"removed": "pilj"}, "w\": false}}}"]}}, {"data": "{\"qwe\": {\"bjkpa\": 123085, \"njkaz\": \"087sb?h\"}, \"rbuo\": {\"xjnb09621n\": {\"plif\": true,\"piljw\": .}}}", "generalized": {"input": ["{\"", {"removed": "qwe"}, "\":", {"removed": " "}, "{\"", {"removed": "bjkpa"}, "\":", {"removed": " 12308"}, "5,", {"removed": " "}, "\"", {"removed": "njkaz\": \"087sb?h\"}, \"rbuo\": {\"xjnb09621n"}, "\":", {"removed": " "}, "{\"", {"removed": "plif"}, "\":", {"removed": " "}, "true,\"", {"removed": "piljw"}, "\":", {"removed": " "}, ".}}}"]}}]
+[
+  {
+    "data": "{\"qwe\": {\"bjkpa\": 123085, \"njkaz\": \"087sb?h\"}, \"rbuo\": {\"xjnb09621n\": {\"plif\": true,\"piljw\": false}}}",
+    "generalized": {
+      "input": [
+        "{\"",
+        {
+          "removed": "qwe"
+        },
+        "\":",
+        {
+          "removed": " "
+        },
+        "{\"",
+        {
+          "removed": "bjkpa"
+        },
+        "\":",
+        {
+          "removed": " 12308"
+        },
+        "5,",
+        {
+          "removed": " "
+        },
+        "\"",
+        {
+          "removed": "njkaz"
+        },
+        "\":",
+        {
+          "removed": " "
+        },
+        "\"",
+        {
+          "removed": "087sb?h"
+        },
+        "\"},",
+        {
+          "removed": " "
+        },
+        "\"",
+        {
+          "removed": "rbuo"
+        },
+        "\":",
+        {
+          "removed": " "
+        },
+        "{\"",
+        {
+          "removed": "xjnb09621n"
+        },
+        "\":",
+        {
+          "removed": " "
+        },
+        "{\"",
+        {
+          "removed": "plif"
+        },
+        "\":",
+        {
+          "removed": " "
+        },
+        "true,\"",
+        {
+          "removed": "pilj"
+        },
+        "w\": false}}}"
+      ]
+    }
+  }
+]
