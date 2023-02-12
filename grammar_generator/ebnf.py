@@ -5,9 +5,12 @@ Some code snippets used directly with permission from Caroline Lemieux.
 import random
 import re
 
+from lark import Lark
+
 
 class Grammar():
-    def __init__(self):
+    def __init__(self, start):
+        self.start = start
         self.rules = {}
 
     def add_rule(self, rule):
@@ -18,6 +21,9 @@ class Grammar():
 
     def pretty_print(self):
         return '\n'.join([rule.pretty_print() for rule in self.rules.values()])
+
+    def parser(self):
+        return Lark(str(self), start=self.start, ambiguity='explicit')
 
     def sample_positives(self, n, max_depth):
         samples = set()

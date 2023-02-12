@@ -23,7 +23,7 @@ def generate_ebnf_v5(saved_inputs_filename, valid_inputs_filename):
     saved_data = get_json(saved_inputs_filename)
     valid_data = get_json(valid_inputs_filename)
 
-    grammar = Grammar()
+    grammar = Grammar(START_NAME)
 
     start_rule = Rule(START_NAME)
     generalized_input_regexes = []
@@ -51,7 +51,6 @@ def generate_ebnf_v5(saved_inputs_filename, valid_inputs_filename):
     for terminal in terminals:
         terminal_rule.add_body([f"/{escape_regex(terminal)}/"])
     grammar.add_rule(terminal_rule)
-    print(str(grammar))
     return grammar
 
 def main(argv):
