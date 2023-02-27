@@ -32,7 +32,7 @@ class Grammar():
             attempts += 1
             try:
                 sample = self.generate_positive_example(max_depth)
-                if len(sample) > 300:
+                if len(sample) > 1000:
                     continue
                 samples.add(sample)
             except RecursionError:
@@ -43,6 +43,13 @@ class Grammar():
         """
         Samples a random positive example from the grammar, with max_depth as much as possible.
         """
+        # Currently this function works with a very specific EBNF structure:
+        # - the grammar has exactly three non-terminals: "start", "term", and "terminal"
+        # - "start" can contain "term" as a non-terminal
+        # - the rule for "term" is "term := start | terminal"
+        # - "terminal" only contains terminals
+        # Add an assertion here until we fix it.
+        assert len(self.rules) == 3 and "start" in self.rules and "term" in self.rules and "terminal" in self.rules
 
         # Helper function: gets all the nonterminals for a body
         def body_nonterminals(grammar, body):
