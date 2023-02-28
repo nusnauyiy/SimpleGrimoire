@@ -22,6 +22,8 @@ With the replacement phase, we want it to work like this:
         ==== 2 - Replace-blank Generalization (RG) ====
         i.   Remove a chunk C in DG
         ii.  Replace the chunk with ???, creating a candidate input I''' // TODO
+            - we can try different input families, like numbers, strings, alphanumerics, etc.
         iii. Run I''' through the fuzzer
         iv.  If I''' is accepted, update RG by replacing C with a Blank // TODO or, replacing with a Replace-Blank?
+            - save information about what can go in the blank (ie. the input family)
     d. At the end, save RG
