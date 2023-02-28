@@ -26,8 +26,8 @@ class SplittingRulesTest(unittest.TestCase):
         self._test_split_overlapping_chunk_size(b"a" * 1000, 800)
 
     def test_find_next_char(self):
-        #             0    1    2    3        4    5    6    7    8    9    10   11       12       13   14   15   16
-        input_data = ["h", "e", "l", Blank(), "l", "o", "(", "w", "o", "r", ")", Blank(), Blank(), "l", "d", ")", "!"]
+        #             0    1    2    3                  4    5    6    7    8    9    10   11                   12              13   14   15   16
+        input_data = ["h", "e", "l", Blank.get_blank(), "l", "o", "(", "w", "o", "r", ")", Blank.get_blank(), Blank.get_blank(), "l", "d", ")", "!"]
         expected = 11
         actual = find_next_char(input_data, 0, ")")
         self.assertEqual(expected, actual)
@@ -37,8 +37,8 @@ class SplittingRulesTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_find_closures(self):
-        #             0    1    2    3        4    5    6    7    8    9    10   11       12       13   14   15   16
-        input_data = ["h", "e", "l", Blank(), "l", "o", "(", "w", "o", "r", ")", Blank(), Blank(), "l", "d", ")", "!"]
+        #             0    1    2    3                  4    5    6    7    8    9    10   11                   12              13   14   15   16
+        input_data = ["h", "e", "l", Blank.get_blank(), "l", "o", "(", "w", "o", "r", ")", Blank.get_blank(), Blank.get_blank(), "l", "d", ")", "!"]
         expected = (6, [16, 11])  # ends are exclusive (one index after the closing char)
         actual = find_closures(input_data, 0, "(", ")")
         # find_gaps_in_closures(input_data, old_node, default_info, find_closures, "(", ")")
@@ -53,14 +53,14 @@ class SplittingRulesTest(unittest.TestCase):
             ]
             for result in results:
                 yield result
-        #            |     first split (True)              |second (False)|              third (True)               |
-        input_data = ["h", "e", "l", Blank(), "l", "o", ",", "m", "y", ",", "w", "o", "r", Blank(), Blank(), "l", "d"]
+        #            |     first split (True)                       |second (False)|              third (True)                                      |
+        input_data = ["h", "e", "l", Blank.get_blank(), "l", "o", ",", "m", "y", ",", "w", "o", "r", Blank.get_blank(), Blank.get_blank(), "l", "d"]
         gen = generator()
 
         def candidate_check(input_bytes: bytes) -> bool:
             return next(gen)
 
-        expected = [Blank(b"hello,"), "m", "y", ",", Blank(b"world")]
+        expected = [Blank.get_blank(removed=b"hello,"), "m", "y", ",", Blank.get_blank(removed=b"world")]
         result = find_gaps(input_data, candidate_check, find_next_char, ",")
         self.assertEqual(expected, result)
 
@@ -75,14 +75,14 @@ class SplittingRulesTest(unittest.TestCase):
             for result in results:
                 yield result
 
-        #             0    1    2    3        4    5    6    7    8    9    10   11       12       13   14   15   16
-        input_data = ["h", "e", "l", Blank(), "l", "o", "(", "w", "o", "r", ")", Blank(), Blank(), "l", "d", ")", "!"]
+        #             0    1    2    3                  4    5    6    7    8    9    10   11                   12              13   14   15   16
+        input_data = ["h", "e", "l", Blank.get_blank(), "l", "o", "(", "w", "o", "r", ")", Blank.get_blank(), Blank.get_blank(), "l", "d", ")", "!"]
         gen = generator()
 
         def candidate_check(input_bytes: bytes) -> bool:
             return next(gen)
 
-        expected = ["h", "e", "l", Blank(), "l", "o", Blank(b"(wor)ld)"), "!"]
+        expected = ["h", "e", "l", Blank.get_blank(), "l", "o", Blank.get_blank(removed=b"(wor)ld)"), "!"]
         result = find_gaps_in_closures(input_data, candidate_check, find_closures, "(", ")")
         self.assertEqual(expected, result)
 
