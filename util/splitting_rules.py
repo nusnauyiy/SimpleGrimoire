@@ -91,7 +91,8 @@ def add_gap_in_exploded_input(exploded_input, start_index, end_index):
 def find_gaps(exploded_input: List[Union[str, Blank]],
               candidate_check: Callable[[bytes], bool],
               find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
-              split_char: str):
+              split_char: str,
+              cumulative: bool):
     index = 0
     while index < len(exploded_input):
         resume_index = find_next_index(exploded_input, index, split_char)
@@ -111,7 +112,8 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
                           candidate_check: Callable[[bytes], bool],
                           find_closures: Callable[[List[Union[str, None]], int, str, str], Tuple[int, List[int]]],
                           opening_char: str,
-                          closing_char: str):
+                          closing_char: str,
+                          cumulative: bool):
     index = 0
     while index < len(exploded_input):
         index, endings = find_closures(exploded_input, index, opening_char, closing_char)
