@@ -155,7 +155,7 @@ class GrimoireFuzzer(Fuzzer):
     def recursive_replacement(self, generalized_input: GeneralizedInput):
         def pad_with_gaps(generalized_input: GeneralizedInput) -> GeneralizedInput:
             # adding gaps to the beginning and the end of inputs
-            return GeneralizedInput([Blank()] + generalized_input.input + [Blank()])
+            return GeneralizedInput([Blank.get_blank()] + generalized_input.input + [Blank.get_blank()])
 
         def random_power_of_two() -> int:
             # arbitrarily chosen

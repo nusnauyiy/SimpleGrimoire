@@ -79,7 +79,7 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
             token = generalized.input[i]
 
             if isinstance(token, Blank):
-                next_generalized.input.append(Blank())
+                next_generalized.input.append(Blank.get_blank())
 
             else:
                 # apply splitting rule to token
@@ -103,7 +103,7 @@ def generic_generalized(input_bytes: bytes, candidate_check: Callable[[bytes], b
                     logging.debug(f"Candidate: {candidate}")
                     if candidate_check(candidate):
                         logging.debug(f"Adding blank")
-                        next_generalized.input.append(Blank())
+                        next_generalized.input.append(Blank.get_blank())
                     else:
                         logging.debug(f"Adding substring")
                         next_generalized.input.append(substring)

@@ -12,8 +12,8 @@ from util.util import find_all_overlapping_substr, find_all_nonoverlapping_subst
 class UtilTest(unittest.TestCase):
     def setUp(self):
         self.input1 = GeneralizedInput([b"hello", b"world"])
-        self.input2 = GeneralizedInput([b"hello", Blank(), b"world"])
-        self.input3 = GeneralizedInput([b"hello", Blank(), b"world", Blank(), b"bye", Blank(), b"world"])
+        self.input2 = GeneralizedInput([b"hello", Blank.get_blank(), b"world"])
+        self.input3 = GeneralizedInput([b"hello", Blank.get_blank(), b"world", Blank.get_blank(), b"bye", Blank.get_blank(), b"world"])
 
     def test_random_slice_no_blank(self):
         answer = random_slice([self.input1]).input
@@ -42,11 +42,11 @@ class UtilTest(unittest.TestCase):
             GeneralizedInput([b"hello"]),
             GeneralizedInput([b"world"]),
             GeneralizedInput([b"bye"]),
-            GeneralizedInput([b"hello", Blank(), b"world"]),
-            GeneralizedInput([b"world", Blank(), b"bye"]),
-            GeneralizedInput([b"bye", Blank(), b"world"]),
-            GeneralizedInput([b"hello", Blank(), b"world", Blank(), b"bye"]),
-            GeneralizedInput([b"world", Blank(), b"bye", Blank(), b"world"])
+            GeneralizedInput([b"hello", Blank.get_blank(), b"world"]),
+            GeneralizedInput([b"world", Blank.get_blank(), b"bye"]),
+            GeneralizedInput([b"bye", Blank.get_blank(), b"world"]),
+            GeneralizedInput([b"hello", Blank.get_blank(), b"world", Blank.get_blank(), b"bye"]),
+            GeneralizedInput([b"world", Blank.get_blank(), b"bye", Blank.get_blank(), b"world"])
         ]
         all_possible = generalized + strings + generalized_slices
         for i in range(30):

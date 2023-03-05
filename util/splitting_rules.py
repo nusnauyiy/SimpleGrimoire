@@ -71,16 +71,16 @@ the exploded_input will be modified to:
 '''
 def add_gap_in_exploded_input(exploded_input, start_index, end_index, blank_type, blank_content=None):
     removed = exploded_input[start_index:end_index]
-    removed_blank = Blank(blank_type=blank_type)
+    removed_blank = Blank.get_blank(blank_type=blank_type)
     if blank_type == Blank.DELETE:
         for token in removed:
             removed_blank.append(token)
-    else:
+    elif blank_type == Blank.REPLACE:
         for token in removed: # TODO: change this to save replace blank input family
             removed_blank.append(token)
     # fill the removed range with Blank objects, with the first Blank containing
     # the removed text (blanks will be merged later)
-    exploded_input[start_index:end_index] = [removed_blank] + ([Blank()] * (end_index - start_index - 1))
+    exploded_input[start_index:end_index] = [removed_blank] + ([Blank.get_blank()] * (end_index - start_index - 1))
 
 def create_delete_candidate(exploded_input, blank_start, blank_end):
     candidate_exploded_input = exploded_input[0:blank_start] + exploded_input[blank_end:]
