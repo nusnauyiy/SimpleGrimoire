@@ -33,6 +33,14 @@ class GeneralizedInput:
                 res += f"{token} "
         res += "]"
         return res
+    def pretty_print(self):
+        res = ""
+        for token in self.input:
+            if isinstance(token, bytes):
+                res += bytes_to_str(token)
+            else:
+                res += f"{token.pretty_print()}"
+        return res
 
     # replace all blanks with empty string and return the input as bytes
     def get_bytes(self) -> bytes:
@@ -49,8 +57,9 @@ class GeneralizedInput:
             elem = self.input[i]
             prev_elem = self.input[i - 1]
             if isinstance(elem, Blank) and isinstance(prev_elem, Blank):
-                prev_elem.removed += elem.removed
-                del self.input[i]
+                if elem.blank_type == prev_elem.blank_type:
+                    prev_elem.removed += elem.removed
+                    del self.input[i]
             elif isinstance(elem, bytes) and isinstance(prev_elem, bytes):
                 self.input[i - 1] += elem
                 del self.input[i]
