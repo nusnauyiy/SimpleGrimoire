@@ -69,17 +69,30 @@ For example, for:
 the exploded_input will be modified to:
     [Blank('hel'), Blank(), Blank(), 'l', 'o']
 '''
-def add_gap_in_exploded_input(exploded_input, start_index, end_index):
+def add_gap_in_exploded_input(exploded_input, start_index, end_index, blank_type, blank_content=None):
     removed = exploded_input[start_index:end_index]
-    removed_blank = Blank()
-    for token in removed:
-        removed_blank.append(token)
+    removed_blank = Blank(blank_type=blank_type)
+    if blank_type == Blank.DELETE:
+        for token in removed:
+            removed_blank.append(token)
+    else:
+        for token in removed: # TODO: change this to save replace blank input family
+            removed_blank.append(token)
     # fill the removed range with Blank objects, with the first Blank containing
     # the removed text (blanks will be merged later)
     exploded_input[start_index:end_index] = [removed_blank] + ([Blank()] * (end_index - start_index - 1))
 
+def create_delete_candidate(exploded_input, blank_start, blank_end):
+    candidate_exploded_input = exploded_input[0:blank_start] + exploded_input[blank_end:]
+    return GeneralizedInput(candidate_exploded_input, True).get_bytes()
+
+def create_replace_candidate(exploded_input, blank_start, blank_end):
+    candidate_exploded_input = exploded_input[0:blank_start] + ["1"] + exploded_input[blank_end:] # TODO: fix hardcode
+    return GeneralizedInput(candidate_exploded_input, True).get_bytes()
 
 def find_gaps(exploded_input: List[Union[str, Blank]],
+              blank_type,
+              create_candidate: Callable[[List[Union[str, Blank]], int, int], bytes],
               candidate_check: Callable[[bytes], bool],
               find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
               split_char: str,
@@ -92,7 +105,7 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
         candidate = GeneralizedInput(working_exploded_input[0:index] + working_exploded_input[resume_index:], True).get_bytes()
 
         if candidate_check(candidate):
-            add_gap_in_exploded_input(exploded_input, index, resume_index)
+            add_gap_in_exploded_input(exploded_input, index, resume_index, blank_type)
 
         index = resume_index
 
@@ -102,6 +115,8 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
 
 
 def find_gaps_in_closures(exploded_input: List[Union[str, None]],
+                          blank_type,
+                          create_candidate: Callable[[List[Union[str, Blank]], int, int], bytes],
                           candidate_check: Callable[[bytes], bool],
                           find_closures: Callable[[List[Union[str, None]], int, str, str], Tuple[int, List[int]]],
                           opening_char: str,
@@ -119,10 +134,10 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
         ending = len(working_exploded_input)
         while endings:
             ending = endings.pop(0)
-            candidate = GeneralizedInput(working_exploded_input[0:index] + working_exploded_input[ending:], True).get_bytes()
+            candidate = create_candidate(working_exploded_input, index, ending)
 
             if candidate_check(candidate):
-                add_gap_in_exploded_input(exploded_input, index, ending)
+                add_gap_in_exploded_input(exploded_input, index, ending, blank_type)
                 break
 
         index = ending
