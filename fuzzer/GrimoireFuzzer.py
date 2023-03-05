@@ -235,8 +235,18 @@ class GrimoireFuzzer(Fuzzer):
             _, edges, _ = self.exec_with_coverage(candidate)
             return edges.difference(self.edges_covered)
 
-        def candidate_check(candidate: bytes):
-            logging.debug(f"checking candidate: {candidate}")
+        def delete_candidate_check(candidate: bytes):
+            logging.debug(f"checking candidate for delete blank: {candidate}")
+            original_edges = new_edges
+            candidate_edges = get_new_bytes(candidate)
+            logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
+            logging.warning(f"ORIGINAL BYTES {sorted(original_edges)}")
+            logging.warning(f"ORIGINAL-CANDIDATE {original_edges.difference(candidate_edges)}")
+            logging.warning(f"CANDIDATE-ORIGINAL {candidate_edges.difference(original_edges)}")
+            return get_new_bytes(candidate) == new_edges
+
+        def replace_candidate_check(candidate: bytes):
+            logging.debug(f"checking candidate for replace blank: {candidate}")
             original_edges = new_edges
             candidate_edges = get_new_bytes(candidate)
             logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
