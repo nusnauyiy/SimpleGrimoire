@@ -58,16 +58,7 @@ def find_closures(l, index, opening_char, closing_char):
         if l[index_ending] == closing_char:
             endings.append(index_ending + 1)
         index_ending -= 1
-
-        index += 1
     return start_index, endings
-
-
-"""
-generalized = ['hel', Blank("hi"), 'lo']
-exploded = ['h', 'e', 'l', None, 'l', 'o']
-candidate = "heo"
-"""
 
 '''
 Adds gap in exploded input while retaining information of the removed text.
@@ -91,11 +82,14 @@ def add_gap_in_exploded_input(exploded_input, start_index, end_index):
 def find_gaps(exploded_input: List[Union[str, Blank]],
               candidate_check: Callable[[bytes], bool],
               find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
-              split_char: str):
+              split_char: str,
+              cumulative: bool):
+    # if non-cumulative, working_exploded_input will not be modified
+    working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
-    while index < len(exploded_input):
-        resume_index = find_next_index(exploded_input, index, split_char)
-        candidate = GeneralizedInput(exploded_input[0:index] + exploded_input[resume_index:], True).get_bytes()
+    while index < len(working_exploded_input):
+        resume_index = find_next_index(working_exploded_input, index, split_char)
+        candidate = GeneralizedInput(working_exploded_input[0:index] + working_exploded_input[resume_index:], True).get_bytes()
 
         if candidate_check(candidate):
             add_gap_in_exploded_input(exploded_input, index, resume_index)
@@ -111,18 +105,21 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
                           candidate_check: Callable[[bytes], bool],
                           find_closures: Callable[[List[Union[str, None]], int, str, str], Tuple[int, List[int]]],
                           opening_char: str,
-                          closing_char: str):
+                          closing_char: str,
+                          cumulative: bool):
+    # if non-cumulative, working_exploded_input will not be modified
+    working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
-    while index < len(exploded_input):
-        index, endings = find_closures(exploded_input, index, opening_char, closing_char)
+    while index < len(working_exploded_input):
+        index, endings = find_closures(working_exploded_input, index, opening_char, closing_char)
 
         if len(endings) == 0:
             break
 
-        ending = len(exploded_input)
+        ending = len(working_exploded_input)
         while endings:
             ending = endings.pop(0)
-            candidate = GeneralizedInput(exploded_input[0:index] + exploded_input[ending:], True).get_bytes()
+            candidate = GeneralizedInput(working_exploded_input[0:index] + working_exploded_input[ending:], True).get_bytes()
 
             if candidate_check(candidate):
                 add_gap_in_exploded_input(exploded_input, index, ending)

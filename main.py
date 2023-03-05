@@ -81,7 +81,7 @@ def fuzz_main(args):
         else:
             inputs = None
         fuzzer = GrimoireFuzzer(
-            module_under_test, test_file_name, cov, output_dir_name, inputs
+            module_under_test, test_file_name, cov, output_dir_name, inputs, args.cumulative
         )
 
     # Run all the fuzzing
@@ -121,6 +121,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--time", type=int, default=60, help="Search time for which to run fuzzing"
+    )
+    parser.add_argument(
+        "--cumulative",
+        action=argparse.BooleanOptionalAction,
+        help="if set, blanks will be cumulatively applied during input generalization",
+        default=True,
     )
     args = parser.parse_args()
     fuzz_main(args)

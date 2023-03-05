@@ -45,47 +45,57 @@ class SplittingRulesTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_find_gaps(self):
-        def generator() -> bool:
-            results = [
-                True,
-                False,
-                True
-            ]
-            for result in results:
-                yield result
-        #            |     first split (True)              |second (False)|              third (True)               |
-        input_data = ["h", "e", "l", Blank(), "l", "o", ",", "m", "y", ",", "w", "o", "r", Blank(), Blank(), "l", "d"]
-        gen = generator()
-
         def candidate_check(input_bytes: bytes) -> bool:
-            return next(gen)
+            valid_candidates = [b"hello,my,", b"my,world"]
+            return input_bytes in valid_candidates
 
+        #            |             first split             |    second    |                  third                   |
+        input_data = ["h", "e", "l", Blank(), "l", "o", ",", "m", "y", ",", "w", "o", "r", Blank(), Blank(), "l", "d"]
+
+        cumulative = True
+        expected = [Blank(b"hello,"), "m", "y", ",", "w", "o", "r", Blank(), "l", "d"]
+        result = find_gaps(input_data.copy(), candidate_check, find_next_char, ",", cumulative)
+        self.assertEqual(expected, result)
+
+        cumulative = False
         expected = [Blank(b"hello,"), "m", "y", ",", Blank(b"world")]
-        result = find_gaps(input_data, candidate_check, find_next_char, ",")
+        result = find_gaps(input_data.copy(), candidate_check, find_next_char, ",", cumulative)
         self.assertEqual(expected, result)
 
     def test_find_gaps_in_closures(self):
-        def generator() -> bool:
-            results = [
-                True,
-                False,
-                True,
-                False
-            ]
-            for result in results:
-                yield result
-
         #             0    1    2    3        4    5    6    7    8    9    10   11       12       13   14   15   16
         input_data = ["h", "e", "l", Blank(), "l", "o", "(", "w", "o", "r", ")", Blank(), Blank(), "l", "d", ")", "!"]
-        gen = generator()
 
         def candidate_check(input_bytes: bytes) -> bool:
-            return next(gen)
+            valid_candidates = [b"hello!", b"hellold)!"]
+            return input_bytes in valid_candidates
 
+        cumulative = True
         expected = ["h", "e", "l", Blank(), "l", "o", Blank(b"(wor)ld)"), "!"]
-        result = find_gaps_in_closures(input_data, candidate_check, find_closures, "(", ")")
+        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
         self.assertEqual(expected, result)
 
+        cumulative = False
+        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        self.assertEqual(expected, result)
+
+
+    def test_find_gaps_in_closures_2(self):
+        #             0    1    2    3    4    5    6    7    8    9    10   11   12   13   14   15
+        input_data = ["(", "h", "e", "l", "l", "o", ")", "(", "w", "o", "r", ")", "l", "d", ")", "!"]
+        def candidate_check(input_bytes: bytes) -> bool:
+            valid_candidates = [b"(hello)!", b"(wor)ld)!"]
+            return input_bytes in valid_candidates
+
+        cumulative = True
+        expected = [Blank(b"(hello)"), "(", "w", "o", "r", ")", "l", "d", ")", "!"]
+        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        self.assertEqual(expected, result)
+
+        cumulative = False
+        expected = [Blank(b"(hello)(wor)ld)"), "!"]
+        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        self.assertEqual(expected, result)
 
 if __name__ == '__main__':
     unittest.main()
