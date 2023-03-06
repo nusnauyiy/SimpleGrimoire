@@ -235,7 +235,7 @@ class GrimoireFuzzer(Fuzzer):
             return edges.difference(self.edges_covered)
 
         def candidate_check(candidate: bytes):
-            logging.debug(f"checking candidate for delete blank: {candidate}")
+            logging.debug(f"checking candidate for blank: {candidate}")
             original_edges = new_edges
             candidate_edges = get_new_bytes(candidate)
             logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
@@ -265,7 +265,7 @@ class GrimoireFuzzer(Fuzzer):
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '<', '>', self.cumulative)
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '\'', '\'', self.cumulative)
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '"', '"', self.cumulative)
-        logging.debug(f"Input with delete blanks: {''.join([s if isinstance(s, str) else '' for s in generalized_input])}")
+        logging.debug(f"Input with delete blanks: {''.join([s if isinstance(s, str) else s.pretty_print() for s in generalized_input])}")
 
         # Replace-blank Generalization
         generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 256, self.cumulative)

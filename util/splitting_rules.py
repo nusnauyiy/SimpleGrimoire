@@ -79,6 +79,8 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
               find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
               split_char: str,
               cumulative: bool):
+    if blank_type == Blank.REPLACE:
+        cumulative = False
     # if non-cumulative, working_exploded_input will not be modified
     working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
@@ -114,6 +116,8 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
 
         # run each candidate through the fuzzer
         for (candidate, replacement, replace_class) in candidate_info:
+            if replace_class in invalid_replace_classes:
+                continue
             if candidate_check(candidate):
                 valid_replace_classes.add(replace_class)
             else:
@@ -142,6 +146,8 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
                           opening_char: str,
                           closing_char: str,
                           cumulative: bool):
+    if blank_type == Blank.REPLACE:
+        cumulative = False
     # if non-cumulative, working_exploded_input will not be modified
     working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
@@ -163,6 +169,8 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
             for token in removed:
                 removed_blank.append(token)
             for (candidate, replacement, replace_class) in candidate_info:
+                if replace_class in invalid_replace_classes:
+                    continue
                 if candidate_check(candidate):
                     valid_replace_classes.add(replace_class)
                 else:

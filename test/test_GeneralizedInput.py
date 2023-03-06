@@ -46,6 +46,13 @@ class GeneralizedInputTest(unittest.TestCase):
         generalized_input.merge_adjacent_gaps_and_bytes()
         self.assertEqual(expected, generalized_input)
 
+    def test_GeneralizedInput_merge_adjacent_gaps_and_bytes_different_blank_types(self):
+        generalized_input = GeneralizedInput([b"(", Blank.get_blank(removed=b"401309124809148", blank_type=Blank.DELETE), Blank.get_blank(removed=b"0", blank_type=Blank.REPLACE), b"/"])
+        expected = GeneralizedInput([b"(", Blank.get_blank(removed=b"4013091248091480", blank_type=Blank.REPLACE), b"/"])
+        generalized_input.merge_adjacent_gaps_and_bytes()
+        print(expected)
+        print(generalized_input)
+        self.assertEqual(expected, generalized_input)
     def test_GeneralizedInput_to_exploded_input(self):
         generalized_input = GeneralizedInput([b"Hello"])
         expected = ["H", "e", "l", "l", "o"]

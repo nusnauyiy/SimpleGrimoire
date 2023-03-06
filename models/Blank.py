@@ -67,7 +67,7 @@ class DeleteBlank(Blank):
         }
 
     def pretty_print(self):
-        return ""
+        return "[_]"
 
     def __eq__(self, other):
         if isinstance(other, DeleteBlank):
@@ -129,7 +129,7 @@ class ReplaceBlank(Blank):
         }
 
     def pretty_print(self):
-        return "[_]"
+        return "[+]"
 
     def __eq__(self, other):
         if isinstance(other, ReplaceBlank):
