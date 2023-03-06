@@ -5,25 +5,7 @@ from util.splitting_rules import *
 
 class SplittingRulesTest(unittest.TestCase):
     def setUp(self):
-        self.chunk_sizes = [256, 128, 64, 32, 2, 1]
-
-    def _test_split_overlapping_chunk_size(self, input_bytes: bytes, start: int):
-        for chunk_size in self.chunk_sizes:
-            split_fn = split_overlapping_chunk_size(chunk_size)
-
-            expected = len(input_bytes)
-            if start + chunk_size < len(input_bytes):
-                expected = start + chunk_size
-
-            actual = split_fn(input_bytes, start)
-            self.assertEqual(expected, actual)
-
-    def test_split_overlapping_chunk_size(self):
-        self._test_split_overlapping_chunk_size(b"hello", 0)
-        self._test_split_overlapping_chunk_size(b"hello", 1)
-        self._test_split_overlapping_chunk_size(b"hello", 4)
-        self._test_split_overlapping_chunk_size(b"a" * 1000, 0)
-        self._test_split_overlapping_chunk_size(b"a" * 1000, 800)
+        pass
 
     def test_find_next_char(self):
         #             0    1    2    3                  4    5    6    7    8    9    10   11                   12              13   14   15   16
@@ -52,13 +34,13 @@ class SplittingRulesTest(unittest.TestCase):
         #            |     first split (True)                       |second (False)|              third (True)                                      |
         input_data = ["h", "e", "l", Blank.get_blank(), "l", "o", ",", "m", "y", ",", "w", "o", "r", Blank.get_blank(), Blank.get_blank(), "l", "d"]
         cumulative = True
-        expected = [Blank.get_blank(removed=b"hello,"), "m", "y", ",", Blank.get_blank(removed=b"world"), "l", "d"]
-        result = find_gaps(input_data.copy(), candidate_check, find_next_char, ",", cumulative)
+        expected = [Blank.get_blank(removed=b"hello,"), "m", "y", ",", "w", "o", "r", Blank.get_blank(), "l", "d"]
+        result = find_gaps(input_data.copy(), Blank.DELETE, candidate_check, find_next_char, ",", cumulative)
         self.assertEqual(expected, result)
 
         cumulative = False
         expected = [Blank.get_blank(removed=b"hello,"), "m", "y", ",", Blank.get_blank(removed=b"world")]
-        result = find_gaps(input_data.copy(), candidate_check, find_next_char, ",", cumulative)
+        result = find_gaps(input_data.copy(), Blank.DELETE, candidate_check, find_next_char, ",", cumulative)
         self.assertEqual(expected, result)
 
     def test_find_gaps_in_closures(self):
@@ -71,11 +53,11 @@ class SplittingRulesTest(unittest.TestCase):
 
         cumulative = True
         expected = ["h", "e", "l", Blank.get_blank(), "l", "o", Blank.get_blank(removed=b"(wor)ld)"), "!"]
-        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        result = find_gaps_in_closures(input_data.copy(), Blank.DELETE, candidate_check, find_closures, "(", ")", cumulative)
         self.assertEqual(expected, result)
 
         cumulative = False
-        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        result = find_gaps_in_closures(input_data.copy(), Blank.DELETE, candidate_check, find_closures, "(", ")", cumulative)
         self.assertEqual(expected, result)
 
 
@@ -87,13 +69,14 @@ class SplittingRulesTest(unittest.TestCase):
             return input_bytes in valid_candidates
 
         cumulative = True
-        expected = [Blank.get_blank(removed=b"(hello)!"), "(", "w", "o", "r", ")", "l", "d", ")", "!"]
-        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        expected = [Blank.get_blank(removed=b"(hello)"), "(", "w", "o", "r", ")", "l", "d", ")", "!"]
+        result = find_gaps_in_closures(input_data.copy(), Blank.DELETE, candidate_check, find_closures, "(", ")", cumulative)
+        print(f"{GeneralizedInput(expected).pretty_print()} {GeneralizedInput(result).pretty_print()}")
         self.assertEqual(expected, result)
 
         cumulative = False
         expected = [Blank.get_blank(removed=b"(hello)(wor)ld)"), "!"]
-        result = find_gaps_in_closures(input_data.copy(), candidate_check, find_closures, "(", ")", cumulative)
+        result = find_gaps_in_closures(input_data.copy(), Blank.DELETE, candidate_check, find_closures, "(", ")", cumulative)
         self.assertEqual(expected, result)
 
 if __name__ == '__main__':

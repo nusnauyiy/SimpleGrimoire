@@ -22,12 +22,14 @@ class Args():
                  module_to_fuzz: str,
                  output_dir: str,
                  input_dir: str = None,
-                 time: int = 10):
+                 time: int = 10,
+                 cumulative: bool = True):
         self.module_to_fuzz = module_to_fuzz
         self.fuzzer = "GRIMOIRE"
         self.output_dir = output_dir
         self.input_dir = input_dir
         self.time = time
+        self.cumulative = cumulative
 
 def calculate_precision(grammar, module_to_fuzz, benchmark_output_file = None):
     module_under_test = importlib.import_module(module_to_fuzz)

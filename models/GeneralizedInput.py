@@ -38,6 +38,8 @@ class GeneralizedInput:
         for token in self.input:
             if isinstance(token, bytes):
                 res += bytes_to_str(token)
+            elif isinstance(token, str):
+                res += token
             else:
                 res += f"{token.pretty_print()}"
         return res

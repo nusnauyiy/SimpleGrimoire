@@ -27,8 +27,7 @@ from models.GeneralizedInput import GeneralizedInput
 from models.SavedInput import SavedInput
 from util.dictionary_builder import build_dictionary
 from util.grimoire_util import random_generalized
-from util.splitting_rules import increment_by_offset, find_gaps, find_next_char, find_closures, find_gaps_in_closures, \
-    create_delete_candidate, create_replace_candidate
+from util.splitting_rules import increment_by_offset, find_gaps, find_next_char, find_closures, find_gaps_in_closures
 from util.util import log, str_to_bytes, replace_all_instances, replace_random_instance, find_random_substring
 
 
@@ -235,18 +234,8 @@ class GrimoireFuzzer(Fuzzer):
             _, edges, _ = self.exec_with_coverage(candidate)
             return edges.difference(self.edges_covered)
 
-        def delete_candidate_check(candidate: bytes):
+        def candidate_check(candidate: bytes):
             logging.debug(f"checking candidate for delete blank: {candidate}")
-            original_edges = new_edges
-            candidate_edges = get_new_bytes(candidate)
-            logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
-            logging.warning(f"ORIGINAL BYTES {sorted(original_edges)}")
-            logging.warning(f"ORIGINAL-CANDIDATE {original_edges.difference(candidate_edges)}")
-            logging.warning(f"CANDIDATE-ORIGINAL {candidate_edges.difference(original_edges)}")
-            return get_new_bytes(candidate) == new_edges
-
-        def replace_candidate_check(candidate: bytes):
-            logging.debug(f"checking candidate for replace blank: {candidate}")
             original_edges = new_edges
             candidate_edges = get_new_bytes(candidate)
             logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
@@ -258,45 +247,45 @@ class GrimoireFuzzer(Fuzzer):
         generalized_input = GeneralizedInput([input_data]).to_exploded_input()
 
         # Delete-blank Generalization
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, increment_by_offset, 256, self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, increment_by_offset, 128, self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, increment_by_offset, 64, self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, increment_by_offset, 32, self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, increment_by_offset, 1, self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, '.', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, ';', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, ',', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, '\n', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, '\r', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, '#', self.cumulative)
-        generalized_input = find_gaps(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_next_char, ' ', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '(', ')', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '[', ']', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '{', '}', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '<', '>', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '\'', '\'', self.cumulative)
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, create_delete_candidate, delete_candidate_check, find_closures, '"', '"', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, increment_by_offset, 256, self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, increment_by_offset, 128, self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, increment_by_offset, 64, self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, increment_by_offset, 32, self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, increment_by_offset, 1, self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, '.', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, ';', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, ',', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, '\n', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, '\r', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, '#', self.cumulative)
+        generalized_input = find_gaps(generalized_input, Blank.DELETE, candidate_check, find_next_char, ' ', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '(', ')', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '[', ']', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '{', '}', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '<', '>', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '\'', '\'', self.cumulative)
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '"', '"', self.cumulative)
         logging.debug(f"Input with delete blanks: {''.join([s if isinstance(s, str) else '' for s in generalized_input])}")
 
         # Replace-blank Generalization
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, increment_by_offset, 256)
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, increment_by_offset, 128)
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, increment_by_offset, 64)
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, increment_by_offset, 32)
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, increment_by_offset, 1)
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, '.')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, ';')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, ',')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, '\n')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, '\r')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, '#')
-        generalized_input = find_gaps(generalized_input, Blank.REPLACE, create_replace_candidate, replace_candidate_check, find_next_char, ' ')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '(', ')')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '[', ']')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '{', '}')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '<', '>')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '\'', '\'')
-        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, create_replace_candidate, delete_candidate_check, find_closures, '"', '"')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 256)
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 128)
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 64)
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 32)
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 1)
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, '.')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, ';')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, ',')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, '\n')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, '\r')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, '#')
+        generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, find_next_char, ' ')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '(', ')')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '[', ']')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '{', '}')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '<', '>')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '\'', '\'')
+        generalized_input = find_gaps_in_closures(generalized_input, Blank.REPLACE, candidate_check, find_closures, '"', '"')
 
         return GeneralizedInput(generalized_input, is_exploded_data=True)
 

@@ -1,35 +1,8 @@
 from typing import List, Union, Callable, Tuple
 
-from models.Blank import Blank
+from models.Blank import Blank, ReplaceClass
 from models.GeneralizedInput import GeneralizedInput
 
-
-def split_overlapping_chunk_size(chunk_size: int):
-    if chunk_size <= 0:
-        raise Exception(f"Chunk size cannot be <= 0: {chunk_size}")
-
-    def _split_overlapping_chunk_size(input_bytes: bytes, start: int):
-        if start + chunk_size > len(input_bytes):
-            return len(input_bytes)
-        return start + chunk_size
-
-    return _split_overlapping_chunk_size
-
-
-chunk_sizes = [256, 128, 64, 32, 2, 1]
-split_overlapping_chunk_size_rules = [split_overlapping_chunk_size(chunk_size) for chunk_size in chunk_sizes]
-
-
-# def trim_generalized(exploded_generalized_input):
-#     ret = []
-#     before = ""
-#     for char_class in exploded_generalized_input:
-#         if char_class == before and char_class == "gap":
-#             pass
-#         else:
-#             ret.append(char_class)
-#         before = char_class
-#     return ret
 
 def increment_by_offset(_, index, offset):
     return index + offset
@@ -60,6 +33,7 @@ def find_closures(l, index, opening_char, closing_char):
         index_ending -= 1
     return start_index, endings
 
+
 '''
 Adds gap in exploded input while retaining information of the removed text.
 For example, for:
@@ -69,30 +43,38 @@ For example, for:
 the exploded_input will be modified to:
     [Blank('hel'), Blank(), Blank(), 'l', 'o']
 '''
-def add_gap_in_exploded_input(exploded_input, start_index, end_index, blank_type, blank_content=None):
-    removed = exploded_input[start_index:end_index]
-    removed_blank = Blank.get_blank(blank_type=blank_type)
-    if blank_type == Blank.DELETE:
-        for token in removed:
-            removed_blank.append(token)
-    elif blank_type == Blank.REPLACE:
-        for token in removed: # TODO: change this to save replace blank input family
-            removed_blank.append(token)
+
+
+def add_gap_in_exploded_input(exploded_input, start_index, end_index, removed_blank: Blank):
     # fill the removed range with Blank objects, with the first Blank containing
     # the removed text (blanks will be merged later)
     exploded_input[start_index:end_index] = [removed_blank] + ([Blank.get_blank()] * (end_index - start_index - 1))
 
-def create_delete_candidate(exploded_input, blank_start, blank_end):
-    candidate_exploded_input = exploded_input[0:blank_start] + exploded_input[blank_end:]
-    return GeneralizedInput(candidate_exploded_input, True).get_bytes()
 
-def create_replace_candidate(exploded_input, blank_start, blank_end):
-    candidate_exploded_input = exploded_input[0:blank_start] + ["1"] + exploded_input[blank_end:] # TODO: fix hardcode
-    return GeneralizedInput(candidate_exploded_input, True).get_bytes()
+def create_delete_candidates(exploded_input: List[Union[str, Blank]], blank_start, blank_end) -> Tuple[List[Tuple[bytes, str, Union[ReplaceClass, None]]], List[Union[str, Blank]]]:
+    candidate_exploded_input = exploded_input[0:blank_start] + exploded_input[blank_end:]
+    candidate = GeneralizedInput(candidate_exploded_input, True).get_bytes()
+    return [(candidate, "", None)], exploded_input[blank_start:blank_end]
+
+
+def create_replace_candidates(exploded_input, blank_start, blank_end) -> List[Tuple[bytes, str, ReplaceClass]]:
+    res = []
+    for replace_class in ReplaceClass:
+        seen_candidates = set()
+        for i in range(10):
+            replacement = ReplaceClass.generate(replace_class)
+            while replacement in seen_candidates:
+                replacement = ReplaceClass.generate(replace_class)
+            seen_candidates.add(replacement)
+
+            candidate_exploded_input = exploded_input[0:blank_start] + replacement + exploded_input[blank_end:]
+            candidate = GeneralizedInput(candidate_exploded_input, True).get_bytes()
+            res.append((candidate, replacement, replace_class))
+    return res, exploded_input[blank_start:blank_end]
+
 
 def find_gaps(exploded_input: List[Union[str, Blank]],
               blank_type,
-              create_candidate: Callable[[List[Union[str, Blank]], int, int], bytes],
               candidate_check: Callable[[bytes], bool],
               find_next_index: Callable[[List[Union[str, Blank]], int, Union[int, str]], int],
               split_char: str,
@@ -100,12 +82,51 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
     # if non-cumulative, working_exploded_input will not be modified
     working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
-    while index < len(working_exploded_input):
-        resume_index = find_next_index(working_exploded_input, index, split_char)
-        candidate = GeneralizedInput(working_exploded_input[0:index] + working_exploded_input[resume_index:], True).get_bytes()
 
-        if candidate_check(candidate):
-            add_gap_in_exploded_input(exploded_input, index, resume_index, blank_type)
+    # index = start of blank that we're trying
+    while index < len(working_exploded_input):
+        '''
+        # start
+        exploded_input = "helloworld"
+        working = "helloworld"
+        
+        # after 1st iteration
+        exploded_input = "__lloworld"
+        working = "__lloworld" # cumulative case, working == exploded_input
+        working = "helloworld" # non-cumulative case
+        '''
+
+        # resume_index = end of blank that we're trying
+        resume_index = find_next_index(working_exploded_input, index, split_char)
+
+        create_candidates = create_delete_candidates if blank_type == Blank.DELETE else create_replace_candidates
+
+        valid_replace_classes = set()  # set of replace classes with passing candidates
+        invalid_replace_classes = set()  # set of replace classes with failing candidates
+
+        # candidate_info = [(candidate, replacement, replace class), ...]
+        candidate_info, removed = create_candidates(working_exploded_input, index, resume_index)
+
+        # create the blank object to store the information for the current blank we're trying
+        removed_blank = Blank.get_blank(blank_type=blank_type)  # blank containing info about the removed chunk
+        for token in removed:
+            removed_blank.append(token)
+
+        # run each candidate through the fuzzer
+        for (candidate, replacement, replace_class) in candidate_info:
+            if candidate_check(candidate):
+                valid_replace_classes.add(replace_class)
+            else:
+                invalid_replace_classes.add(replace_class)
+
+        # replace classes = set of valid replace classes for this blank
+        replace_classes = valid_replace_classes.difference(invalid_replace_classes)
+        # if there is anything in replace_classes, it means the blank is valid
+        # -> add the blank in the exploded input
+        if len(replace_classes) != 0:
+            if blank_type == Blank.REPLACE:
+                removed_blank.replacements = replace_classes
+            add_gap_in_exploded_input(exploded_input, index, resume_index, removed_blank)
 
         index = resume_index
 
@@ -116,7 +137,6 @@ def find_gaps(exploded_input: List[Union[str, Blank]],
 
 def find_gaps_in_closures(exploded_input: List[Union[str, None]],
                           blank_type,
-                          create_candidate: Callable[[List[Union[str, Blank]], int, int], bytes],
                           candidate_check: Callable[[bytes], bool],
                           find_closures: Callable[[List[Union[str, None]], int, str, str], Tuple[int, List[int]]],
                           opening_char: str,
@@ -125,6 +145,7 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
     # if non-cumulative, working_exploded_input will not be modified
     working_exploded_input = exploded_input if cumulative else exploded_input.copy()
     index = 0
+    create_candidates = create_delete_candidates if blank_type == Blank.DELETE else create_replace_candidates
     while index < len(working_exploded_input):
         index, endings = find_closures(working_exploded_input, index, opening_char, closing_char)
 
@@ -134,10 +155,24 @@ def find_gaps_in_closures(exploded_input: List[Union[str, None]],
         ending = len(working_exploded_input)
         while endings:
             ending = endings.pop(0)
-            candidate = create_candidate(working_exploded_input, index, ending)
 
-            if candidate_check(candidate):
-                add_gap_in_exploded_input(exploded_input, index, ending, blank_type)
+            valid_replace_classes = set()
+            invalid_replace_classes = set()
+            candidate_info, removed = create_candidates(working_exploded_input, index, ending)
+            removed_blank = Blank.get_blank(blank_type=blank_type)  # blank containing info about the removed chunk
+            for token in removed:
+                removed_blank.append(token)
+            for (candidate, replacement, replace_class) in candidate_info:
+                if candidate_check(candidate):
+                    valid_replace_classes.add(replace_class)
+                else:
+                    invalid_replace_classes.add(replace_class)
+
+            valid_replace_classes = valid_replace_classes.difference(invalid_replace_classes)
+            if len(valid_replace_classes) != 0:
+                if blank_type == Blank.REPLACE:
+                    removed_blank.replacements = valid_replace_classes
+                add_gap_in_exploded_input(exploded_input, index, ending, removed_blank)
                 break
 
         index = ending
