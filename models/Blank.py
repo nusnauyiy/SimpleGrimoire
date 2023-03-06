@@ -125,7 +125,7 @@ class ReplaceBlank(Blank):
         return {
             "removed": bytes_to_str(self.removed),
             "type": "REPLACE",
-            "replacements": self.replacements
+            "replacements": [replace_class.name for replace_class in self.replacements]
         }
 
     def pretty_print(self):

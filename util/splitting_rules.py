@@ -67,7 +67,7 @@ def create_replace_candidates(exploded_input, blank_start, blank_end) -> List[Tu
                 replacement = ReplaceClass.generate(replace_class)
             seen_candidates.add(replacement)
 
-            candidate_exploded_input = exploded_input[0:blank_start] + replacement + exploded_input[blank_end:]
+            candidate_exploded_input = exploded_input[0:blank_start] + [replacement] + exploded_input[blank_end:]
             candidate = GeneralizedInput(candidate_exploded_input, True).get_bytes()
             res.append((candidate, replacement, replace_class))
     return res, exploded_input[blank_start:blank_end]
