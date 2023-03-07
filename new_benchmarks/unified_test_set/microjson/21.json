@@ -1,0 +1,27 @@
+[
+  [
+    "sen",
+    {
+      "sn":"4",
+      "et":[
+        ["text","by shortening"]
+      ]
+    }
+  ],[
+    "sense",
+    {
+      "sn":"a",
+      "dt":[
+        ["text","{bc}{sx|tablet||}"]
+      ]
+    }
+  ],[
+    "sense",
+    {
+      "sn":"b",
+      "dt":[
+        ["text","{bc}{sx|tabloid||}"]
+      ]
+    }
+  ]
+]
