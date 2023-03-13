@@ -2,7 +2,7 @@ import re
 import sys
 import json
 
-from ebnf import Grammar, Rule
+from grammar_generator.ebnf import Grammar, Rule
 
 START_NAME = "start"
 TERM_NAME = "term"

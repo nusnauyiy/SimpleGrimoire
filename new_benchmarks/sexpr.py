@@ -1,5 +1,6 @@
-import pyparsec
 import sys
+
+from new_benchmarks.pyparsec import pyparsec
 
 alphaP = pyparsec.letters
 alphaP.tag = 'alphaP'
@@ -38,8 +39,11 @@ if __name__== "__main__":
     main(f.read())
 
 def test_one_input(input_data: bytes):
-    input_str = input_data.decode("UTF-8")
-    v = sexprP.parse(input_str)
-    if isinstance(v, pyparsec.Left):
-        # Invalid input, but not a bug
+    try:
+        input_str = input_data.decode("UTF-8")
+        v = sexprP.parse(input_str)
+        if isinstance(v, pyparsec.Left):
+            # Invalid input, but not a bug
+            pass
+    except ValueError:
         pass

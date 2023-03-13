@@ -59,7 +59,7 @@ class GrimoireFuzzer(Fuzzer):
         # Set up the initial inputs to populate `self.saved_inputs`
         for input_data in initial_inputs:
             has_error, input_cov, exec_time = self.exec_with_coverage(input_data)
-            logging.warning("fuzzing seed")
+            logging.warning("fuzzing seed" + str(input_data))
             self.generalize_and_save_if_has_new_coverage(input_data, has_error, input_cov, exec_time)
 
     def is_generalized(self, input_bytes: bytes):
