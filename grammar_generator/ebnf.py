@@ -32,7 +32,7 @@ class Grammar():
             attempts += 1
             try:
                 sample = self.generate_positive_example(max_depth)
-                if len(sample) > 300:
+                if len(sample) > 1000:
                     continue
                 samples.add(sample)
             except RecursionError:
