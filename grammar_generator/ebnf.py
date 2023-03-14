@@ -39,7 +39,7 @@ class Grammar():
                 continue
         return samples
 
-    def generate_positive_example(self, max_depth, start_nonterminal='start', cur_depth=0):
+    def generate_positive_example(self, max_depth, start_nonterminals=['start'], cur_depth=0):
         """
         Samples a random positive example from the grammar, with max_depth as much as possible.
         """
@@ -49,17 +49,22 @@ class Grammar():
         # - the rule for "term" is "term := start | terminal"
         # - "terminal" only contains terminals
         # Add an assertion here until we fix it.
-        assert len(self.rules) == 3 and "start" in self.rules and "term" in self.rules and "terminal" in self.rules
+        # assert len(self.rules) == 3 and "start" in self.rules and "term" in self.rules and "terminal" in self.rules
+
+        start_nonterminal = random.choice(start_nonterminals) # if we are processing a group of nonterminals ()
+        if cur_depth >= max_depth and len(start_nonterminal) > 1:
+            start_nonterminal = start_nonterminals[0] # assumption: all lists of nonterminals start with at least one replacement-class terminal
 
         # Helper function: gets all the nonterminals for a body
         def body_nonterminals(grammar, body):
             nonterminals = []
             for item in body:
-                if item in grammar.rules:
+                if isinstance(item, list) or item in grammar.rules:
                     nonterminals.append(item)
             return nonterminals
         def unescape_regex(terminal):
             return re.sub(r'\\(.)', r'\1', re.sub('^/|/$', '', terminal))
+
         # print(f"cur_depth={cur_depth}")
         # print("1")
         bodies = self.rules[start_nonterminal].bodies
@@ -67,11 +72,11 @@ class Grammar():
         # print("2")
         if cur_depth >= max_depth:
             terminal_bodies = [body for body in bodies if len(body_nonterminals(self, body)) == 0]
-            if len(terminal_bodies) == 0: #hardcode for now :(
-                terminal_bodies = self.rules["terminal"].bodies
-            terminal_body = terminal_bodies[random.randint(0, len(terminal_bodies) - 1)]
+            if len(terminal_bodies) > 0:
+                terminal_body = random.choice(terminal_bodies)
+                return "".join([unescape_regex(elem) for elem in terminal_body])  # referencing https://mentaljetsam.wordpress.com/2007/04/13/unescape-a-python-escaped-string/
+            # Otherwise... guess we'll have to try to stop later.
 
-            return "".join([unescape_regex(elem) for elem in terminal_body]) # referencing https://mentaljetsam.wordpress.com/2007/04/13/unescape-a-python-escaped-string/
         body_to_expand = bodies[random.randint(0, len(bodies) - 1)]
         # print(f"body to expand={body_to_expand}")
         nonterminals_to_expand = body_nonterminals(self, body_to_expand)
@@ -86,16 +91,16 @@ class Grammar():
 class Rule():
     def __init__(self, name):
         self.name = name
-        self.bodies = []
+        self.bodies = [] # can contain 1-deep nested lists of nonterminals, ie. [["body1start", ["nonterminal1", "nonterminal2"]], ["body2start"]]
 
     def add_body(self, body):
         self.bodies.append(body)
         return self
 
     def __str__(self):
-        res = f"{self.name}: "
-        res += " | ".join([" ".join(body) for body in self.bodies])
+        res = f"{self.name}: "       # inner: convert nested lists to strs "(rule|rule|rule)"                    # outer: join strs in body
+        res += " | ".join([" ".join([s if isinstance(s, str) else ''.join(['(', '|'.join(s), ')']) for s in body]) for body in self.bodies])
         return res
 
     def pretty_print(self):
-        return self.__str__().replace("|", "\n  |")
+        return self.__str__().replace(" | ", "\n  | ")
