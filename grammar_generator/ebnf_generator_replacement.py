@@ -25,13 +25,15 @@ def escape_regex(str):
     return re.escape(str).replace("/", "\\/")
 
 def generalized_input_to_regex(input):
-    regex = "".join([re.escape(s) if isinstance(s, str) else "(.+)" for s in input])
+    regex = "".join([s if isinstance(s, str) else "(.+)" for s in input])
     return re.compile(regex)
 
 def add_terminal_class_rule(grammar, rule_name, rule_value):
     rule = Rule(rule_name)
     for c in rule_value:
-        rule.add_body([c])
+        if c == "\n":
+            continue # TODO: currently ebnf doesn't work with newline
+        rule.add_body([f"/{escape_regex(c)}/"])
     grammar.add_rule(rule)
 
 def generate_start_rule_body(generalized_input):
@@ -39,14 +41,14 @@ def generate_start_rule_body(generalized_input):
     for token in generalized_input:
         if isinstance(token, str):
             # print(f"token: {token}")
-            rule_body.append(token)
+            rule_body.append(f"/{escape_regex(token)}/")
         elif token.get("type") == "DELETE":
             pass # do not add anything to the rule
         elif token.get("type") == "REPLACE":
             replacements = token.get("replacements") + [START_NAME] # add start name here to allow recursion
             # print(f"replacements: {replacements}")
-            rule_body.append([r.lower() for r in replacements if r != "NUMBERS"]) # remove numbers for now, TODO
-                                                                                  # TODO: should be CLASS+ instead of CLASS, right now only expands to 1 character
+            rule_body.append([f"{r.lower()}" for r in replacements if r != "NUMBERS"]) # remove numbers for now, TODO
+                                                                                           # TODO: should be CLASS+ instead of CLASS, right now only expands to 1 character
     return rule_body
 
 
@@ -56,15 +58,10 @@ def generate_ebnf_replacement(saved_inputs_filename):
     grammar = Grammar(START_NAME)
 
     start_rule = Rule(START_NAME)
-    generalized_input_regexes = []
     for entry in saved_data:
         # add subrule based on input
         generalized_input = entry.get("generalized").get("input")
         start_rule.add_body(generate_start_rule_body(generalized_input))
-        # start_rule.add_body([f"/{escape_regex(s)}/" if isinstance(s, str) else TERM_NAME for s in generalized_input])
-        # create regex from input
-        r = generalized_input_to_regex(generalized_input)
-        generalized_input_regexes.append(r)
     grammar.add_rule(start_rule)
 
     # grammar.add_rule(Rule(TERM_NAME).add_body([START_NAME]).add_body([TERMINAL_NAME]))

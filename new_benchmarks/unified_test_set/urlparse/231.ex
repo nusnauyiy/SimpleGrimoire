@@ -1,0 +1,1 @@
+ftp://host2/?key3=value2&key4=value1&key4=value4

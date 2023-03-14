@@ -1,0 +1,1 @@
+http://host2?key2=value2

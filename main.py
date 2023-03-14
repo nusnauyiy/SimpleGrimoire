@@ -41,7 +41,8 @@ def fuzz_main(args):
     if not os.path.isdir(output_parent_dir):
         os.mkdir(output_parent_dir)
     curr_timestamp = datetime.datetime.now().strftime("%m-%d_%H:%M:%S")
-    output_dir_name = f"{output_parent_dir}/{curr_timestamp}_{args.module_to_fuzz}"
+    # output_dir_name = f"{output_parent_dir}/{curr_timestamp}_{args.module_to_fuzz}"
+    output_dir_name = f"{output_parent_dir}/{args.module_to_fuzz}"
     if os.path.isdir(output_dir_name):
         raise ValueError(f"{output_dir_name} already exists, not overwriting")
     os.mkdir(output_dir_name)

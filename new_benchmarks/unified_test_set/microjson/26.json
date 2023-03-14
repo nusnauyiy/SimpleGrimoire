@@ -1,0 +1,39 @@
+[[
+  "sense",
+  {
+    "sn":"1 a",
+    "sgram":"T\/I",
+    "dt":[
+      ["text","{bc}to shut down and restart (a computer or program) "],
+      [
+        "vis",
+        [
+          {
+            "t":"\u2026 the annoyance of having to {wi}reboot{\/wi} the computer to switch operating systems \u2026", "aq":{"auth":"Robert Weston"}
+          },
+          {
+            "t":"If anything ever happens to the original drive, you can {wi}reboot{\/wi} using the cloned drive and be up and running in minutes.",
+            "aq":{"auth":"Dan Frakes"}
+          }
+        ]
+      ]
+    ]
+  }
+],[
+  "sense",
+  {
+    "sn":"b",
+    "sgram":"I",
+    "dt":[
+      ["text","{bc}to start up again after closing or shutting down {bc}to boot up again "],
+      [
+        "vis",
+        [
+          {
+            "t":"waiting for a computer\/program to {wi}reboot{\/wi}"
+          }
+        ]
+      ]
+    ]
+  }
+]]

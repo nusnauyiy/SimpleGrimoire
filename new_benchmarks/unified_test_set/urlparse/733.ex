@@ -1,0 +1,1 @@
+http://host2/folder/?key1=value1&key1=value4&key4=value3&key3=value1
