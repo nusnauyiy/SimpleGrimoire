@@ -1,0 +1,28 @@
+[
+  [
+    "bs",
+    {
+      "sense":{
+        "sn":"2",
+        "dt":[["text","{bc}resembling a cat: such as"]]
+      }
+    }
+  ],[
+  "sense",{
+    "sn":"a",
+    "dt":[["text","{bc}sleekly graceful"]]
+  }
+  ],[
+  "sense",
+  {
+    "sn":"b",
+    "dt":[["text","{bc}{sx|sly||}, {sx|treacherous||}"]]
+  }
+  ],[
+  "sense",
+  {
+    "sn":"c",
+    "dt":[["text","{bc}{sx|stealthy||}"]]
+  }
+  ]
+]

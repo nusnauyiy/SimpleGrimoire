@@ -1,0 +1,6 @@
+{
+    "method": "GetClientInfo",
+    "param": ["agrom"],
+    "locale": "ru",
+    "token": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f"
+}

@@ -10,6 +10,16 @@ from start import get_times, START
 from lark import Lark
 from oracle import CachingOracle, ExternalOracle
 import string
+import signal
+
+class TimeoutException(Exception):   # Custom exception class
+    pass
+
+def timeout_handler(signum, frame):   # Custom signal handler
+    raise TimeoutException
+
+# Change the behavior of SIGALRM
+signal.signal(signal.SIGALRM, timeout_handler)
 
 """
 High-level command line to launch Arvada evaluation.
@@ -45,6 +55,7 @@ def main(oracle_cmd, log_file_name, test_examples_folder ):
     real_recall_set = []
     for filename in os.listdir(test_examples_folder):
         full_filename = os.path.join(test_examples_folder, filename)
+        print(full_filename)
         test_raw = open(full_filename).read()
         real_recall_set.append(test_raw)
         # TODO: make an option to try
@@ -91,13 +102,19 @@ def main(oracle_cmd, log_file_name, test_examples_folder ):
             print(f"Recall set (size {len(real_recall_set)}):", file=f)
             print("Recall eval:")
             for example in tqdm(real_recall_set):
+                signal.alarm(1800)
                 try:
                     parser.parse(example)
-                    print("   ", example, file=f)
-                    num_recall_parsed += 1
+                except TimeoutException as e:
+                    print("   ", example, " <----- TIMEOUT", file=f)
                 except Exception as e:
                     print("   ", example, " <----- FAILURE", file=f)
-                    continue
+                else:
+                    print("   ", example, file=f)
+                    num_recall_parsed += 1
+                finally:
+                    # Reset the alarm
+                    signal.alarm(0)
 
             print(
                 f'Recall: {num_recall_parsed / len(real_recall_set)}, Precision: {num_precision_parsed / len(precision_set)}',

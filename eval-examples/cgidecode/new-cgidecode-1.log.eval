@@ -1,0 +1,1207 @@
+
+
+Initial grammar loaded:
+start: t0
+t679: t6878 t8362
+t6878: "b"
+    | t6878 t0
+    | "CJ"
+    | "D"
+    | t6878 t6878
+    | t679 t6878
+    | "E"
+    | "FK"
+    | "e"
+    | "B"
+    | "chf"
+    | "dm"
+    | "eyc"
+    | "c"
+    | "C"
+    | "A"
+    | "CW"
+    | "d"
+    | "DCG"
+    | "fnasty"
+    | "fscript"
+    | "a"
+    | "DZM"
+    | "EVH"
+    | "FR"
+    | "bhh"
+    | "cjn"
+    | "fcu"
+    | "ey"
+    | "ft"
+    | "AIJ"
+    | "BA"
+    | "DK"
+    | "f"
+    | "EB"
+    | "cscript"
+    | "FA"
+    | "az"
+    | "blw"
+    | "ct"
+    | "dqy"
+    | "BH"
+t267: tdigits
+t5333: t5333 t0
+    | t267 t6878
+    | tdigits
+t8362: "%" t267
+    | t0
+    | t0 t679
+    | t0 t8362
+    | t679 t679
+    | t8362 t679
+    | t6878 t8362
+t0: t8362 t6878
+    | "%" t5333
+    | t0 t0
+    | "+"
+    | "."
+    | "="
+    | "&"
+    | t267 t0
+    | "-"
+    | "/"
+    | "_"
+    | "~"
+    | t6878
+    | t0 t6878
+    | ":"
+    | "?"
+    | t0 t5333
+    | talphanums
+tdigits: tdigit
+    | tdigit tdigits
+tdigit: "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+talphanums: talphanum
+    | talphanum talphanums
+talphanum: "a"
+    | "b"
+    | "c"
+    | "d"
+    | "e"
+    | "f"
+    | "g"
+    | "h"
+    | "i"
+    | "j"
+    | "k"
+    | "l"
+    | "m"
+    | "n"
+    | "o"
+    | "p"
+    | "q"
+    | "r"
+    | "s"
+    | "t"
+    | "u"
+    | "v"
+    | "w"
+    | "x"
+    | "y"
+    | "z"
+    | "A"
+    | "B"
+    | "C"
+    | "D"
+    | "E"
+    | "F"
+    | "G"
+    | "H"
+    | "I"
+    | "J"
+    | "K"
+    | "L"
+    | "M"
+    | "N"
+    | "O"
+    | "P"
+    | "Q"
+    | "R"
+    | "S"
+    | "T"
+    | "U"
+    | "V"
+    | "W"
+    | "X"
+    | "Y"
+    | "Z"
+    | "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+Precision set (size 50):
+    Fxn?
+    %5fcu
+    78=2833DK
+    b
+    ./
+    _+
+    D&FAA=ect+cscriptDFK?+DCG=+fscript.c%759a%86dm-DZM+A%74BAd%8FRE~&bDZMFK=BA
+    _
+    /
+    dm
+    %868D
+    BHA
+    +
+    4pt
+    &+=FK?D
+    ?
+    =
+    %8bhh-
+    %2ey94379chf%3BA~&1BA+=
+    5.31cAC
+    az
+    -
+    +3
+    k61
+    %327bhh
+    %5az
+    2
+    .
+    -b
+    &
+    :fscript/CW/D
+    .7
+    -=eDZMcjn?bhh?%9CJ~DZM&EBfscript:DDCGe?ctfscript:a_chf%14fnastyct%22AC%8955fscriptDCG:D/_fnasty?E%42chf:EB:FK._C&cjnblw+b:AIJ_d-fnasty%30d=:~dm%0FAD?ctC
+    0/
+    =ct
+    fscriptFK&BAd%49blw&ft%49BH&ft%50CW
+    ~c
+    de+?FR/ft_cjn
+    0
+    _~
+    =EB
+    ~
+    d
+    :
+    j
+    %1C
+    DKa:DCGbhh+E=%308f%4BA-?ft%1049bhhCchf.FKey/a=Eey.chfdm-FA+D&/+%6C%9dFA%083bhh=EVH:%40Ceyc~fnastyE%8ct.azFKA?fscript%33DK%97dm-._-+fscript.e+eycB+:Bechf%44210d%3fdqy_f%3cjnFK?cscript/D_BA?blw?fscript
+    DK+DK
+    %5BH
+    -dm
+Recall set (size 1000):
+    %23%7B
+    %40
+    %5B
+    %24N
+    %3B
+    %3By2N
+    M%24
+    N
+    %3C
+    %5Be
+    y%26U%24
+    %3E
+    S
+    q
+    Tv%7B
+    %23%3A
+    T
+    K%2B%5Bai
+    %3Br
+    %3F%5C
+    f
+    %5Cx
+    %7D
+    %5C
+    %3B1
+    l%7C%29%3B
+    %2CBT%7Dp
+    J
+    r
+    %3C
+    6
+    %3D%3Az%24q%5E
+    %2B%5E
+    %3D%7D
+    %7Dy%2C
+    %3B
+    C
+    Z
+    X
+    %2B%25
+    n%5Bwx
+    %5B
+    %3D
+    P
+    F%28
+    %5D
+    %7C
+    %23
+    es
+    b%5Bc
+    %232
+    7o
+    L%7C
+    b%3B%40
+    Z
+    %21
+    v%7Bc
+    %24%60
+    %7C
+    %27
+    O
+    %5E
+    Lbc%7C%3A
+    D
+    %29L%5B
+    Q
+    %3D%3A%24
+    DMP
+    %5BEs
+    %259
+    N%5E
+    %5C3n%40
+    %5Dz
+    V3m%60
+    D
+    %3F%7B
+    %28
+    V
+    2S
+    %3A
+    %2A%40
+    %40
+    %25
+    blRB%5C%606
+    %28
+    %3E
+    a%5D
+    E
+    %3EB%40
+    8
+    %22~%22
+    %3Ce
+    %7B
+    D%2A
+    Fo
+    %211
+    %2Ab%7Cq
+    F%3F%40
+    %25j
+    %22
+    %25%5C%5B
+    %7B
+    %5D%28
+    x
+    S%5E
+    _7%7D
+    w
+    i%22
+    %2B
+    %23
+    U
+    %2B%28%22%28g
+    i
+    O
+    7
+    %3Co%2AA%26
+    %5B
+    %223/P
+    %26A
+    %5B%24%3C
+    %25C
+    M
+    %60x%27
+    %3E
+    oj%3C%5BY
+    %7C
+    /
+    %60
+    %22
+    N
+    %3E
+    K
+    %221.
+    %5C
+    %7C%7C%3C
+    D
+    %5E
+    J%2B
+    x4%24
+    2
+    3
+    %5CG
+    o4
+    C%5DCQ
+    r%2Bv
+    %5C
+    %27%25a%2A
+    Imx
+    0%7D
+    %60I%2Bl%5C%5C
+    -%26
+    %26/%60
+    Mx
+    %60
+    -
+    Q
+    %23
+    %40
+    iVe%26
+    %3B%7D%3C
+    %3C
+    D%2B1
+    %60%7D
+    %2Az
+    2
+    6%23%60
+    %5D
+    j%7D
+    %5D
+    %7D
+    t
+    %2A
+    W
+    B
+    v%40
+    6QD
+    Pp
+    v%29
+    %22%28P
+    %25
+    %24
+    %7B
+    E
+    %29%5B%5B
+    %21A
+    gSA
+    %28i
+    M%7D
+    %2A%3C%21%7DI
+    o
+    %5E
+    QT
+    z
+    %7B
+    Yt
+    %7C%3DQ
+    %29
+    %7C
+    n
+    %3E
+    %7D
+    BD
+    %5EN
+    %21
+    L
+    %3F
+    r%28
+    %40%28
+    P
+    %5C%2C
+    z
+    ZD
+    3q
+    %3E%3A%26
+    %5B9%2B
+    6C%2B
+    %5E%3B%28
+    %22
+    f
+    IJ
+    %3C%29N
+    %3A%26c~
+    %7C
+    e%26
+    -%3E%2C7
+    q%5D
+    sNf
+    F%3C4LPG
+    S
+    %24%23
+    %5E
+    Q
+    1
+    %2B
+    H
+    %27
+    L%2B3
+    %2B%22J
+    w%3B%23%60%5D
+    %3A
+    Xl%7C
+    eb%2A%25
+    %2C
+    z
+    %2C/H
+    J
+    uq
+    S%23
+    OM%7B%29
+    svJ8z
+    %3D%3F%3F%3Ca
+    %2B
+    %27kM%7B
+    j
+    %2A
+    %22pjz
+    d
+    %21
+    y7Ns
+    %28NVBQ
+    u
+    -
+    %3AF
+    %7CD
+    %2A
+    Mg
+    %28y
+    %5E%24
+    A
+    %3D%3CO%25t_
+    %28%7C%22%26
+    %27
+    %60Z%23%24
+    dO2
+    S
+    %3B
+    S
+    _
+    c
+    _
+    J
+    %40
+    %26%7C
+    Jk
+    GT
+    %3C
+    7y5n
+    oCk
+    F
+    %222
+    %2Cy
+    %288%24
+    %3EJ
+    E
+    %24d%7C/
+    %28
+    9%40
+    %27%5ET
+    b%3D%2A%21
+    %27
+    O
+    d
+    U
+    %21
+    %5D
+    b
+    %23
+    %23
+    T
+    %3B
+    %5C
+    R
+    j
+    w
+    %26o
+    ~%2A%29
+    r
+    %23%3ET
+    a
+    %27
+    ~
+    %3E
+    %2B
+    %27
+    j%26%2C
+    %5E
+    v%40
+    %27
+    %3E%21%24
+    %26%7B
+    7
+    %26HA%3Cg
+    gS
+    %25u_
+    %2B%5EI8k
+    1
+    %5D
+    %2C~
+    YUxE
+    %27Z
+    %3B
+    %25
+    R
+    b_%3E%29qg
+    t
+    1
+    %23X
+    %5DV
+    %3Af%26
+    %3Ep%5C%7B%28
+    s
+    d
+    %2A
+    TW
+    %3A
+    N
+    a%3A%3A%7B
+    kV%249
+    %3F
+    %26
+    %3DO
+    Q
+    M%26
+    %24
+    %7B
+    %23K
+    %3F
+    %22
+    %28
+    %5C%5C%27
+    %22
+    %7CN
+    f
+    SG
+    Z
+    1
+    h%40
+    %7D%26
+    %2Cq
+    %60w9
+    %2B
+    i7H%23u%294
+    %7CNv%26SB
+    s%2A
+    8o9%3ES
+    %2C%28x
+    M
+    D
+    u9
+    %40
+    %28
+    %2C
+    %7C
+    y3
+    %28
+    %5E~
+    os
+    %3C
+    %7D
+    yr
+    h
+    %7C%3A
+    %3A%5E
+    %23
+    5Z
+    Gz
+    %7B1
+    %60P
+    F7
+    %27
+    %2A
+    %40AH
+    %3Ds%25%5Eh
+    r
+    8
+    %3F
+    MK
+    5V%3A1%7B
+    r
+    d
+    i
+    l
+    m
+    %7C
+    L
+    %3E
+    %7Dc
+    l%3C
+    sP
+    %3F
+    %22
+    %3CC1
+    V
+    x
+    %25
+    _6
+    _%3F
+    7
+    %29
+    p%7D
+    %26%7B
+    %7C
+    /%25F
+    4
+    .
+    0%3F
+    %5B
+    ~
+    i%3D
+    s-
+    %3A%5Dm
+    N
+    H%7B
+    %2Bpo
+    O
+    H
+    %2A
+    %5B%2A%3A%2A
+    %29
+    .%3Aa%26
+    0V
+    7E
+    %7B
+    eQ3
+    %3Dqf4%27
+    vy%2B
+    %2B
+    M
+    %3B%2Bl%29
+    %5B
+    P
+    %21%5C%21
+    r/
+    A
+    %2B
+    %24%22
+    %7B
+    %2C
+    N
+    %2C%2B%3CR%7B
+    1
+    %2BW
+    1%3F
+    h%2B%3B
+    C
+    %3DTH
+    Cq%2C%2C%3C
+    H
+    .
+    %40%29
+    %5B
+    S%7CZ
+    e
+    %3F6
+    %217%7C
+    %3Au%3CE
+    %2B
+    0i
+    r
+    %2BY%3D
+    %60
+    J
+    %2B
+    %40
+    n%5C
+    Z%27
+    F
+    %22
+    %60%2C
+    %3B
+    b
+    %28%3A
+    %23
+    %3F
+    %7C
+    D
+    w
+    x%24
+    j
+    1
+    6
+    %28N%3A
+    %3F
+    1
+    %21
+    %2C
+    5
+    4L
+    B
+    %60
+    8
+    sz
+    r
+    %5B%3Fayd%3A%40T
+    %3D
+    %5Df%28
+    %7C
+    e
+    %3A
+    %24
+    %23%5CW
+    %28NF%26
+    %3Cw
+    %3D
+    O
+    %29
+    41%3B
+    %40
+    k
+    %26
+    s%7D
+    %5C
+    %29
+    p
+    .
+    -%5C
+    %3A
+    40p
+    h
+    %40
+    %2C
+    j
+    %40
+    %21
+    %2A
+    4
+    f6
+    %21e5o
+    -
+    %27%7B
+    Q
+    %3C
+    %27m4O%7D%22
+    abr%254
+    %60h
+    g
+    %2A
+    M%23
+    C
+    %29%28
+    g
+    .%22%238
+    b
+    %24
+    %3D
+    %3A
+    %3E%3F%60%289G%60
+    x
+    %23b1%40v
+    k4
+    k%3A
+    %7B%21F
+    %5E%24
+    %2C
+    %3D%5D
+    Yh
+    L
+    e
+    S
+    %27
+    %7B
+    U
+    H
+    8%3B
+    k
+    4H
+    %5B
+    i
+    %2CG.
+    %28B
+    k%3D
+    %5E%5E
+    i
+    M
+    %2Ct
+    %5Dfm%29%7Dm1
+    b
+    %3C
+    r%24
+    %23%29
+    %7B%7C%5CC
+    8
+    ok
+    %3A
+    v1X
+    Gc
+    %5EpfU%7C
+    W4
+    %5B%23
+    H
+    %3D%5D
+    %24%5EO
+    k
+    %29%60
+    a
+    s
+    r
+    %21
+    m
+    M%25%26N%24ll
+    8O
+    %5B%27b%3B
+    %23%608
+    q
+    %29g%2B
+    %21
+    %2A%5E
+    uo
+    %3Bg
+    8
+    O
+    L
+    %24
+    %3C
+    %40
+    %5C%3BPA
+    %29%7C
+    Gv%3B
+    %24
+    r%7C
+    %7C6%7D
+    m
+    %60%7D
+    %5C%7D
+    %60
+    IS%3E%27%3A~S
+    %3A
+    TE%3B
+    w
+    -%3E%5C
+    Y%23%5D/%7B
+    %23%22
+    c
+    %237
+    %28
+    %2A
+    %7D
+    W%60M
+    %25
+    %2C%3D
+    %5C
+    9%25%40
+    %26
+    o%40%3D
+    J%2B8
+    s
+    %5B%3Ei
+    %7D1
+    %24
+    kok
+    N
+    V%7C
+    AV
+    SYfh
+    %3Af
+    %3A
+    %3D
+    %21
+    D%3C
+    d
+    YZ
+    0%2B
+    %2B
+    i%5B
+    %21
+    %7B
+    e%28
+    f
+    %5D%25%3D
+    %5B
+    %60%3F%3B
+    %2C
+    S
+    %40%3A
+    Bc
+    s
+    L
+    ef
+    %5Eh%23
+    j9o
+    %5D%22
+    %22
+    fz%40
+    K
+    %24%27%7D%29K%22
+    5
+    k
+    -P
+    %27
+    06VY
+    %3E%26
+    8
+    Up%2C
+    %23%40
+    .
+    %26
+    %27%3DN
+    %27
+    -
+    B%3B%3D%3D%3A%22%5Ei%3B
+    %7B%3D
+    a
+    %3D%40
+    %25
+    %5E%21%23
+    at%3B
+    %27%25
+    %27
+    %23O%5D
+    eDE
+    %3DA%2B
+    %40
+    %7B%3Ax%26
+    %29%2C
+    %268
+    %21q%3A
+    %5E
+    %29
+    %7DGI%60%7D
+    %2C6q%23
+    U%2C%5Ets
+    8%40
+    P%7D
+    N~%5CV%2C
+    %24Ta%22%3E
+    v
+    h%7DlV
+    %3A
+    %3DiG
+    G%24
+    K
+    %29
+    vM%25%3B
+    UH
+    M%40%5C
+    P
+    2%3B
+    18
+    %26
+    Q
+    7OAl
+    W%29
+    c
+    %3E%25
+    I
+    %40%3D
+    r
+    M
+    %24X
+    C
+    I
+    n
+    %7D
+    2
+    %23%3B%5B%5C
+    G
+    %24
+    %22%2Bg
+    %3Eq
+    %7Cv
+    %2B%7BJ%2C
+    S
+    sv%24
+    1
+    %60J
+    4%24G
+    %40%7C
+    %3F%27cg
+    %60e
+    %7B
+    78
+    0%22
+    %5C
+    R
+    F
+    %22j
+    %3A
+    Q
+    Q
+    %3A
+    %5CTV
+    %3E
+    %5C
+    %21%5E
+    %24Z
+    B
+    V%5CV/E
+    x.5c%26%3A0%24
+    %217
+    %2Ch
+    M%28
+    B
+    %7DFn
+    %21%7D
+    _
+    %3E
+    t%3D%2ClS
+    wI4
+    pY%5E%3Bi
+    HF
+    %7B
+    %60~%5C
+    h
+    M
+    %21
+    2u%21
+    /K
+    7y
+    %2B6
+    %29
+    I%3D%5C%3Eq
+    k
+    %29L
+    %7C
+    G
+    S
+    %3D%3C
+    u%242
+    7%2B3%3FW2
+    I%25
+    %60
+    %7B
+    %7C
+    V%3B~
+    a%24
+    5
+    %26%28%7C
+    Z
+    %5C
+    EFhIK%3E
+    %5B%29
+    %7D%3F
+    %7D%60%40
+    O
+    p
+    F%7B
+    V
+    s%3A
+    wE%22J
+    R
+    9S
+    -
+    q%29%7D%3C%5D%23%5D%2A
+    %5B
+    %7C
+    %3E%29p
+    %29%23%25
+    %3F
+    %22_
+    i
+    %26
+    %2A
+    %3CW
+    %22%28
+    %3D%40
+    %26
+    M
+    U
+    %21Yrq
+    %5E
+    %3Ey
+    %7B%7C%27jwQp
+    %28
+    x%5E
+    %7D
+    j
+    %3B
+    E
+    %3E%5Ex
+    A
+    %3FU
+    F
+    %5B
+    %7C%3F%40V
+    B
+    _
+    %3B
+    %7D
+    7
+    %3Ca
+    %26%5D%5EyJ
+    yn%2C%2C
+    %24%40
+    %24
+    J
+    5
+    %21%24
+    Wf
+    ~
+    %2A
+    2
+    %2C%25SL
+    8
+    K%2C
+    6%5B%22s
+    %25
+    uZ%21%2C
+    %7B
+    %25%5B%27%60I
+    %3B
+    %7C%26
+    %2B
+    ak
+    %3E
+    rX%26
+    BIX
+    Bd%5DX
+    5
+    %5E%3A
+    j5~
+    -%3D
+    %26
+    k
+    %5D%60%3C8%3C
+    A
+    c
+    L
+    iz%5D%3F%29
+    O
+    E%25%40
+    z~c%26k
+    R
+    b
+    X
+    %25
+    qh
+    E%25
+    P
+    Z
+    %3D6%7B
+    y
+    %5Bd
+    %2A%2AUI%5C9
+    j%3E%25
+    %26%3E
+    %22
+    %26
+    5/~%3F
+    %22%21%7D
+    %5Dh
+    n
+    m
+    %40D
+    %3D6
+    ~
+    R
+    ~
+    sl9g%5B
+    %29
+    J
+    %3B
+    d
+    %2AU
+    q
+    %3BU%29
+    5
+    %23
+    Mo%3Eg
+    %3C
+    %3B2
+Recall: 1.0, Precision: 1.0
+Example gen time: 0.042371273040771484
+Scoring time: 18.795575380325317

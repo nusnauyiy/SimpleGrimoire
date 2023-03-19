@@ -1,0 +1,305 @@
+
+
+Initial grammar loaded:
+start: t0
+t0: t6784 t6983
+    | t8972 t6983
+    | t0 t0
+    | "+"
+    | "."
+    | t0 t7364
+    | t0 t254
+    | "="
+    | "&"
+    | "-"
+    | "/"
+    | "_"
+    | "~"
+    | t7364
+    | ":"
+    | "?"
+    | talphanums
+t6784: t7364 t8972
+t7364: t7545 t7364
+    | "b"
+    | "CJ"
+    | "D"
+    | "E"
+    | t7364 t7364
+    | "FK"
+    | "e"
+    | "B"
+    | t7364 t0
+    | "chf"
+    | "dm"
+    | "eyc"
+    | "c"
+    | t254 t0
+    | "C"
+    | "A"
+    | "CW"
+    | "d"
+    | "DCG"
+    | "fnasty"
+    | "fscript"
+    | "a"
+    | "DZM"
+    | "EVH"
+    | "FR"
+    | "bhh"
+    | "cjn"
+    | "fcu"
+    | "ey"
+    | "ft"
+    | "AIJ"
+    | "BA"
+    | "DK"
+    | "f"
+    | "EB"
+    | "cscript"
+    | "FA"
+    | "az"
+    | "blw"
+    | "ct"
+    | "dqy"
+    | "BH"
+t7545: t6784 t254
+    | t7545 t7545
+t254: tdigits
+t6983: t254 t7364
+    | t6983 t0
+    | t6983 t7364
+    | tdigits
+t8972: "%"
+    | t0 t8972
+talphanums: talphanum
+    | talphanum talphanums
+talphanum: "a"
+    | "b"
+    | "c"
+    | "d"
+    | "e"
+    | "f"
+    | "g"
+    | "h"
+    | "i"
+    | "j"
+    | "k"
+    | "l"
+    | "m"
+    | "n"
+    | "o"
+    | "p"
+    | "q"
+    | "r"
+    | "s"
+    | "t"
+    | "u"
+    | "v"
+    | "w"
+    | "x"
+    | "y"
+    | "z"
+    | "A"
+    | "B"
+    | "C"
+    | "D"
+    | "E"
+    | "F"
+    | "G"
+    | "H"
+    | "I"
+    | "J"
+    | "K"
+    | "L"
+    | "M"
+    | "N"
+    | "O"
+    | "P"
+    | "Q"
+    | "R"
+    | "S"
+    | "T"
+    | "U"
+    | "V"
+    | "W"
+    | "X"
+    | "Y"
+    | "Z"
+    | "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+tdigits: tdigit
+    | tdigit tdigits
+tdigit: "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+Precision set (size 50):
+    %41-o
+    CW%4  <----- FAILURE
+    :
+    ?
+    +fnasty
+    DK
+    BH&308
+    =:
+    A
+    =87667
+    -
+    :.
+    =8
+    Z
+    BA
+    /8
+    i
+    /
+    E
+    6
+    +
+    %1  <----- FAILURE
+    =
+    ~ct
+    EB%5b
+    ~
+    B%5ey~
+    B:%65&
+    d
+    k
+    __
+    eydqy%11CJ&%5  <----- FAILURE
+    AB
+    :&~%4cjnDCGchf_
+    .D
+    KUf
+    cjn=%7  <----- FAILURE
+    %4_eyc  <----- FAILURE
+    _
+    eyc%7chf
+    CJ
+    ?.
+    ~04
+    &
+    EB
+    .
+    Mm
+    2mNGG
+    =580
+    _eyc
+Recall set (size 100):
+    u%7B
+    Es
+    V%7B7
+    X%3A.2
+    z
+    %24f%40
+    d%5B
+    %3C
+    %5C
+    A
+    %3C6
+    %3Cin%5Dc%7D%3D%22
+    %5C
+    tb
+    -
+    %7BP
+    %7C%3F%60
+    2
+    %22%3AObYr
+    r%7B
+    -
+    %3D
+    %7D
+    6
+    v
+    e
+    %231
+    o
+    c%5B
+    i
+    %3F%22L
+    8rHMX
+    %21n93
+    %25
+    97%25
+    %60
+    %3A%3E
+    6
+    %2CX%7B
+    A%40
+    s
+    z
+    Y
+    %26~
+    %3D
+    %2B%3D%5C
+    w
+    m
+    %5B%60%3Fg
+    %5DcN
+    %7C
+    -M
+    %28%3B
+    m%3Ew%3E
+    %3F1dbX
+    JGN
+    %3E
+    C%40
+    1g
+    i%3AV
+    h
+    q%27%5E%7D4
+    OL
+    %2B
+    C.%28B
+    E%5C5g
+    %29j
+    %21
+    %29
+    g
+    %3B
+    3
+    M%25k
+    QD
+    %7C
+    %3Ce%5C%21x
+    %5E
+    u
+    a%3F
+    %3FT
+    xd
+    e%2C%3Eu%28%2B
+    N%5B%3C%7B
+    M
+    P
+    A%5C
+    n
+    k
+    %5E
+    %7D
+    %2B
+    %25%7C
+    %7D%5B
+    %60En%7Dm%21%25
+    %29M%25
+    %5B%7B
+    X
+    A
+    OJ
+    f%5D
+Recall: 1.0, Precision: 0.9
+Example gen time: 0.03830695152282715
+Scoring time: 3.7725627422332764

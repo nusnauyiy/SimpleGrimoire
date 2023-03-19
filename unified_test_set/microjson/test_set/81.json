@@ -1,0 +1,22 @@
+[
+{
+  "message": "Validation Failed",
+  "errors": [
+    {
+      "resource": "Issue",
+      "field": "title",
+      "code": "missing_field"
+    }
+  ]
+},
+{
+  "message": "Validation Failed",
+  "errors": [
+    {
+      "resource": "Issue",
+      "field": "title",
+      "code": "missing_field"
+    }
+  ]
+}
+]

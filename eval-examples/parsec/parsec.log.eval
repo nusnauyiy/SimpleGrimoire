@@ -1,0 +1,33 @@
+
+
+Initial grammar loaded:
+start: t0
+t0: "ab" "=" "0"
+    | "a" "=" "0"
+    | "b" "=" "2"
+    | "e" "=" "79"
+    | "c" "=" "9"
+    | "zuui" "=" "2"
+    | "d" "=" "012"
+    | "bbc" "=" "4491123"
+Precision set (size 8):
+    bbc=4491123
+    ab=0
+    zuui=2
+    c=9
+    b=2
+    d=012
+    a=0
+    e=79
+Recall set (size 8):
+    ab=0
+    a=0
+    b=2
+    e=79
+    c=9
+    zuui=2
+    d=012
+    bbc=4491123
+Recall: 1.0, Precision: 1.0
+Example gen time: 0.016953229904174805
+Scoring time: 0.2771422863006592

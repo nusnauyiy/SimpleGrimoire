@@ -1,0 +1,21 @@
+{"quotes":[
+  {
+    "t":"More specifically, how are actual events deformed by the application to them of metaphor, rhetorical comparison, prose rhythm, assonance, {qword}alliteration{\/qword}, allusion, and sentence structures and connectives implying clear causality?",
+    "aq":{
+      "auth":"Paul Fussel",
+      "source":"{it}The Great War and Modern Memory{\/it}",
+      "aqdate":"1975"
+    }
+  },{
+    "t":"As far as sound repetition goes, I don\u0027t have any principles.  I try to stay away from heavy {qword}alliteration{\/qword} and other pyrotechnics because I think they detract from the sense of the poem and blur the imagery.",
+    "aq":{
+      "auth":"Maxine Kumin",
+      "source":"\u0022A Questionnaire\u0022",
+      "aqdate":"1977",
+      "subsource":{
+        "source":"in {it}To Make a Prairie{\/it}",
+        "aqdate":"1979"
+      }
+    }
+  }
+]}

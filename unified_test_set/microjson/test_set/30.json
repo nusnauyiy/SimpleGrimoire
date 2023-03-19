@@ -1,0 +1,27 @@
+{"def":[
+  {
+    "vd":"transitive verb",
+    "sseq":[
+      [
+        [
+          "sense",
+          {
+            "dt":[["text","{bc}to place in or bring into a boat"]]
+          }
+        ]
+      ]
+    ]
+  },{
+    "vd":"intransitive verb",
+    "sseq":[
+      [
+        [
+          "sense",
+          {
+            "dt":[["text","{bc}to go by boat"]]
+          }
+        ]
+      ]
+    ]
+  }
+] }

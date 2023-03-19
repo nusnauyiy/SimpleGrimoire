@@ -1,0 +1,10 @@
+{
+  "hom":1,
+  "hwi":{
+    "hw":"test",
+    "prs":[{
+      "mw":"\u02c8test",
+      "sound":{"audio":"test0001","ref":"c","stat":"1"}
+    }]
+  }
+}

@@ -1,0 +1,36 @@
+{ "head": {},
+  "def": [
+     { "text": "time", "pos": "noun",
+       "tr": [
+          { "text": "", "pos": "",
+            "syn": [
+               { "text": "" },
+               { "text": "" }
+            ],
+            "mean": [
+               { "text": "timing" },
+               { "text": "fold" },
+               { "text": "half"}
+            ],
+            "ex" : [
+               { "text": "prehistoric time",
+                 "tr": [
+                    { "text": " " }
+                 ]
+               },
+               { "text": "hundredth time",
+                 "tr": [
+                    { "text": " " }
+                 ]
+               },
+               { "text": "time-slot",
+                 "tr": [
+                    { "text": "-" }
+                 ]
+               }
+            ]
+          }
+       ]
+    }
+  ]
+}

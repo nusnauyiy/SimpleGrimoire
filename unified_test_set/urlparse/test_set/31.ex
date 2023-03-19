@@ -1,0 +1,1 @@
+https://host3?key3=value1

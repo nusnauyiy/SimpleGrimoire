@@ -1,0 +1,58 @@
+[
+  {
+    "login": "NixOS",
+    "id": 487568,
+    "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ4NzU2OA==",
+    "url": "https://api.github.com/orgs/NixOS",
+    "repos_url": "https://api.github.com/orgs/NixOS/repos",
+    "events_url": "https://api.github.com/orgs/NixOS/events",
+    "hooks_url": "https://api.github.com/orgs/NixOS/hooks",
+    "issues_url": "https://api.github.com/orgs/NixOS/issues",
+    "members_url": "https://api.github.com/orgs/NixOS/members{/member}",
+    "public_members_url": "https://api.github.com/orgs/NixOS/public_members{/member}",
+    "avatar_url": "https://avatars3.githubusercontent.com/u/487568?v=4",
+    "description": ""
+  },
+  {
+    "login": "uds-se",
+    "id": 15820465,
+    "node_id": "MDEyOk9yZ2FuaXphdGlvbjE1ODIwNDY1",
+    "url": "https://api.github.com/orgs/uds-se",
+    "repos_url": "https://api.github.com/orgs/uds-se/repos",
+    "events_url": "https://api.github.com/orgs/uds-se/events",
+    "hooks_url": "https://api.github.com/orgs/uds-se/hooks",
+    "issues_url": "https://api.github.com/orgs/uds-se/issues",
+    "members_url": "https://api.github.com/orgs/uds-se/members{/member}",
+    "public_members_url": "https://api.github.com/orgs/uds-se/public_members{/member}",
+    "avatar_url": "https://avatars1.githubusercontent.com/u/15820465?v=4",
+    "description": ""
+  },
+  {
+    "login": "mutation-workshop",
+    "id": 30117792,
+    "node_id": "MDEyOk9yZ2FuaXphdGlvbjMwMTE3Nzky",
+    "url": "https://api.github.com/orgs/mutation-workshop",
+    "repos_url": "https://api.github.com/orgs/mutation-workshop/repos",
+    "events_url": "https://api.github.com/orgs/mutation-workshop/events",
+    "hooks_url": "https://api.github.com/orgs/mutation-workshop/hooks",
+    "issues_url": "https://api.github.com/orgs/mutation-workshop/issues",
+    "members_url": "https://api.github.com/orgs/mutation-workshop/members{/member}",
+    "public_members_url": "https://api.github.com/orgs/mutation-workshop/public_members{/member}",
+    "avatar_url": "https://avatars2.githubusercontent.com/u/30117792?v=4",
+    "description": null
+  },
+  {
+    "login": "IEEEKeralaSection",
+    "id": 42405496,
+    "node_id": "MDEyOk9yZ2FuaXphdGlvbjQyNDA1NDk2",
+    "url": "https://api.github.com/orgs/IEEEKeralaSection",
+    "repos_url": "https://api.github.com/orgs/IEEEKeralaSection/repos",
+    "events_url": "https://api.github.com/orgs/IEEEKeralaSection/events",
+    "hooks_url": "https://api.github.com/orgs/IEEEKeralaSection/hooks",
+    "issues_url": "https://api.github.com/orgs/IEEEKeralaSection/issues",
+    "members_url": "https://api.github.com/orgs/IEEEKeralaSection/members{/member}",
+    "public_members_url": "https://api.github.com/orgs/IEEEKeralaSection/public_members{/member}",
+    "avatar_url": "https://avatars3.githubusercontent.com/u/42405496?v=4",
+    "description": ""
+  }
+]

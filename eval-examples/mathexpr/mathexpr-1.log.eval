@@ -1,0 +1,369 @@
+
+
+Initial grammar loaded:
+start: t0
+t13063: t13357 t9952 "," t0
+    | t10921 t0
+    | t14362 t13063
+    | t10921 t14360
+    | t10921 t77
+    | t5333 t0
+    | t13063 t13211
+    | t13063 t14361
+    | t13063 t460
+    | t13063 t14360
+t13357: "hypot"
+    | "pow"
+    | "atan" t14360
+t9952: t5333 t14360
+    | t5333 t77
+t5333: "("
+    | t10921
+t9754: " "
+    | " " t9754
+    | t77 t4208
+t77: "3"
+    | "0"
+    | "0000"
+t10921: "("
+    | t14362 t10921
+    | t10921 t14362
+    | t14362 t5333
+    | t78 t5333
+    | t13063 t76
+t76: "+"
+    | "*"
+    | "/"
+    | "-"
+t13211: t4208 t77
+    | t14359 t76 t13063
+    | " "
+t4208: "-"
+    | t14360 t4208
+    | "."
+t78: "cos"
+    | "exp"
+    | "-"
+    | "abs"
+t460: " "
+    | t4208 t7285
+t7285: t77 t7285
+    | " "
+t14359: t14361 t14359
+    | t13211 t14359
+    | ")"
+    | t14359 t14361
+t0: t9754 t14360
+    | "100"
+    | t13063 t14359
+    | "123"
+    | "133"
+    | t14362 t14360
+    | "9"
+    | t14362 t0
+    | "pi"
+    | "e"
+    | "9983"
+    | "701"
+    | "x"
+    | t0 t460
+    | t9754 t77
+    | t0 t14361
+    | "10"
+    | "a"
+    | "b"
+    | "c"
+    | t14360 t14361
+    | t14360 t460
+    | "3"
+    | "555"
+    | "445"
+    | t460 t14360
+t14360: "5"
+    | "12"
+    | "8"
+    | "33"
+    | "31"
+    | "20"
+    | "2"
+    | "423"
+    | "334"
+    | "6"
+    | "4"
+    | "1"
+    | "41"
+    | "23"
+    | "234"
+    | "22"
+    | "443"
+    | "222"
+    | t4208 t14360
+    | "3"
+t14361: t76 t0
+    | t76 t14360
+    | t460 t14361
+    | t14361 t14361
+    | t14361 t460
+    | "+" t0
+    | t4208 t0
+    | " "
+t14362: t0 t76
+    | t14360 t76
+    | t14362 t14362
+    | t77 t76
+    | t4208 t14362
+    | " "
+Precision set (size 50):
+     5
+    .0000 4  <----- FAILURE
+    x
+    b
+    133.0000 
+    445
+    701+443
+    .00000 1  <----- FAILURE
+    555
+    c. +133   <----- FAILURE
+    3
+     4. 
+    cos(3.100-3)
+    9983.9983
+     0.  pi  <----- FAILURE
+    c 
+    .6-2323. 
+    .a+701-a  <----- FAILURE
+    423201. 
+     3-334
+    pi
+    2*5
+    9983.0 
+    445-100 
+     31
+    123
+    a
+     pi
+      3.0
+    0000-0000
+    9983 
+    9983
+    133
+    334-8+5
+    e
+    5 
+    222. *3
+        0000
+    - 1
+    9
+    4-.33
+    10
+     3-6
+    31-0 
+    100
+    701
+    c
+    - 4
+    e.0000    <----- FAILURE
+    1. 
+Recall set (size 100):
+    ++9.912*acos*-6.6/7*abs/(sin)/pi
+  <----- FAILURE
+    log/0.34/--ldexp(floor*e-exp-sinh,atan-acos-log10)/((sin)/atan/fabs+log10/atan)
+  <----- FAILURE
+    -hypot/+(log10-asin(cos,degrees)*tan*hypot+log+frexp-sinh)
+  <----- FAILURE
+    ((+e*log/acos)*++-sinh-+fmod)*e*+frexp(1/abs*ldexp+fabs*atan2+tan+fabs,3.1-exp/tanh+cos)*+c/-sinh/+atan(pi,hypot)*6.5*fabs*sin-ldexp(degrees(cosh/cos,degrees*cos-radians)/-(ceil)+frexp(log-e,asin)-asin(atan2,abs)/abs*log10,modf)*-02
+  <----- FAILURE
+    ldexp(frexp((log)*phi/tan-sinh*fabs,-ceil/log10-sin/sqrt+pi+phi)/(tan*phi+fabs)*degrees*-floor/atan2/atan2+(cosh*ldexp)-cosh/(ceil),radians/+0.3/-(log)/+pi+48--ldexp(degrees,fabs)+(sin))-(+(ceil-tanh)+ldexp(abs-acos,pi-floor)-modf*radians)*1683*(exp*fabs*cos+atan)/-(frexp+log)*(pi)+(cosh+modf)/+degrees/hypot(frexp/floor,cosh-log+abs)+(-exp*pow*floor-pow)
+  <----- FAILURE
+    9+((phi*phi-cos-sinh)*e)/sin*floor+modf/ceil(pi*pi/tan-ceil/log10+sinh-phi,asin(sqrt,ldexp)+frexp/phi+atan2)
+  <----- FAILURE
+    6.56/+hypot*sqrt(+log10,-+atan2*pi(cosh,phi))+27414.86*2/exp*+7/fabs(fmod,frexp)/+pow
+  <----- FAILURE
+    atan2((+atan+modf*floor)/(sinh)--5,fmod(+log10*hypot+cosh/sqrt+modf+modf,pow/pi+asin-modf)/+8.1*degrees(log-fmod,acos)*5*log--(fmod-atan)/3.4+(atan-sqrt)*-asin/e+degrees+frexp-sinh+modf)
+  <----- FAILURE
+    degrees(+(atan*degrees+fmod+e)*hypot(hypot*tanh,atan2*pi)-pow(cos,ceil*pow+sin+exp)*exp/-sinh/asin/fabs-(pow)-hypot/sqrt/log-exp+degrees,87.611*-frexp(cosh-modf,atan-phi)/3.9)/++degrees*99.2-e/-+00/2.8/+-+pi-3.2/+54.57-9.84-93.7/log/modf(phi,tanh)+fmod*+radians
+  <----- FAILURE
+    -ceil(++7+(floor)+-atan/cos-exp/acos+abs-acos,cosh+acos*pi*pi/tan+8.3*fmod*ceil-sinh*ceil-cosh)+-asin+sqrt(cosh(fabs-sqrt,log10+pow)+log(ldexp,fabs),sinh(fabs,pow)/(degrees)/modf/e-3.4*e/cosh-tan-degrees+pow)+++++abs+(modf*pow)+fabs(degrees+acos,log10-cosh)*sqrt++radians-log
+  <----- FAILURE
+    4/(+4.4*4+++floor/+tanh/degrees)+degrees(+-pow(ldexp,frexp)*cos/(phi)*tanh/frexp-3.8,+ceil(ceil,exp)*(ceil+pow)+(radians)-asin(sinh,radians)/radians/phi)/++-asin--290*259.92*(sin/e+sin+tanh)*--atan*(log)/exp/atan2
+  <----- FAILURE
+    cosh*cosh(-floor*e(ceil-hypot,acos),sinh/sin(ldexp-acos,ceil+atan)*8.3+(atan2-cosh)*+tan*phi-(log)*tan)/ceil(modf(log10+ldexp,pi+degrees)/e(fabs,tan)*phi/tan-+abs/phi*cos-degrees-tanh+sinh,(modf-modf)*phi*radians)
+  <----- FAILURE
+    -+e(-exp(atan2,phi)/+phi/hypot-acos+log10/log10+floor+atan2,modf/cos(pow,cosh))*((pi)*++sin-++exp)*floor-0.39/fmod/ldexp(3/e-atan2*asin,1.5/tanh/log10-e*radians+atan-sqrt)-1712/28-fmod(+pi/radians/radians,-asin*e+acos/modf-pi)/+5*exp/-pow*phi/e
+  <----- FAILURE
+    tanh((+fmod*tanh/fabs)/e*(phi)*-atan*radians/log10,degrees*(pow+phi+atan)*+-frexp*(pi)-(floor/log)*4.2*3-1.4)/7.1*abs/hypot(+abs,+ceil)+-++++log10(atan,acos)*+(frexp+pow-modf-hypot)/+atan2+55.2/((pi)/ceil+phi/sqrt)*atan2(exp+pi,fabs-sin)*9-8.78-(pow*atan2+pow-cos)*0
+  <----- FAILURE
+    -log10(+2/log/+phi*abs*pi+-(sqrt)*(frexp)-5/radians/abs+atan2*exp-fabs-atan,+0/-sinh/4.0*cos+radians/-fabs*sqrt*phi)/-log10*hypot(tan(tanh-acos,abs-log10),tanh(cos,phi-ceil)*+hypot*frexp*ldexp)/+4*atan/2/atan2(degrees,log10)/ldexp/ldexp+3-3*cosh(-tan/sqrt+log10*e-cos+acos,modf(phi,ceil)-sqrt/fmod-sqrt-abs)/(tan/ldexp+fmod-pow)/abs++5/+hypot(modf-phi,pi)*-+fabs
+  <----- FAILURE
+    fabs(frexp(modf(exp,asin)*tan/acos-log/frexp,(exp)+ceil*hypot-tan+cos)-atan*ldexp(asin-modf,frexp-tanh)+-e(atan,sin)*phi(ldexp,ceil),atan/ldexp*(radians-sin)*3*modf)-exp(-log(hypot-sin,pi-floor)*0.8*asin,+t(cos,ldexp-degrees))*(log*1/tanh*pi+atan2+e*atan)+(-atan/5/pi-(sqrt))*--log10/(e-pi-acos)++(sqrt/ceil)*+floor*e-(abs-fabs-asin)*0.7*+pow-+-ceil*(acos)-atan*modf/hypot-pi-abs-frexp
+  <----- FAILURE
+    -log10/sin*+++(log)-86234*4.8*pi(6.7*phi*exp-sinh/atan2+phi+modf,-cos/tanh/sin)*+radians(sinh-phi,modf+sin)+(cos)+(+log10/phi)*atan2(floor*fmod+frexp-phi,pi/tanh+log10+sinh)*ceil-+e*-phi*0.2/e/acos-(log)*+atan2--radians/acos/fabs-phi/acos
+  <----- FAILURE
+    6.2*pi/+1-+289/+--phi-+sin(+fabs/log10*cos-atan2/pi+pow,+sin+atan2*ceil+cosh)*11+--3
+  <----- FAILURE
+    (abs*sinh(asin*atan2+atan+asin,hypot-pi)/0-sin/degrees/sinh/tan*exp)
+  <----- FAILURE
+    5.533+330.403/hypot
+  <----- FAILURE
+    (-(sinh/degrees+ceil)/-acos-degrees*(degrees+exp)*(acos))*-5/exp/e((exp)/phi*cosh-log10*sinh+cos+acos,(modf)/degrees-modf*log10+pi)-2
+  <----- FAILURE
+    0.85
+  <----- FAILURE
+    ++(-frexp/phi(acos,asin)*e+acos(floor,floor)+asin)
+  <----- FAILURE
+    exp(((sqrt)*atan2+fabs*asin+acos)*4*(cosh+degrees)/5++4-pi,485.8)*-+fabs*+-modf(sin,modf/acos-radians-tanh)
+  <----- FAILURE
+    pi*tan/++++e(sin,floor)*modf+71-atan*(modf-tan/fmod)/44.78*9.7*abs(atan,sin)*log10/modf
+  <----- FAILURE
+    ceil*log(-cosh/-+log/-hypot+hypot,0*cos/-ldexp+sin(sin-cos,radians)/+sqrt*tanh*tan+-tan/hypot+modf)---(+frexp*atan2*modf-sin*pow-hypot+ceil)-(-6.2/atan/cosh+-atan*sin/log+abs/exp+atan2)/radians*atan*fmod(log10+frexp,degrees)+-+(acos+asin)/+asin(exp,pow-radians)*sin/-sqrt/sinh
+  <----- FAILURE
+    10227.516282-5.0+-e(sin(asin,sqrt)-pi*abs+asin-radians,6/cosh+pow/exp+tanh-sinh)-ldexp-1.52/(atan2)/-frexp-tanh/+hypot/atan/log-+hypot+cos/tan-log10-frexp
+  <----- FAILURE
+    radians((+log10*atan-tanh/tan+sinh+floor)*-sqrt+cosh/++degrees+log(fabs,hypot)*cosh--floor+sqrt,-degrees(fmod,atan*floor)+6.84/5*-ldexp/asin/radians)*-(+sin/6.9-+modf*sinh+sin/fmod)-radians*-+(degrees/tan-atan2)*abs(hypot(atan,degrees)-floor*cos-degrees-degrees,log(modf,fabs)/pow*floor)-+-sinh(modf+ceil+ldexp,cos*abs-modf-abs)/(pow(modf,hypot)-cosh*hypot)*2
+  <----- FAILURE
+    4.0*radians(degrees(exp*tan+phi-acos,sin*hypot),cosh*cosh(log-sin,e)/log(log,tan)*e+--e+1.2*atan2*pi+tanh+sin-ldexp)+0.99-fmod/pow+ceil(1.5,phi-frexp+floor-e)+ldexp(atan2/tan,acos*floor-acos+fabs)
+  <----- FAILURE
+    cos/02.90889*+-b(cos*e,e+cosh)*(cosh*e)/floor
+  <----- FAILURE
+    (-+exp/+8.0*9.8*(atan)/cosh*sqrt)/fabs*(-ceil/-sinh+6.4*acos/cos+log10*cos)*(9)+cos(+(tan-pow)*tanh(e+sin,exp)*cosh(log10,sinh)*log-fabs*+sinh,hypot+-+phi-pow/ceil)/--tan*+---phi/-(hypot+hypot)+degrees((degrees)*4.4*e/fmod+3.7*atan/fmod-sinh/tanh+atan-abs,-+atan2*(cos)*log10/sinh)/-fabs(e*sin-acos,fmod+e)++3/(pi*sin)*+fmod(pow,modf)*5.7*log+pi/-(fmod)/8.1*cos*tan-4.0-+fabs/exp-modf*asin-atan-abs
+  <----- FAILURE
+    +45/-cos(++cos/-cosh,exp(sin-fmod,degrees)/(acos))/-49
+  <----- FAILURE
+    +-(-2.1)*-(-hypot(atan2,abs)-(ldexp))/(degrees(atan2+ceil,fabs-modf))/phi(ceil(pow,ldexp)/tanh/exp+cos+phi-sinh,-fmod*atan/atan)*6*(phi)*+frexp*fabs/modf
+  <----- FAILURE
+    pow*+((ldexp+cos)/-abs*abs+(frexp))*--phi(tan*cosh+fmod-radians,tanh*sin+tan-log)/3.950
+  <----- FAILURE
+    log10(+(cosh/log),tanh*(ldexp*tan-phi+cos)/1.7/-fabs)-(pi+-frexp(radians,modf)/log-+atan2-pi*log)
+  <----- FAILURE
+    cos-9*+frexp(5.5,abs/atan2*cos-sin*pow+pow)*65/+8.6-frexp*degrees--25.2*28.1-++modf(sin,exp)-7.7
+  <----- FAILURE
+    38.9+sqrt
+  <----- FAILURE
+    +log*floor/b*exp+(2.2/(floor-e)-log10*(sqrt)*degrees/cosh++degrees-floor/log10+cos-pow)*65-e(--abs+(cosh)*acos-modf*frexp,-3/+phi/fmod-5-tan/tanh+ceil-cos)*pi(1.5+log10*frexp+sin+sqrt,+pi/tan+frexp)+81.5/-2/+acos*+log10*phi/sqrt-05
+  <----- FAILURE
+    fabs((9/fmod+pow*abs-phi+sqrt)/--fmod(e,tanh)*ldexp/-cosh-(sin+pi+exp),-sqrt/05.14*(fmod)-(degrees/cos+pow-cos)*++sin*4+asin*pow(cos,floor)-+hypot*hypot*sinh+sqrt*modf+phi-frexp)/909.0*fabs(-(radians)*phi(hypot,phi)/modf*cos,e)*radians*hypot(pi+pow+log10,fmod-floor-atan2)/phi*(acos)+-((tan-radians)+abs/abs/sqrt-log*abs-ldexp)-19+665.3-02/cos-radians/ldexp*floor+cos+log10*asin-pow
+  <----- FAILURE
+    -+tan(degrees/+log*frexp-(cos)/log10,7*-phi*pow/pow)+(++hypot(degrees,degrees)-++sin/sin(phi,asin)*atan2++tan-abs/log10+atan2-ldexp)/++log10(hypot+floor+log10,acos/sin+radians-fabs)/+(tan*fabs+log10-degrees)-243.737
+  <----- FAILURE
+    (modf(ldexp(cosh,fmod)-exp+modf+cos,asin(acos,cos)*ldexp*abs+degrees/abs)/-radians(asin+pi,tanh)+2)/-6+atan-acos/-52.55*pow
+  <----- FAILURE
+    e(1.935/(sqrt*atan-atan2+log)*5.0,3)-atan2/+radians(7.7+phi/modf+abs-log10,-asin+log*log+hypot-pow)/0+--+-+frexp/+asin(degrees/fmod-abs-degrees,fmod*modf+frexp)-(floor(pi,log10)*e/fabs+ceil-pi+cosh)/+(fabs)*radians(degrees-cosh,ldexp+frexp)
+  <----- FAILURE
+    acos
+  <----- FAILURE
+    log10*09.51316/(-log(degrees,log10)/asin*hypot*exp-abs/hypot)*sinh(-acos,(floor)-acos*atan+hypot)
+  <----- FAILURE
+    (-(hypot-hypot+floor)+tan(tanh/cos,acos-cos-log10)-exp(exp,pi-cosh))*pow(4+(e-sin)+9.8/log/exp+hypot*pi-hypot,-sqrt(log10-sinh,atan-exp)*(log)*sqrt(log10,fmod)+++radians/-acos/phi/floor-sqrt(log10,floor)/atan-atan2/frexp+asin+atan)*-8/++-(degrees)
+  <----- FAILURE
+    phi(sin+(fabs/hypot-abs+abs)/tan*9-fabs-(pi)-ldexp*degrees+fmod+log,-+3.3+log10*-5*-log10)*(+tanh(e-atan2,abs)/pi-modf+exp(log,fmod)/log10/sinh)-cos/+-fmod(tanh/log10+log10-fmod,atan2*fmod+atan2-pow)/-39*+++log--+-(atan)/-00*(e*tanh)*-+atan*6.8/ceil+-57/0
+  <----- FAILURE
+    (95/+-+modf)/atan2
+  <----- FAILURE
+    (-tanh(abs+log10-sqrt,sqrt-cos-fabs)-exp+tan(exp-cos,e+atan)/pow/pi/asin)--(fmod(sqrt+radians,atan-e))*(+acos(sqrt,frexp)+atan2(hypot,sqrt)-asin+log+fmod)/radians(+exp*modf,-tanh*ceil*pi+fmod/frexp)*asin
+  <----- FAILURE
+    29.321/acos(-(acos+pi)++-floor*-radians/degrees+3/sin/hypot+pi*phi,fabs/pow(atan+e,fabs)*(atan2)/abs/asin-+3.8/-degrees/modf*acos-(tanh)/pow/cos-ldexp/hypot)*(-sqrt++e*log10*log)*76.81*+--degrees/1.5/3.1/floor/sqrt  <----- FAILURE
+    +(-(exp)/8.7/log10/fabs*cosh+cos*-sqrt/frexp/pow)/+((sqrt-pow)*e(log10,hypot)*radians/e)*+-pi(tan*fabs-fabs,floor*fabs)*((tanh)*fmod/exp)+ceil(+log10(ceil,sqrt-ceil)*+(atan)/-e+4/pow/sqrt+(pow),++(floor)-fmod(exp+atan2,degrees-atan2)/-tanh-(cosh)*pi+pow)-9.3/+pow--(fmod)*+8.1/9.6/6.8*ldexp++asin(phi,acos-acos)/+(tan)*6.8+log10*-atan*floor/exp-+sqrt*ldexp
+  <----- FAILURE
+    (atan(asin(atan,cos)/sinh-log+log10,degrees(ldexp,atan)+tan/tanh-asin+sqrt))+((log10/cos)+sin(degrees,acos)*7.5-(cosh)*asin*fmod)++sin-+-ldexp/-tanh(hypot-pi,ldexp+atan)/(fabs-atan)
+  <----- FAILURE
+    sin*4.6+(sinh(modf-fabs-floor,phi+sin+atan)/+tan(pow,fabs)*+frexp*atan*floor+--fmod*8.6+sqrt(ldexp,fmod)/pi/sin)*-73*log(-atan2-cosh*degrees+atan,+cosh*tanh/fabs+fmod/log10+floor)*sqrt(log+e+cosh,e*tan+radians-cos)-(sqrt(floor+pow,frexp+asin)*phi-(ceil)*fmod/asin-sqrt/phi)+-(tanh)/ceil/(ldexp+abs)*1/ldexp-3*-cosh(atan,sinh)+(exp-fmod)*radians*ldexp*sqrt
+  <----- FAILURE
+    acos(6/+4.1*+sin*9.6,588*frexp)/+tanh
+  <----- FAILURE
+    abs+++---tanh+613/(-sin*sqrt*degrees)/67*exp(modf,ceil-ceil)-fmod(degrees/abs*ceil-acos+cosh+fmod,(sqrt)/radians*atan)-0.4*(asin-sqrt)--1
+  <----- FAILURE
+    abs/-3.71+--+atan2(ceil*atan,degrees+acos)
+  <----- FAILURE
+    pi(4.4*e(abs*cosh-log,tan)/+-cosh/+log*radians,97/(fabs-cosh)*6.7-pi/-(log)/-cos/e*tanh)-acos+(radians(modf+exp,radians+frexp)*2.5)+3/log(sqrt*hypot+e-acos,cos*fabs)+---asin*(degrees+atan2)++(atan)*2/radians/ldexp
+  <----- FAILURE
+    --(-ceil*abs(exp,radians)*acos/tan)/+(+abs(pow,sin)--cosh/cos*sin-acos/pi)*87.7/fmod*(ldexp/pow)/2.1
+  <----- FAILURE
+    fabs(58*fmod*0*atan2(tan,atan2)+-(floor+hypot)*--radians/cos-6-abs(atan2,sqrt)/hypot/degrees-acos,(+ceil+log*sinh-degrees+sinh)*(hypot)*++degrees/phi/frexp-+radians/+9.3/-acos-atan+abs(fabs,cosh)/sin)-fmod(cosh(fmod*hypot,atan+fabs-sinh)*(sin-sinh)*5*fabs/sinh,4/hypot(ldexp,acos+fmod)+-(atan)+-hypot/acos)/-5-floor
+  <----- FAILURE
+    e/-fmod*hypot+957.496++8.6*(fabs*sinh/atan)*(exp*ceil+cos+fabs)/4
+  <----- FAILURE
+    0/-(-1.5/-tanh*sin/sin-5*tan/modf)
+  <----- FAILURE
+    -asin-+sinh(-1.4/-sinh*frexp/e+phi,--radians/+sinh*exp++pi*exp+modf)*4233/6.61
+  <----- FAILURE
+    -(52*-+exp)*w*-hypot*+-4.5*-+(exp)/(fmod-phi)*exp*abs---(4.8/sinh*ceil-acos-degrees-fabs)/4144/(6*sqrt/pow)
+  <----- FAILURE
+    tan(-(fmod*log10-sinh+e)/atan*1.1+exp(floor+asin+asin,modf-log-atan2)/7.7*+pow*sinh,(atan/modf/floor-asin-sin+pi)/-abs/4)/--143/++exp(asin+atan2+hypot,ceil*atan2-pow+log10)/854.16
+  <----- FAILURE
+    (-9/6/-log+(fabs/atan2)*9.0*-sinh+-ldexp*-acos*exp/acos)*83/ldexp*exp(8.9-ldexp/cos,+ldexp/modf/frexp+phi+abs-modf)-+32+(log(hypot,floor-atan2)*atan2(hypot,pi)+-sqrt/ldexp+fabs)
+  <----- FAILURE
+    1.5*e(pow(fabs*tanh,log10/tanh-log10)/(abs-cosh)/modf(phi,sinh)/log*acos,degrees/++pi*6.2/ceil+ldexp(pi,modf+log)*-cosh*modf*floor-(pow)*atan2*atan+exp+degrees+cosh)/(--tan+-floor+atan2/asin+cosh-fabs)*+-e*05.2/(atan-pi)/(abs)/asin+(-8.8/-(fmod)*(pow)/cosh/acos)*+atan(8.6,+abs/cosh/log10)*modf(9*atan2*modf,-frexp/exp/log-atan/frexp)*(acos)+1-+(log10-phi+cosh)+z(tanh/exp-hypot-radians,atan*asin+radians+degrees)--fmod
+  <----- FAILURE
+    +(99/(log))*-hypot+(-fabs*+(hypot)*(degrees)*acos*cos-frexp+tanh-exp/acos)*asin
+  <----- FAILURE
+    14.6
+  <----- FAILURE
+    (sin(-atan2/atan2/hypot+exp,pow/abs)*(tanh)*4.5-+4.8/+-atan-(atan2-e)/radians/modf/ldexp-5*ceil)/log(-tan*4*tan++-radians+frexp(fabs,sqrt)-tan-log10-sinh,fmod(exp*fmod-tan,ldexp*sqrt-modf)/7.7)*+e(exp(radians,sqrt)*sin/exp,cosh+asin*floor+exp-atan2)*+87*6.08*s*(modf)-+atan(ceil(sqrt+tan,atan+fmod)+cosh(sqrt,atan)/atan*frexp-pi,(acos-ldexp)*7.1-+pow-floor/phi)*((tanh+abs))-sin(-phi*+log*phi/modf+-frexp*cos*e,5.6)*+65.54/2.29*+sin
+  <----- FAILURE
+    cos*ceil*(cosh*(degrees)/abs*ldexp)-0+cos((radians-pow)++tanh+tanh*cosh-asin-acos,(e)/4--hypot*log*exp)*2*atan(phi+hypot-sinh,sqrt-fabs+tan)*-(tanh)*+sqrt++ceil/+exp(e+log,pi+pow)*+hypot(radians,phi)-+pi(acos-asin,ldexp+e)*9.3+frexp(degrees-pi,cosh)*radians*pow-3*radians*degrees
+  <----- FAILURE
+    h*1*23.539
+  <----- FAILURE
+    pi(-5*-0.3/-cos/+ceil/phi*tan+(atan*log10+fabs-pow)/(sin-hypot)+-degrees(ldexp,exp)--atan/pow/e-sinh*fabs+exp-exp,82.8-++(fabs)*abs(phi,pow)/-degrees)*c/++(cosh*ceil-cos-atan2)
+  <----- FAILURE
+    -+cosh(x(frexp,sqrt)--sinh*floor*sinh,-2.6/acos(sin,fmod)/log10*log+(degrees)*abs+fmod/hypot)/-8.1816
+  <----- FAILURE
+    pi(e+sqrt*++modf+floor-+atan2/sin/log10-cos-exp-tan,92*--+abs)/-3.0/e(degrees-7.9/acos-degrees,atan2/+asin/abs/cosh+(phi)*asin*log+fmod-degrees)*pi(phi+fmod*sinh+e-hypot,fabs(modf,sqrt)*tan+fmod/hypot-exp-asin)*6-21*+ceil/tanh*pi(abs*hypot+log10-fabs,log)*-ceil(frexp,cos)*1*tan+(cosh(phi-degrees,tanh)+(exp)*pi-sinh*cos-sqrt-sqrt)/29.4+(+tanh*cos*log10+exp/log10)*cos(e/fmod+asin-phi,phi+cos)*tanh/4.9/atan2/hypot-+-(fabs)/4.0
+  <----- FAILURE
+    ++exp(floor*exp(atan,exp),-radians+2/cos/degrees-pow/cos+exp+e)*tanh/(floor*(hypot))/+-atan2-26.55+frexp*exp/-tanh(cos-sqrt,radians)/log/floor/pi-acos(frexp,floor-atan*pow+degrees-cos)
+  <----- FAILURE
+    ++sinh((fabs-frexp),+2*(atan)*sinh-atan/pi*exp)-15*radians*fabs*03*4*+fabs/phi
+  <----- FAILURE
+    (4/---ceil)
+  <----- FAILURE
+    degrees*floor/-1.6*2.2+6.01*pow/+h/40/+-ceil/8.9++(exp(cos,asin)/fmod+asin/atan2)/+log10-log10(ldexp*ldexp*phi,floor(exp,modf)*asin/pi+sqrt/pow-pi)+floor*cosh(tanh,e)*8-++log10+-phi/frexp*degrees+log/e+e
+  <----- FAILURE
+    log10(+-5.0+fmod-ldexp*cos(ldexp,floor)-(fmod),++ceil)*(-(fabs+radians)-tanh(sin,cos+tanh)/-tan*phi*abs-modf/asin/exp+modf/radians+asin)*log(+radians/-sinh*floor*ldexp,frexp)*modf/+-ceil*-atan(sinh,pi)*0.7*sqrt*e+(+fabs*6/(cos)-(pow+fabs)/modf)+(+(sinh)/+sinh/hypot/hypot--cosh+fmod*sin)/168.896
+  <----- FAILURE
+    1.01*modf*(-degrees/-sinh/log10/sqrt+modf(atan,phi)/sin+sinh)*-+(fmod)*cosh/frexp*cosh(cos,e)*tan-(92/exp(acos,atan2)*acos(floor,frexp)*pow/sinh-1.5*(sin)/floor-ldexp/ceil-hypot/pi+sinh+sqrt)+atan2(0*8/tan/pow,4/(acos)/cos*log10+-asin/tan+tanh)/+--asin(frexp,sinh)/0
+  <----- FAILURE
+    +fabs((cosh/e)*++log+acos(ldexp-sin,ldexp+fabs)*cos(abs,cos)/degrees/degrees,+atan2(log10+sinh,sinh+hypot)/atan-radians*4.0+(sqrt)*tanh*log-log+sqrt)+(+modf(sin+atan2,abs))-(+0)-((sin)*abs-degrees*log+log)
+  <----- FAILURE
+    3/+sinh*+4.1*-+4.4/-atan2*2+-frexp*--(cosh/tan+log)/+6.7/b*-(frexp)/(asin)/acos/log10-(ldexp/-sqrt*asin*ldexp+4*asin*fmod+sqrt*frexp+modf+cosh)/(-exp/hypot/floor)*61*+(radians)/ceil(sin,exp)*log*atan2+431.3
+  <----- FAILURE
+    degrees*65.8113*+(sqrt(abs,atan)*cosh/exp)+tanh*tanh/-log(e*sinh,frexp/atan+log10-log10)--exp-81-37.90*modf(ldexp,sqrt)/exp++9.5/5*cos+(pow)-tan*floor-phi
+  <----- FAILURE
+    +-++51.24
+  <----- FAILURE
+    ldexp*-tan(+5.2/abs*tan*atan,(sqrt-cos)--cosh*radians/phi-floor*ldexp)/-(-acos/tan-modf/frexp-phi-log)/(asin(frexp,abs)/pi+log+abs-e)*+(log10)+-+1.317++phi--tan(cos/floor+pow,exp+fabs-sinh)+(modf/pi)+5.9-phi*floor+cos+degrees+cosh
+  <----- FAILURE
+    c(6.7++frexp(pow,acos-sin)*(sqrt-acos)/4/cos,+-7)*25326.6/7684.8152*-22.1*(log10)/(abs)/+log10
+  <----- FAILURE
+    pow((atan(atan2,log)/exp/e-modf-fmod)/(asin-hypot-asin)+64*(log+radians)-6.4+(asin),ceil+(sinh/sqrt)*(atan2+degrees)*-fmod*log/atan2)--acos((hypot-floor)/6.7*fmod,-e(degrees,sinh)-2.7*cosh/atan2+tan/tanh)/(+-atan2-8-cos/fabs-pi)*++-fabs(e,log)
+  <----- FAILURE
+    +-cosh/(frexp/(log10-fabs)/(abs)/radians*modf+5.2+fmod(floor,radians)*tan/ldexp+pi/modf)/-tanh*-+6*phi/-degrees/+cosh/abs/radians++floor(6.0-8.0*asin/cos,hypot(degrees,sqrt)/abs+4.9/atan*phi)*+4-25
+  <----- FAILURE
+    n((radians(e,floor)*log/fabs-atan)/log10/degrees,fmod/6++-pi+tanh)-(-+-atan2+atan2(phi,e-ceil)+log10/degrees)/cos*+fmod(atan2/ldexp-hypot-exp,acos/exp+ceil+cosh)*(sqrt-sinh+atan)+-543.277/log/modf(sinh/cos+tanh+sqrt,exp+sin-phi)*cos(sin-tan,pow-asin)-+4.6*+5
+  <----- FAILURE
+    (atan(-tan+cosh/fmod,-pow*fabs*degrees)-+(cos+exp)*fmod(phi+acos,exp)+--phi*(tan))
+  <----- FAILURE
+    hypot(99/-sqrt(sqrt,sin)*+cos(modf,log)++(tan)*1/+log-(hypot),e((modf)*modf+phi*radians,+degrees*log/pi))/+0
+  <----- FAILURE
+    log/--+exp(log10,exp)++e(7+-ldexp*degrees,(pow)-(phi)/fmod/atan2-fabs/cos-asin-exp)/frexp(+fabs-0-modf*floor-pow,tanh(degrees+modf,tanh+atan2)/(asin)+(pi)*asin-cosh/atan-frexp+modf)-pow+6/++tanh*(radians-ldexp)/modf/degrees*pow--(ldexp+abs)*-(sqrt)-tan--abs
+  <----- FAILURE
+    (fabs/-ldexp)/tan(phi(atan2+cosh,ceil*fmod-ceil+hypot)-(sin+fabs)/+log-(ldexp)/log10*phi-sqrt+sin-modf,sqrt(log10*hypot-e,sin*pow)*(cosh-hypot)+atan(phi+abs,asin)-4/fabs*atan+floor)
+  <----- FAILURE
+    (modf(phi+asin*log10,(pi)+log10+log10)/--acos(tan,cos))+log10*+ldexp*8+fabs
+  <----- FAILURE
+    (-++cos(tanh,asin)/+x)*-ceil
+  <----- FAILURE
+    +(2+sqrt/+e/cosh/tanh-(asin)+atan)*atan((pi/fabs+floor+asin)/--tan,(frexp*fabs+floor)*sqrt/(pi)-pow(degrees+ldexp,cosh+phi)-(radians)*fmod/ceil-log10+fmod-tanh)*4*radians(4*sqrt+frexp/cos+log10-ldexp,(tanh)/fmod*log+asin*fabs)-138.0/+-acos(cos*fabs+pow-degrees,cos-sqrt)+8312*++(pi)+fmod+-sqrt*log10(fmod,pow+sqrt)-+hypot-phi(pi,ldexp)-pow
+  <----- FAILURE
+    +10*83.6++phi/++(e/exp)/+-exp*-9.5-hypot(-acos(log,cos)-3*atan2/pow-acos*acos+abs+log10,6.1)/(2*cosh*ceil)*ldexp(pi/sin-acos+frexp,hypot)+-++exp/--+sinh*n/-floor--e(cos,log10-radians)-4.5*7.7*cos--tanh/e*fmod+asin*fmod-fabs+hypot
+  <----- FAILURE
+    -exp/+72*(4.5*-e)/0.549/+++asin+cosh-+--ldexp(tan-e,sqrt+floor)*cosh*+9.1+07.8*-(e)-2*--cosh+5.5*(atan2)+(ldexp)*tanh/tan-pi/ceil+asin+acos
+  <----- FAILURE
+    phi*-sin(atan2-(sinh)+fabs-degrees-abs,ceil)/8.0/-(frexp/degrees-atan-floor)+(+(abs-ceil))*+(+sinh/sin/sqrt+exp)/floor/+(phi-sinh)+(0/-asin*floor*fmod)
+  <----- FAILURE
+    (-+(sin-ceil))*-6.020*floor(sin(degrees,sinh+fmod)/(ceil)+-floor*pi*acos-log,4-(pow)+acos/ldexp)/+fmod*4.4/++radians/exp(ldexp,ldexp)+cos*-fmod(asin*ceil*cos,-fmod)*-ldexp(cosh/fabs-cosh+log10,exp*floor+cosh-frexp)-+3/+cosh
+  <----- FAILURE
+    +(-8/+-sinh+-ldexp(acos,degrees)*tan(sqrt,ldexp)/floor+sinh(sin,phi)*asin*degrees-frexp)/5.9*+tanh*exp*(fmod/cos-pi+frexp)*+(cos)/1
+  <----- FAILURE
+Recall: 0.0, Precision: 0.88
+Example gen time: 0.03399801254272461
+Scoring time: 2.321187973022461

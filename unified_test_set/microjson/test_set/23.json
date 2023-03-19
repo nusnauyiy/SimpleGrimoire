@@ -1,0 +1,32 @@
+[
+  "pseq",
+  [
+    [
+      "bs",
+      {
+        "sense":{
+          "sn":"1 a",
+          "dt":[
+            ["text","{bc}a short projecting device: such as"]
+          ]
+        }
+      }
+    ],[
+      "sense",
+      {
+        "sn":"(1)",
+        "dt":[
+          ["text","{bc}a small flap or loop by which something may be grasped or pulled"]
+        ]
+      }
+    ],[
+      "sense",
+      {
+        "sn":"(2)",
+        "dt":[
+          ["text","{bc}a projection from a card used as an aid in filing"]
+        ]
+      }
+    ]
+  ]
+]

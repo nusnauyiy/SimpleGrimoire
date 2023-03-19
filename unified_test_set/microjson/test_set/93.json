@@ -1,0 +1,5 @@
+{
+    "error_detail":"The POST method should be used for an HTTP request",
+    "error_str":"Invalid request method",
+    "error_code":512
+}

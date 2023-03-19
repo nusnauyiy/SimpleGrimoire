@@ -1,0 +1,1 @@
+https://host2/folder?key1=value2&key4=value1&key4=value1

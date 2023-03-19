@@ -1,0 +1,45 @@
+{"sseq":[
+  [
+    [
+      "sense",
+      {
+        "sn":"1 a",
+        "dt":[["text","{bc}a short brisk leap especially on one leg"]]
+      }
+    ],[
+    "sense",
+    {
+      "sn":"b",
+      "dt":[
+        ["text","{bc}{sx|bounce||}, {sx|rebound||} "],
+        [
+          "vis",
+          [{"t":"shortstop scooped it up on the first {wi}hop{\/wi}"}]
+        ]
+      ]
+    }
+    ]
+  ],[
+  [
+    "sense",
+    {
+      "sn":"2",
+      "dt":[["text","{bc}{sx|dance||3}"]]
+    }
+  ]
+  ],[
+  [
+    "sense",
+    {
+      "sn":"3 a",
+      "dt":[["text","{bc}a flight in an aircraft"]]
+    }
+  ],[
+  "sense",
+  {
+    "sn":"b",
+    "dt":[["text","{bc}a short trip"]]
+  }
+  ]
+  ]
+]}

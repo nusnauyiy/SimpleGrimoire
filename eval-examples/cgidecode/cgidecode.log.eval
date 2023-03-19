@@ -1,0 +1,228 @@
+
+
+Initial grammar loaded:
+start: t0
+t4075: t7174 t11412
+    | t4075 t9916
+    | t7174 t4075
+t7174: "b"
+    | "CJ"
+    | "D"
+    | "E"
+    | "FK"
+    | "e"
+    | "B"
+    | "chf"
+    | "dm"
+    | "eyc"
+    | "c"
+    | t6403 t0
+    | t7174 t0
+    | "C"
+    | "A"
+    | "CW"
+    | "d"
+    | "DCG"
+    | "fnasty"
+    | "fscript"
+    | "a"
+    | "DZM"
+    | "EVH"
+    | "FR"
+    | "bhh"
+    | "cjn"
+    | "fcu"
+    | "ey"
+    | "ft"
+    | "AIJ"
+    | "BA"
+    | "DK"
+    | "f"
+    | "EB"
+    | "cscript"
+    | "FA"
+    | "az"
+    | "blw"
+    | "ct"
+    | "dqy"
+    | "BH"
+t9916: t9916 t9916
+    | t6403 t4075
+    | t11409 t4075
+    | t11409 t11412
+t6403: t9916 t11409
+    | tdigits
+t11409: t11409 t0
+    | t11409 t7174
+    | t9916 t11409
+    | t6403 t7174
+    | tdigits
+t11412: t4075 t9916
+    | t0 t11412
+    | t0 t4075
+    | t11412 t9916
+    | "%"
+t0: t11412 t11409
+    | "+"
+    | "."
+    | "="
+    | "&"
+    | t0 t7174
+    | "-"
+    | "/"
+    | "_"
+    | "~"
+    | t0 t0
+    | ":"
+    | "?"
+    | t4075 t11409
+    | t9916 t11409
+    | talphanums
+tdigits: tdigit
+    | tdigit tdigits
+tdigit: "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+talphanums: talphanum
+    | talphanum talphanums
+talphanum: "a"
+    | "b"
+    | "c"
+    | "d"
+    | "e"
+    | "f"
+    | "g"
+    | "h"
+    | "i"
+    | "j"
+    | "k"
+    | "l"
+    | "m"
+    | "n"
+    | "o"
+    | "p"
+    | "q"
+    | "r"
+    | "s"
+    | "t"
+    | "u"
+    | "v"
+    | "w"
+    | "x"
+    | "y"
+    | "z"
+    | "A"
+    | "B"
+    | "C"
+    | "D"
+    | "E"
+    | "F"
+    | "G"
+    | "H"
+    | "I"
+    | "J"
+    | "K"
+    | "L"
+    | "M"
+    | "N"
+    | "O"
+    | "P"
+    | "Q"
+    | "R"
+    | "S"
+    | "T"
+    | "U"
+    | "V"
+    | "W"
+    | "X"
+    | "Y"
+    | "Z"
+    | "0"
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+Precision set (size 50):
+    %0DCGcjn=%33950324
+    :
+    ~FA
+    &.
+    ?d
+    .FR=
+    .bhh
+    0C&%9544AIJCWC%7479c
+    fEVH%6ft/DCG
+    ==
+    %3b.853eyc%9DZMEBe?eyc%1FR+f%25
+    n1
+    _c
+    EBf%7cjnfnasty%43blw%327ffnastybhh%0%3_AIJ%79aaf%671%91%16aDK%52071  <----- FAILURE
+    _
+    B%3817307_EBFKfcuE%3ct%62CJ
+    :f
+    ~
+    q
+    H
+    264a%573EVHEVH
+    -
+    84DCGchffnasty%2fcubeycEVHDZM%14CJ%5:ftAd%595%7%5568E%3dm  <----- FAILURE
+    ?
+    ?EBdfscriptcteyc%1f%950bhh%815057788CJ%03f%03944
+    p8
+    a%523%94~
+    /
+    ?BH
+    %35EVHchffnasty%5fnasty
+    +~
+    /CW
+    &az%99:
+    S
+    ?=
+    M
+    dHRw
+    =
+    +
+    :3u
+    o6
+    5DKfnastydm/%99767500..7BA&.=%1BH%06+EB%9%4%5_fcufscriptEBFAEfcublw%1017bbhhB%45/fnasty  <----- FAILURE
+    .
+    &
+    .%6:--C  <----- FAILURE
+    :DZM
+    %3fcu
+    V
+    =-
+    /E
+Recall set (size 17):
+    b%5CJm%5Drl%5Ezn%5FKe%60hQ%7bBj%7chf%7dmB%7eyc%7Bp
+    Send+mail+to+me%40fuzzingbook.org
+    Hello%2c+world%21
+    name=Fred&class=101&math=2+%2B+2+%3D+4&
+    -./_~
+    Colon%20%3A%20Hash%20%23%20Percent%20%25
+    w%7CWd%7DCG%7Ec
+    www.badplace.com%2fnasty.js%22%3e%3c%2fscript%3e
+    1234567890
+    abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+    O%21nP%22BG%23JI%24Tw%25mJ%26bB%27xX%28zy%29Aj%2aZ
+    y%3DZM%3EVH%3FRx%40gG%5bhh%5cjn%5dOD%5eDR%5fcu%5Bm
+    E%2bNp%2cRP%2dVN%2eyV%2ftW%2AIJ%2BAe%2CkM%2DKf%2EB
+    http://target/getdata.php?data=%3cscript%20src=%22http%3a%2f%2f
+    W%2FAo%3azF%3blw%3ctY%3dqy%3eLm%3fCS%3AyB%3BHq%3Ck
+    http://target/login.asp?userid=bob%27%3b%20update%20logintable%20set%20passwd%3d%270wn3d%27%3b--%00
+    name=Fred&status=good&status=happy&
+Recall: 1.0, Precision: 0.92
+Example gen time: 0.3166072368621826
+Scoring time: 20.71030831336975
