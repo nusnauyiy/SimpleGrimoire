@@ -1,9 +1,7 @@
-import string
 from abc import ABC, abstractmethod
-import random
 from typing import Union, List, Dict
-from enum import Enum
 
+from models.ReplaceClass import ReplaceClass
 from util.util import str_to_bytes, bytes_to_str
 
 
@@ -75,39 +73,6 @@ class DeleteBlank(Blank):
         return False
 
 
-class ReplaceClass(Enum):
-    DIGITS, NUMBERS, HEXDIGITS, LETTERS, WHITESPACES, PUNCTUATIONS, ALPHANUMERICS, PRINTABLE = range(8)
-
-    @staticmethod
-    def get_char(replace_class: 'ReplaceClass'):
-        return {
-            ReplaceClass.DIGITS: [string.digits],
-            # NUMBERS: [string.digits, "."],
-            ReplaceClass.HEXDIGITS: ["abcdefABCDEF", string.digits],
-            ReplaceClass.LETTERS: [string.ascii_lowercase, string.ascii_uppercase],
-            ReplaceClass.WHITESPACES: [string.whitespace],
-            ReplaceClass.PUNCTUATIONS: [string.punctuation],
-            ReplaceClass.ALPHANUMERICS: [string.ascii_letters, string.digits],
-            ReplaceClass.PRINTABLE: [string.ascii_letters, string.digits, string.whitespace, string.punctuation]
-        }[replace_class]
-
-    @staticmethod
-    def generate(replace_class: 'ReplaceClass'):
-        result = ""
-        if replace_class == ReplaceClass.NUMBERS:
-            num = random.randint(1, 1000000)
-            den = random.randint(1, 1000000)
-            result = str(num/den)
-        else:
-            groups = ReplaceClass.get_char(replace_class)
-            for i in range(random.randint(len(groups)*2, len(groups)*10)):
-                group = random.choice(groups)
-                char = random.choice(group)
-                result += char
-        return result
-
-
-
 class ReplaceBlank(Blank):
 
 
@@ -116,9 +81,9 @@ class ReplaceBlank(Blank):
         self.replacements = set()
 
         self.optimization_table: Dict[ReplaceClass, List[ReplaceClass]] = {
-            ReplaceClass.HEXDIGITS: [ReplaceClass.DIGITS],
-            ReplaceClass.ALPHANUMERICS: [ReplaceClass.DIGITS, ReplaceClass.HEXDIGITS, ReplaceClass.LETTERS],
-            ReplaceClass.PRINTABLE: [ReplaceClass.ALPHANUMERICS, ReplaceClass.NUMBERS, ReplaceClass.PUNCTUATIONS, ReplaceClass.WHITESPACES]
+            ReplaceClass.HEXDIGIT: [ReplaceClass.DIGIT],
+            ReplaceClass.ALPHANUMERIC: [ReplaceClass.DIGIT, ReplaceClass.HEXDIGIT, ReplaceClass.LETTER],
+            ReplaceClass.PRINTABLE: [ReplaceClass.ALPHANUMERIC, ReplaceClass.NUMBER, ReplaceClass.PUNCTUATION, ReplaceClass.WHITESPACE]
         }
 
     def to_map(self):

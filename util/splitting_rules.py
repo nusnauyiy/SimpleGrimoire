@@ -1,7 +1,8 @@
 from typing import List, Union, Callable, Tuple
 
-from models.Blank import Blank, ReplaceClass
+from models.Blank import Blank
 from models.GeneralizedInput import GeneralizedInput
+from models.ReplaceClass import ReplaceClass
 
 
 def increment_by_offset(_, index, offset):

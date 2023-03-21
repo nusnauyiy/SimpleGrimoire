@@ -4,18 +4,10 @@ import sys
 import json
 
 from grammar_generator.ebnf import Grammar, Rule
+from models.ReplaceClass import ReplaceClass
 
 START_NAME = "start"
 TERM_NAME = "term"
-TERMINAL_NAME = "terminal"
-DIGITS_NAME = "digits"
-# NUMBERS_NAME = "numbers"
-HEXDIGITS_NAME = "hexdigits"
-LETTERS_NAME = "letters"
-WHITESPACES_NAME = "whitespaces"
-PUNCTUATIONS_NAME = "punctuations"
-ALPHANUMERICS_NAME = "alphanumerics"
-PRINTABLE_NAME = "printable"
 
 def get_json(filename):
     f = open(filename, 'r')
@@ -36,20 +28,30 @@ def add_terminal_class_rule(grammar, rule_name, rule_value):
         rule.add_body([f"/{escape_regex(c)}/"])
     grammar.add_rule(rule)
 
+# Generates an arbitrary-length repeat version of the given rule
+# eg. rule_name = "rule", generates
+# rules : rule | rule rules
+def add_repeat_rule(grammar, rule_name):
+    repeat_rule_name = rule_name + "s"
+    rule = Rule(repeat_rule_name)
+    rule.add_body([rule_name]).add_body([rule_name, repeat_rule_name])
+    grammar.add_rule(rule)
+
 def generate_start_rule_body(generalized_input):
     rule_body = []
+    replacements_set = set()
     for token in generalized_input:
         if isinstance(token, str):
-            # print(f"token: {token}")
             rule_body.append(f"/{escape_regex(token)}/")
         elif token.get("type") == "DELETE":
-            pass # do not add anything to the rule
+            pass  # do not add anything to the rule
         elif token.get("type") == "REPLACE":
-            replacements = token.get("replacements") + [START_NAME] # add start name here to allow recursion
-            # print(f"replacements: {replacements}")
-            rule_body.append([f"{r.lower()}" for r in replacements if r != "NUMBERS"]) # remove numbers for now, TODO
-                                                                                           # TODO: should be CLASS+ instead of CLASS, right now only expands to 1 character
-    return rule_body
+            replacements = token.get("replacements")
+            replacement_strs = [f"{r.lower()}" for r in replacements if r != "NUMBER"]  # remove numbers for now, TODO
+            replacements_set.update(replacement_strs)
+            rule_body.append([f"{r}s" for r in replacement_strs] + [START_NAME.lower()])  # add repeat rule, add start name here to allow recursion
+
+    return rule_body, replacements_set
 
 
 def generate_ebnf_replacement(saved_inputs_filename):
@@ -58,23 +60,20 @@ def generate_ebnf_replacement(saved_inputs_filename):
     grammar = Grammar(START_NAME)
 
     start_rule = Rule(START_NAME)
+    seen_replacements = set()
     for entry in saved_data:
         # add subrule based on input
         generalized_input = entry.get("generalized").get("input")
-        start_rule.add_body(generate_start_rule_body(generalized_input))
+        body, body_replacements = generate_start_rule_body(generalized_input)
+        start_rule.add_body(body)
+        seen_replacements.update(body_replacements)
     grammar.add_rule(start_rule)
 
-    # grammar.add_rule(Rule(TERM_NAME).add_body([START_NAME]).add_body([TERMINAL_NAME]))
-
     # add terminal class rules
-    add_terminal_class_rule(grammar, DIGITS_NAME, string.digits)
-    # grammar.add_rule(Rule(NUMBERS_NAME))
-    add_terminal_class_rule(grammar, HEXDIGITS_NAME, string.hexdigits)
-    add_terminal_class_rule(grammar, LETTERS_NAME, string.ascii_letters)
-    add_terminal_class_rule(grammar, WHITESPACES_NAME, string.whitespace)
-    add_terminal_class_rule(grammar, PUNCTUATIONS_NAME, string.punctuation)
-    add_terminal_class_rule(grammar, ALPHANUMERICS_NAME, string.ascii_letters + string.digits)
-    add_terminal_class_rule(grammar, PRINTABLE_NAME, string.printable)
+    for replacement_class in seen_replacements:
+        replace_enum = ReplaceClass.get_enum_value(replacement_class)
+        add_terminal_class_rule(grammar, replacement_class, ''.join(ReplaceClass.get_char(replace_enum)))
+        add_repeat_rule(grammar, replacement_class)
 
     print(grammar.pretty_print())
     return grammar

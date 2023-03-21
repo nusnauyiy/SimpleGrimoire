@@ -1,7 +1,7 @@
 import unittest
 
-from models import Blank
-from models.Blank import Blank, DeleteBlank, ReplaceBlank, ReplaceClass
+from models.ReplaceClass import ReplaceClass
+from models.Blank import Blank, DeleteBlank, ReplaceBlank
 
 
 class BlankTest(unittest.TestCase):
