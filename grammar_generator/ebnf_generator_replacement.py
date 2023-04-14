@@ -13,6 +13,9 @@ def get_json(filename):
     f = open(filename, 'r')
     return json.load(f)
 
+def str_to_lark_regex(s: str):
+    return f"/{escape_regex(s)}/x"
+
 def escape_regex(str):
     return re.escape(str).replace("/", "\\/")
 
@@ -25,7 +28,7 @@ def add_terminal_class_rule(grammar, rule_name, rule_value):
     for c in rule_value:
         if c == "\n":
             continue # TODO: currently ebnf doesn't work with newline
-        rule.add_body([f"/{escape_regex(c)}/"])
+        rule.add_body([str_to_lark_regex(c)])
     grammar.add_rule(rule)
 
 # Generates an arbitrary-length repeat version of the given rule
@@ -42,7 +45,7 @@ def generate_start_rule_body(generalized_input):
     replacements_set = set()
     for token in generalized_input:
         if isinstance(token, str):
-            rule_body.append(f"/{escape_regex(token)}/")
+            rule_body.append(str_to_lark_regex(token))
         elif token.get("type") == "DELETE":
             pass  # do not add anything to the rule
         elif token.get("type") == "REPLACE":

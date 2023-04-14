@@ -111,7 +111,7 @@ class GrimoireFuzzer(Fuzzer):
         # n ← havoc_amount(input.performance())
         n = havoc_amount()
 
-        logging.debug(f"!!! MUTATING INPUT: {input_bytes}")
+        # logging.debug(f"!!! MUTATING INPUT: {input_bytes}")
         for i in range(0, n):
             if self.is_generalized(input_bytes):
                 generalized_input = self.generalized_map[input_bytes]
@@ -125,7 +125,7 @@ class GrimoireFuzzer(Fuzzer):
         It expects concrete inputs. Thus, mutations working
         on generalized inputs first replace all remaining [] by an empty string
         """
-        logging.debug(f"!!! SENDING TO FUZZER: {input_bytes}")
+        # logging.debug(f"!!! SENDING TO FUZZER: {input_bytes}")
         has_error, input_cov, exec_time = self.exec_with_coverage(
             input_bytes
         )
@@ -143,9 +143,9 @@ class GrimoireFuzzer(Fuzzer):
         if isinstance(rand, GeneralizedInput):
             rand = rand.get_bytes()
         input_bytes: bytes = generalized_input.get_bytes()
-        logging.debug(f"input extension 1: input_bytes={input_bytes}, rand={rand}, new={input_bytes + rand}")
+        # logging.debug(f"input extension 1: input_bytes={input_bytes}, rand={rand}, new={input_bytes + rand}")
         self.send_to_fuzzer(input_bytes + rand)
-        logging.debug(f"input extension 2: input_bytes={input_bytes}, rand={rand}, new={rand + input_bytes}")
+        # logging.debug(f"input extension 2: input_bytes={input_bytes}, rand={rand}, new={rand + input_bytes}")
         self.send_to_fuzzer(rand + input_bytes)
 
     def recursive_replacement(self, generalized_input: GeneralizedInput):
@@ -175,7 +175,7 @@ class GrimoireFuzzer(Fuzzer):
         for i in range(0, random_power_of_two()):
             rand = random_generalized(self.generalized, self.strings)
             generalized_input = replace_random_gaps(generalized_input, rand)
-        logging.debug("recursive replacement")
+        # logging.debug("recursive replacement")
         self.send_to_fuzzer(generalized_input.get_bytes())
 
     def string_replacement(self, input_bytes: bytes, strings: List[bytes]):
@@ -199,10 +199,10 @@ class GrimoireFuzzer(Fuzzer):
         if sub:
             rand = random_string(strings)
             data = replace_random_instance(input_bytes, sub, rand)
-            logging.debug("string replacement 1")
+            # logging.debug("string replacement 1")
             self.send_to_fuzzer(data)
             data = replace_all_instances(input_bytes, sub, rand)
-            logging.debug("string replacement 2")
+            # logging.debug("string replacement 2")
             self.send_to_fuzzer(data)
 
     def fuzz(self, search_time: int):
@@ -232,13 +232,13 @@ class GrimoireFuzzer(Fuzzer):
             return edges.difference(self.edges_covered)
 
         def candidate_check(candidate: bytes):
-            logging.debug(f"checking candidate for blank: {candidate}")
+            # logging.debug(f"checking candidate for blank: {candidate}")
             original_edges = new_edges
             candidate_edges = get_new_bytes(candidate)
-            logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
-            logging.warning(f"ORIGINAL BYTES {sorted(original_edges)}")
-            logging.warning(f"ORIGINAL-CANDIDATE {original_edges.difference(candidate_edges)}")
-            logging.warning(f"CANDIDATE-ORIGINAL {candidate_edges.difference(original_edges)}")
+            # logging.warning(f"CANDIDATE BYTES {sorted(candidate_edges)}")
+            # logging.warning(f"ORIGINAL BYTES {sorted(original_edges)}")
+            # logging.warning(f"ORIGINAL-CANDIDATE {original_edges.difference(candidate_edges)}")
+            # logging.warning(f"CANDIDATE-ORIGINAL {candidate_edges.difference(original_edges)}")
             return get_new_bytes(candidate) == new_edges
 
         generalized_input = GeneralizedInput([input_data]).to_exploded_input()
@@ -262,7 +262,7 @@ class GrimoireFuzzer(Fuzzer):
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '<', '>', self.cumulative)
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '\'', '\'', self.cumulative)
         generalized_input = find_gaps_in_closures(generalized_input, Blank.DELETE, candidate_check, find_closures, '"', '"', self.cumulative)
-        logging.debug(f"Input with delete blanks: {''.join([s if isinstance(s, str) else s.pretty_print() for s in generalized_input])}")
+        # logging.debug(f"Input with delete blanks: {''.join([s if isinstance(s, str) else s.pretty_print() for s in generalized_input])}")
 
         # Replace-blank Generalization
         generalized_input = find_gaps(generalized_input, Blank.REPLACE, candidate_check, increment_by_offset, 256, self.cumulative)
@@ -303,7 +303,7 @@ class GrimoireFuzzer(Fuzzer):
 
         for edge in input_coverage:
             if edge not in self.edges_covered and not has_error:
-                logging.warning(f"NEW EDGES COVERED: {sorted(input_coverage.difference(self.edges_covered))}")
+                # logging.warning(f"NEW EDGES COVERED: {sorted(input_coverage.difference(self.edges_covered))}")
                 generalized_input: GeneralizedInput = self.generalize(input_data,
                                                                       input_coverage.difference(self.edges_covered),
                                                                       splitting_rule)
