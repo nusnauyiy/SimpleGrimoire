@@ -10,7 +10,7 @@ def eval_benchmark(fuzz_output_dir, golden_input_parent_dir, benchmarks_dir, ben
         fuzz_output_generalized_inputs = f"{fuzz_output_dir}/generalized_input.json"
         grammar = generate_ebnf_replacement(fuzz_output_generalized_inputs)
         benchmark_output_file.write("Grammar:\n")
-        benchmark_output_file.write(grammar.pretty_print())
+        benchmark_output_file.write(grammar.lark_str())
         grammar_parser = grammar.parser()
 
         # calculate precision and recall

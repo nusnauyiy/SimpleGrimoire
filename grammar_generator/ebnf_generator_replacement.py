@@ -40,14 +40,14 @@ def add_repeat_rule(grammar, rule_name):
 def generate_start_rule_body(generalized_input):
     rule_body = []
     replacements_set = set()
-    for token in generalized_input:
+    for token in generalized_input:  # token is either a str or a Blank
         if isinstance(token, str):
             rule_body.append(f"/{escape_regex(token)}/")
         elif token.get("type") == "DELETE":
             pass  # do not add anything to the rule
         elif token.get("type") == "REPLACE":
             replacements = token.get("replacements")
-            replacement_strs = [f"{r.lower()}" for r in replacements if r != "NUMBER"]  # remove numbers for now, TODO
+            replacement_strs = [f"{r.lower()}" for r in replacements if r != "NUMBER"]
             replacements_set.update(replacement_strs)
             rule_body.append([f"{r}s" for r in replacement_strs] + [START_NAME.lower()])  # add repeat rule, add start name here to allow recursion
 
@@ -60,8 +60,21 @@ def generate_ebnf_replacement(saved_inputs_filename):
     grammar = Grammar(START_NAME)
 
     start_rule = Rule(START_NAME)
+    # term := start | terminal
+    # rule := "hi" rule "bye" | terminal
+    # Rule
+    #     name="term"
+    #     bodies=[["start"], ["terminal"]]
+    # Rule
+    #     name="rule"
+    #     bodies[["\"hi\"", "rule", "\"bye\""], ["terminal"]]
+
+    # [Blank({digits}) "+" Blank({digits})]
+    # [["digits"], "+", ["digits"]]
+
     seen_replacements = set()
-    for entry in saved_data:
+        # = {"digits", "hexdigits"}
+    for entry in saved_data: # saved_data is generalized_input.json
         # add subrule based on input
         generalized_input = entry.get("generalized").get("input")
         body, body_replacements = generate_start_rule_body(generalized_input)
@@ -73,9 +86,10 @@ def generate_ebnf_replacement(saved_inputs_filename):
     for replacement_class in seen_replacements:
         replace_enum = ReplaceClass.get_enum_value(replacement_class)
         add_terminal_class_rule(grammar, replacement_class, ''.join(ReplaceClass.get_char(replace_enum)))
+        # ReplaceClass.get_char(replace_enum)): eg. for hexdigit, would be ["0123456789", "abcdef"]
         add_repeat_rule(grammar, replacement_class)
 
-    print(grammar.pretty_print())
+    print(grammar.lark_str())
     return grammar
 
 def main(argv):

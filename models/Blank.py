@@ -83,7 +83,7 @@ class ReplaceBlank(Blank):
         self.optimization_table: Dict[ReplaceClass, List[ReplaceClass]] = {
             ReplaceClass.HEXDIGIT: [ReplaceClass.DIGIT],
             ReplaceClass.ALPHANUMERIC: [ReplaceClass.DIGIT, ReplaceClass.HEXDIGIT, ReplaceClass.LETTER],
-            ReplaceClass.PRINTABLE: [ReplaceClass.ALPHANUMERIC, ReplaceClass.NUMBER, ReplaceClass.PUNCTUATION, ReplaceClass.WHITESPACE]
+            ReplaceClass.PRINTABLE: [ReplaceClass.ALPHANUMERIC, ReplaceClass.DIGIT, ReplaceClass.HEXDIGIT, ReplaceClass.PUNCTUATION, ReplaceClass.WHITESPACE]
         }
 
     def to_map(self):

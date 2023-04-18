@@ -7,6 +7,10 @@ import re
 
 from lark import Lark
 
+from models.ReplaceClass import ReplaceClass
+
+replacement_class_rule_names = ["digit", "number", "hexdigit", "letter", "whitespace", "punctuation", "alphanumeric", "printable"]
+replacement_class_rule_names_plural = [f"{name}s" for name in replacement_class_rule_names]
 
 class Grammar():
     def __init__(self, start):
@@ -18,6 +22,23 @@ class Grammar():
 
     def __str__(self):
         return '\n'.join([str(rule) for rule in self.rules.values()])
+
+    def lark_str(self):
+        rule_imports = set()
+        res = ""
+        for rule_name, rule in self.rules.items():
+            if rule_name in replacement_class_rule_names:
+                pass # skip this rule
+            elif rule_name in replacement_class_rule_names_plural:
+                lark_rule = ReplaceClass.get_lark_class(rule_name)
+                res += f"\n{rule_name}: {lark_rule['name']}"
+                rule_imports.add("\n" + lark_rule['import'])
+            else:
+                res += str(rule)
+        for im in rule_imports:
+            res += im
+        return res
+
 
     def pretty_print(self):
         return '\n'.join([rule.pretty_print() for rule in self.rules.values()])
@@ -59,7 +80,7 @@ class Grammar():
                 start_nonterminal = random.choice(start_nonterminals)
 
 
-                # Helper function: gets all the nonterminals for a body
+        # Helper function: gets all the nonterminals for a body
         def body_nonterminals(grammar, body):
             nonterminals = []
             for item in body:
