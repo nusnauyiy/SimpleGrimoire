@@ -81,7 +81,7 @@ class Grammar():
                     nonterminals.append(item)
             return nonterminals
         def unescape_regex(terminal):
-            return re.sub(r'\\(.)', r'\1', re.sub('^/|/$', '', terminal))
+            return re.sub(r'\\(.)', r'\1', re.sub('^/|/x$', '', terminal))
 
         # print(f"cur_depth={cur_depth}")
         # print(f"start_nonterminal={start_nonterminal}")

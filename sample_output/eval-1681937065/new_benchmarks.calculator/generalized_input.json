@@ -1,0 +1,1 @@
+[{"data": "21*3", "generalized": {"input": [{"removed": "21", "type": "REPLACE", "replacements": ["DIGIT"]}, "*", {"removed": "3", "type": "REPLACE", "replacements": ["DIGIT"]}]}}, {"data": "(100)", "generalized": {"input": ["(", {"removed": "100", "type": "REPLACE", "replacements": ["DIGIT"]}, ")"]}}]

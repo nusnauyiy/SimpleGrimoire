@@ -1,0 +1,5481 @@
+Grammar:
+start: (digits|start) /\+/x (digits|start) | /pow\(/x (digits|start) /,\ 5\)/x | /\(/x (digits|start) /\)/x /\*/x (digits|start) | (digits|start) /\+\(/x (digits|start) /\-/x (digits|start) /\)/x | /\(x/x /\+/x /e/x /\*/x (digits|start) /\)/x /\//x (digits|start) | /\-\(/x (digits|start) /\)/x /\*/x (digits|start) | (digits|start) /\//x /c/x | (digits|start) /\./x (digits|start) | /\(\./x (whitespaces|letters|start) | /pow/x /\(\./x (whitespaces|letters|printables|punctuations|start) | (digits|start) /\+/x /\./x (whitespaces|letters|punctuations|start) | (digits|start) /\*\./x (whitespaces|letters|punctuations|start)
+letters: LETTER
+whitespaces: WS
+printables: (LETTER | INT | WS | /[!"#$%&'()*+,-.\/:;<=>?@[\\]^_`{|}~]/)+
+punctuations: /[!"#$%&'()*+,-.\/:;<=>?@[\\]^_`{|}~]/
+digits: INT
+%import common.LETTER
+
+%import common.WS
+%import common.LETTER
+%import common.INT
+%import common.WS
+%import common.INT
+!!! Generated an example from grammar: 628+.%@.(x+e*917)/-(785)*86
+== example passed :) ==
+!!! Generated an example from grammar: (-(2)*6)*2+(7352-0668254).8
+==! example failed :( !==
+!!! Generated an example from grammar: pow(.a
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*85)/(.i
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*69584)/11
+== example passed :) ==
+!!! Generated an example from grammar: 5/c+(67-pow(.,,]`)
+== example passed :) ==
+!!! Generated an example from grammar: (.	 
+== example passed :) ==
+!!! Generated an example from grammar: (51/c)*(x+e*8)/9+(087632-9)
+== example passed :) ==
+!!! Generated an example from grammar: 7/c*. 
+== example passed :) ==
+!!! Generated an example from grammar: -(pow(.U)*220
+== example passed :) ==
+!!! Generated an example from grammar: 0+.  
+== example passed :) ==
+!!! Generated an example from grammar: pow(29, 5)
+== example passed :) ==
+!!! Generated an example from grammar: pow(.pow(.9.6
+== example passed :) ==
+!!! Generated an example from grammar: 6+5
+== example passed :) ==
+!!! Generated an example from grammar: 6+381
+== example passed :) ==
+!!! Generated an example from grammar: 31+(3-152)
+== example passed :) ==
+!!! Generated an example from grammar: 9423/c+._/%-+.5+(pow(.	-6)
+== example passed :) ==
+!!! Generated an example from grammar: (3)*21
+== example passed :) ==
+!!! Generated an example from grammar: (.	 
+== example passed :) ==
+!!! Generated an example from grammar: -(1)*pow(. 	 /c
+== example passed :) ==
+!!! Generated an example from grammar: 73*.Zi
+== example passed :) ==
+!!! Generated an example from grammar: (.5.(52)*68
+==! example failed :( !==
+!!! Generated an example from grammar: -(4)*-((.)*pow(90, 5)
+== example passed :) ==
+!!! Generated an example from grammar: -(922)*9
+== example passed :) ==
+!!! Generated an example from grammar: pow(.]'&!.
+== example passed :) ==
+!!! Generated an example from grammar: 8/c
+== example passed :) ==
+!!! Generated an example from grammar: -(-(35)*6)*77624.97+(2-694/c)
+== example passed :) ==
+!!! Generated an example from grammar: -(33)*0
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*32)/55361
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*9)/6+5+((.	-48397)
+== example passed :) ==
+!!! Generated an example from grammar: pow(4*.~{(|;, 5)
+== example passed :) ==
+!!! Generated an example from grammar: -(0)*5*.pow(.+.k
+== example passed :) ==
+!!! Generated an example from grammar: pow(.1+48+27
+==! example failed :( !==
+!!! Generated an example from grammar: 01+2/c/c
+== example passed :) ==
+!!! Generated an example from grammar: pow(.]
+== example passed :) ==
+!!! Generated an example from grammar: (.(96955498)*45
+== example passed :) ==
+!!! Generated an example from grammar: 36+0+. +.;
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*929+8)/61.(29+(6-764))*4*.
+==! example failed :( !==
+!!! Generated an example from grammar: (73304+.pow(18426971, 5))*2+.s
+== example passed :) ==
+!!! Generated an example from grammar: 7/c+(970-5)+.(. +(9-286)
+== example passed :) ==
+!!! Generated an example from grammar: 261.4+.(x+e*66)/2
+== example passed :) ==
+!!! Generated an example from grammar: 50+(7+((x+e*8)/8-5)-(.MX)
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*pow(.evJ)/6+(24/c-(967)*0)
+== example passed :) ==
+!!! Generated an example from grammar: (.pow(594, 5)
+== example passed :) ==
+!!! Generated an example from grammar: 216+(70/c*.471+.	-1390/c)
+== example passed :) ==
+!!! Generated an example from grammar: pow((4.88)*1, 5)
+== example passed :) ==
+!!! Generated an example from grammar: pow(20, 5)
+== example passed :) ==
+!!! Generated an example from grammar: 92914+.709+34.(x+e*2)/97.7
+==! example failed :( !==
+!!! Generated an example from grammar: (pow(.lE)*-(9)*84+.o
+== example passed :) ==
+!!! Generated an example from grammar: 7+.tq*.&/
+== example passed :) ==
+!!! Generated an example from grammar: -(-((.)*1)*-(3/c)*69
+== example passed :) ==
+!!! Generated an example from grammar: pow(.6
+==! example failed :( !==
+!!! Generated an example from grammar: (x+e*(.	+(1-53))/(.		+17
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*7)/8+pow(.
+== example passed :) ==
+!!! Generated an example from grammar: pow(09+pow(.  , 5)
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*0+440)/(-(5)*5)*(. 
+== example passed :) ==
+!!! Generated an example from grammar: (.pow(./c
+== example passed :) ==
+!!! Generated an example from grammar: 0.765
+== example passed :) ==
+!!! Generated an example from grammar: (.F.pow(pow(., 5)
+== example passed :) ==
+!!! Generated an example from grammar: 92*.+(82-(x+e*72524)/5)+76
+== example passed :) ==
+!!! Generated an example from grammar: 2059+.h
+== example passed :) ==
+!!! Generated an example from grammar: 341+.(.pow(3814, 5)
+== example passed :) ==
+!!! Generated an example from grammar: (.B
+== example passed :) ==
+!!! Generated an example from grammar: -(66)*65
+== example passed :) ==
+!!! Generated an example from grammar: 1+.s
+== example passed :) ==
+!!! Generated an example from grammar: -((.071/c)*(x+e*05)/71638
+==! example failed :( !==
+!!! Generated an example from grammar: 0.597
+== example passed :) ==
+!!! Generated an example from grammar: pow(-(921)*942826534*., 5)
+== example passed :) ==
+!!! Generated an example from grammar: 4+(8-611+(0-0)).6
+==! example failed :( !==
+!!! Generated an example from grammar: pow(3, 5)
+== example passed :) ==
+!!! Generated an example from grammar: pow(.Z.4
+== example passed :) ==
+!!! Generated an example from grammar: 7+12/c+.Q
+== example passed :) ==
+!!! Generated an example from grammar: pow(.
+== example passed :) ==
+!!! Generated an example from grammar: pow((. +., 5)
+== example passed :) ==
+!!! Generated an example from grammar: (6)*-(36)*4+(.
+== example passed :) ==
+!!! Generated an example from grammar: 997+(-(4608)*47-(x+e*831696)/(x+e*71)/909)
+== example passed :) ==
+!!! Generated an example from grammar: pow(.+(0139-106)+(6779-622)
+== example passed :) ==
+!!! Generated an example from grammar: 7+(92-37)*.|
+== example passed :) ==
+!!! Generated an example from grammar: (4)*840
+== example passed :) ==
+!!! Generated an example from grammar: pow(.672+((x+e*03)/046-3)
+==! example failed :( !==
+!!! Generated an example from grammar: 7116/c
+== example passed :) ==
+!!! Generated an example from grammar: -((71)*46/c)*4+(51-56)+24*.	
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*pow(. )/3+(8*.*.$-9)
+== example passed :) ==
+!!! Generated an example from grammar: 45*.Mc
+== example passed :) ==
+!!! Generated an example from grammar: pow(936, 5)
+== example passed :) ==
+!!! Generated an example from grammar: 6+1*.c
+== example passed :) ==
+!!! Generated an example from grammar: -(5)*813
+== example passed :) ==
+!!! Generated an example from grammar: (.
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*(.	)/2.6+9.3*.
+== example passed :) ==
+!!! Generated an example from grammar: 0*. /c+(1-8639)
+== example passed :) ==
+!!! Generated an example from grammar: 069+1*.]
+== example passed :) ==
+!!! Generated an example from grammar: 16*. +828
+== example passed :) ==
+!!! Generated an example from grammar: 90/c
+== example passed :) ==
+!!! Generated an example from grammar: (x+e*pow(3, 5))/85/c
+== example passed :) ==
+!!! Generated an example from grammar: pow(. *.		
+== example passed :) ==
+!!! Generated an example from grammar: 5.(.	/c
+==! example failed :( !==
+!!! Generated an example from grammar: -(4)*pow(9.5, 5)
+== example passed :) ==
+!!! Generated an example from grammar: (.OrMCzQr+((7)*0+(256-0)-(.)
+== example passed :) ==
+!!! Generated an example from grammar: 49+.S
+== example passed :) ==
+!!! Generated an example from grammar: (2)*1
+== example passed :) ==
+input: 4.4
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	4
+
+input: 3
+! failed to parse!
+input: e
+! failed to parse!
+input: 5.9/0382.05
+! failed to parse!
+input: 66.5
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	6
+  .
+  digits
+    digit	5
+
+input: 4.9
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	9
+
+input: 2
+! failed to parse!
+input: 58
+! failed to parse!
+input: (667.169)
+! failed to parse!
+input: 5.14
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	1
+    digits
+      digit	4
+
+input: 0620.2
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	6
+      digits
+        digit	2
+        digits
+          digit	0
+  .
+  digits
+    digit	2
+
+input: 26
+! failed to parse!
+input: 12.12
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	2
+  .
+  digits
+    digit	1
+    digits
+      digit	2
+
+input: 88.8
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	8
+  .
+  digits
+    digit	8
+
+input: -3112.1
+! failed to parse!
+input: 316.6
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	1
+      digits
+        digit	6
+  .
+  digits
+    digit	6
+
+input: 9
+! failed to parse!
+input: e
+! failed to parse!
+input: 9
+! failed to parse!
+input: 65
+! failed to parse!
+input: (0.2)
+! failed to parse!
+input: 6.6
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	6
+
+input: 8
+! failed to parse!
+input: -r
+! failed to parse!
+input: -08.8028+80.1
+! failed to parse!
+input: 0980
+! failed to parse!
+input: -7822.103
+! failed to parse!
+input: 27/58.95
+! failed to parse!
+input: 9.154
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	1
+    digits
+      digit	5
+      digits
+        digit	4
+
+input: 1*4
+! failed to parse!
+input: 4
+! failed to parse!
+input: 7
+! failed to parse!
+input: 6/51.8
+! failed to parse!
+input: 8+8
+output:
+start
+  digits
+    digit	8
+  +
+  digits
+    digit	8
+
+input: 8211
+! failed to parse!
+input: --8.7
+! failed to parse!
+input: -8.356
+! failed to parse!
+input: -0
+! failed to parse!
+input: -9/919*9
+! failed to parse!
+input: 99.89
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	9
+  .
+  digits
+    digit	8
+    digits
+      digit	9
+
+input: e
+! failed to parse!
+input: 0.326
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	3
+    digits
+      digit	2
+      digits
+        digit	6
+
+input: b
+! failed to parse!
+input: --0
+! failed to parse!
+input: 5
+! failed to parse!
+input: 8
+! failed to parse!
+input: 9/13768
+! failed to parse!
+input: 854.02
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	5
+      digits
+        digit	4
+  .
+  digits
+    digit	0
+    digits
+      digit	2
+
+input: --0.4
+! failed to parse!
+input: 18
+! failed to parse!
+input: --96.8
+! failed to parse!
+input: -4.27
+! failed to parse!
+input: 7.194
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	1
+    digits
+      digit	9
+      digits
+        digit	4
+
+input: 2.267
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	2
+    digits
+      digit	6
+      digits
+        digit	7
+
+input: 0.234
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	2
+    digits
+      digit	3
+      digits
+        digit	4
+
+input: 5.60
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	6
+    digits
+      digit	0
+
+input: 0.47/196.4
+! failed to parse!
+input: 5
+! failed to parse!
+input: 37.1/pi
+! failed to parse!
+input: 4.89
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	8
+    digits
+      digit	9
+
+input: (347.024)
+! failed to parse!
+input: 63/22675.7--74.5
+! failed to parse!
+input: 01
+! failed to parse!
+input: 4
+! failed to parse!
+input: 675402
+! failed to parse!
+input: 11652.3
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	1
+      digits
+        digit	6
+        digits
+          digit	5
+          digits
+            digit	2
+  .
+  digits
+    digit	3
+
+input: 237
+! failed to parse!
+input: 4.9*31-2+2*0
+! failed to parse!
+input: -21.2
+! failed to parse!
+input: 5.86
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	8
+    digits
+      digit	6
+
+input: 5910
+! failed to parse!
+input: b
+! failed to parse!
+input: 6
+! failed to parse!
+input: 8/8.4/616.8
+! failed to parse!
+input: 5421.1
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	4
+      digits
+        digit	2
+        digits
+          digit	1
+  .
+  digits
+    digit	1
+
+input: 4/30254.0
+! failed to parse!
+input: 5/-27
+! failed to parse!
+input: (25.00)
+! failed to parse!
+input: 24.367230*-785.17
+! failed to parse!
+input: e
+! failed to parse!
+input: 2.6
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	6
+
+input: 5
+! failed to parse!
+input: 22
+! failed to parse!
+input: 16.59
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	6
+  .
+  digits
+    digit	5
+    digits
+      digit	9
+
+input: 791509.77/-84
+! failed to parse!
+input: 08
+! failed to parse!
+input: -m
+! failed to parse!
+input: 8471.4
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	4
+      digits
+        digit	7
+        digits
+          digit	1
+  .
+  digits
+    digit	4
+
+input: (-9)+1345.83992
+! failed to parse!
+input: 6
+! failed to parse!
+input: 4
+! failed to parse!
+input: q*1
+! failed to parse!
+input: 7.2
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	2
+
+input: 2
+! failed to parse!
+input: 0.421
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	4
+    digits
+      digit	2
+      digits
+        digit	1
+
+input: -55
+! failed to parse!
+input: phi
+! failed to parse!
+input: 5.8
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	8
+
+input: 9.7
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	7
+
+input: 23.17*61.9
+! failed to parse!
+input: e
+! failed to parse!
+input: 11+--phi
+! failed to parse!
+input: 2
+! failed to parse!
+input: -7.19
+! failed to parse!
+input: 144518
+! failed to parse!
+input: 20533/-18.5
+! failed to parse!
+input: 1109.5
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	1
+      digits
+        digit	0
+        digits
+          digit	9
+  .
+  digits
+    digit	5
+
+input: e
+! failed to parse!
+input: -4.4
+! failed to parse!
+input: 94
+! failed to parse!
+input: 263.6477+1891.63
+output:
+_ambig
+  start
+    start
+      digits
+        digit	2
+        digits
+          digit	6
+          digits
+            digit	3
+      .
+      digits
+        digit	6
+        digits
+          digit	4
+          digits
+            digit	7
+            digits
+              digit	7
+    +
+    start
+      digits
+        digit	1
+        digits
+          digit	8
+          digits
+            digit	9
+            digits
+              digit	1
+      .
+      digits
+        digit	6
+        digits
+          digit	3
+  start
+    digits
+      digit	2
+      digits
+        digit	6
+        digits
+          digit	3
+    .
+    _ambig
+      start
+        digits
+          digit	6
+          digits
+            digit	4
+            digits
+              digit	7
+              digits
+                digit	7
+        +
+        start
+          digits
+            digit	1
+            digits
+              digit	8
+              digits
+                digit	9
+                digits
+                  digit	1
+          .
+          digits
+            digit	6
+            digits
+              digit	3
+      start
+        start
+          digits
+            digit	6
+            digits
+              digit	4
+              digits
+                digit	7
+                digits
+                  digit	7
+          +
+          digits
+            digit	1
+            digits
+              digit	8
+              digits
+                digit	9
+                digits
+                  digit	1
+        .
+        digits
+          digit	6
+          digits
+            digit	3
+  start
+    _ambig
+      start
+        start
+          digits
+            digit	2
+            digits
+              digit	6
+              digits
+                digit	3
+          .
+          digits
+            digit	6
+            digits
+              digit	4
+              digits
+                digit	7
+                digits
+                  digit	7
+        +
+        digits
+          digit	1
+          digits
+            digit	8
+            digits
+              digit	9
+              digits
+                digit	1
+      start
+        digits
+          digit	2
+          digits
+            digit	6
+            digits
+              digit	3
+        .
+        start
+          digits
+            digit	6
+            digits
+              digit	4
+              digits
+                digit	7
+                digits
+                  digit	7
+          +
+          digits
+            digit	1
+            digits
+              digit	8
+              digits
+                digit	9
+                digits
+                  digit	1
+    .
+    digits
+      digit	6
+      digits
+        digit	3
+
+input: -2.0*68154.9
+! failed to parse!
+input: 0.1
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	1
+
+input: -54411.81
+! failed to parse!
+input: 488/207.1717
+! failed to parse!
+input: 191887
+! failed to parse!
+input: -8.3*4.423*4414
+! failed to parse!
+input: 9532
+! failed to parse!
+input: 0.30/2
+! failed to parse!
+input: (5.26)
+! failed to parse!
+input: 6952
+! failed to parse!
+input: 802.112/38.4*3970
+! failed to parse!
+input: 021.4
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	2
+      digits
+        digit	1
+  .
+  digits
+    digit	4
+
+input: 869189
+! failed to parse!
+input: pi
+! failed to parse!
+input: s
+! failed to parse!
+input: --5
+! failed to parse!
+input: pi
+! failed to parse!
+input: -phi*-76
+! failed to parse!
+input: -97
+! failed to parse!
+input: 6.087
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	0
+    digits
+      digit	8
+      digits
+        digit	7
+
+input: -59.35
+! failed to parse!
+input: -6
+! failed to parse!
+input: 4
+! failed to parse!
+input: 2
+! failed to parse!
+input: 60
+! failed to parse!
+input: -phi
+! failed to parse!
+input: -9
+! failed to parse!
+input: 3.9
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	9
+
+input: 9.9+5/705
+! failed to parse!
+input: 9.7
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	7
+
+input: 1
+! failed to parse!
+input: 6/a
+! failed to parse!
+input: 8173.919
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	1
+      digits
+        digit	7
+        digits
+          digit	3
+  .
+  digits
+    digit	9
+    digits
+      digit	1
+      digits
+        digit	9
+
+input: -009.6
+! failed to parse!
+input: g/f/9178
+! failed to parse!
+input: phi
+! failed to parse!
+input: 0
+! failed to parse!
+input: 841.3
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	4
+      digits
+        digit	1
+  .
+  digits
+    digit	3
+
+input: 9.2
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	2
+
+input: 0.3
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	3
+
+input: -phi
+! failed to parse!
+input: 291-26
+! failed to parse!
+input: (2-73)
+! failed to parse!
+input: 788
+! failed to parse!
+input: --3.9671*7379
+! failed to parse!
+input: (15.302)
+! failed to parse!
+input: 481509.8
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	8
+      digits
+        digit	1
+        digits
+          digit	5
+          digits
+            digit	0
+            digits
+              digit	9
+  .
+  digits
+    digit	8
+
+input: 3
+! failed to parse!
+input: 310.2
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	1
+      digits
+        digit	0
+  .
+  digits
+    digit	2
+
+input: 52
+! failed to parse!
+input: -pi
+! failed to parse!
+input: 71.16
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	1
+  .
+  digits
+    digit	1
+    digits
+      digit	6
+
+input: 13
+! failed to parse!
+input: 1
+! failed to parse!
+input: 828
+! failed to parse!
+input: --587.0
+! failed to parse!
+input: 07
+! failed to parse!
+input: e
+! failed to parse!
+input: 07.6
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	7
+  .
+  digits
+    digit	6
+
+input: pi/-91.03*e
+! failed to parse!
+input: 6.09
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	0
+    digits
+      digit	9
+
+input: 3520.97
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	5
+      digits
+        digit	2
+        digits
+          digit	0
+  .
+  digits
+    digit	9
+    digits
+      digit	7
+
+input: 9
+! failed to parse!
+input: 43
+! failed to parse!
+input: 351
+! failed to parse!
+input: 05.77
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	5
+  .
+  digits
+    digit	7
+    digits
+      digit	7
+
+input: 3--691.5665
+! failed to parse!
+input: pi
+! failed to parse!
+input: 554.604
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	5
+      digits
+        digit	4
+  .
+  digits
+    digit	6
+    digits
+      digit	0
+      digits
+        digit	4
+
+input: 012.2
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	1
+      digits
+        digit	2
+  .
+  digits
+    digit	2
+
+input: 4
+! failed to parse!
+input: 9
+! failed to parse!
+input: -84.6--02
+! failed to parse!
+input: 61.9
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	1
+  .
+  digits
+    digit	9
+
+input: 0
+! failed to parse!
+input: 9.65
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	6
+    digits
+      digit	5
+
+input: 0.1
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	1
+
+input: -1
+! failed to parse!
+input: pi
+! failed to parse!
+input: --28
+! failed to parse!
+input: 8778.2
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	7
+      digits
+        digit	7
+        digits
+          digit	8
+  .
+  digits
+    digit	2
+
+input: -56725
+! failed to parse!
+input: 86497-926.1
+! failed to parse!
+input: 3891.06
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	8
+      digits
+        digit	9
+        digits
+          digit	1
+  .
+  digits
+    digit	0
+    digits
+      digit	6
+
+input: 2.3
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	3
+
+input: 7.33381
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	3
+    digits
+      digit	3
+      digits
+        digit	3
+        digits
+          digit	8
+          digits
+            digit	1
+
+input: 76
+! failed to parse!
+input: 05
+! failed to parse!
+input: -e
+! failed to parse!
+input: 4.0/0.06174*-875.919/5
+! failed to parse!
+input: -47-13.0
+! failed to parse!
+input: 6399
+! failed to parse!
+input: 8
+! failed to parse!
+input: -9.000
+! failed to parse!
+input: -8
+! failed to parse!
+input: pi*9.0
+! failed to parse!
+input: 65
+! failed to parse!
+input: 5.254
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	2
+    digits
+      digit	5
+      digits
+        digit	4
+
+input: -6
+! failed to parse!
+input: 1
+! failed to parse!
+input: 844100.76
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	4
+      digits
+        digit	4
+        digits
+          digit	1
+          digits
+            digit	0
+            digits
+              digit	0
+  .
+  digits
+    digit	7
+    digits
+      digit	6
+
+input: -8.5*5.30
+! failed to parse!
+input: -1.54
+! failed to parse!
+input: 6417
+! failed to parse!
+input: 13
+! failed to parse!
+input: 5842
+! failed to parse!
+input: 63.9*03.3
+! failed to parse!
+input: 704.3--e
+! failed to parse!
+input: 34791
+! failed to parse!
+input: 2.69
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	6
+    digits
+      digit	9
+
+input: 3/6
+! failed to parse!
+input: pi
+! failed to parse!
+input: 217
+! failed to parse!
+input: 245
+! failed to parse!
+input: 21.1
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	1
+  .
+  digits
+    digit	1
+
+input: (4.2+26.6/8)
+! failed to parse!
+input: -5
+! failed to parse!
+input: 6
+! failed to parse!
+input: 8528.41
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	5
+      digits
+        digit	2
+        digits
+          digit	8
+  .
+  digits
+    digit	4
+    digits
+      digit	1
+
+input: 4
+! failed to parse!
+input: 7
+! failed to parse!
+input: c
+! failed to parse!
+input: phi
+! failed to parse!
+input: -997
+! failed to parse!
+input: 9
+! failed to parse!
+input: 6.52
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	5
+    digits
+      digit	2
+
+input: 26
+! failed to parse!
+input: -phi
+! failed to parse!
+input: 88.78
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	8
+  .
+  digits
+    digit	7
+    digits
+      digit	8
+
+input: -0.969
+! failed to parse!
+input: 536
+! failed to parse!
+input: (073.542--4)
+! failed to parse!
+input: 90.717328
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	0
+  .
+  digits
+    digit	7
+    digits
+      digit	1
+      digits
+        digit	7
+        digits
+          digit	3
+          digits
+            digit	2
+            digits
+              digit	8
+
+input: 199
+! failed to parse!
+input: 5.1
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	1
+
+input: 22
+! failed to parse!
+input: e-phi
+! failed to parse!
+input: 203
+! failed to parse!
+input: 7*57
+! failed to parse!
+input: 39.7
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	9
+  .
+  digits
+    digit	7
+
+input: 3.581
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	5
+    digits
+      digit	8
+      digits
+        digit	1
+
+input: 359.77
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	5
+      digits
+        digit	9
+  .
+  digits
+    digit	7
+    digits
+      digit	7
+
+input: 3198
+! failed to parse!
+input: e/60073
+! failed to parse!
+input: (63)
+! failed to parse!
+input: -17.25
+! failed to parse!
+input: 7.68/5.3281
+! failed to parse!
+input: -5*74.7
+! failed to parse!
+input: 2.8746
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	8
+    digits
+      digit	7
+      digits
+        digit	4
+        digits
+          digit	6
+
+input: 184
+! failed to parse!
+input: 693825
+! failed to parse!
+input: 2
+! failed to parse!
+input: e
+! failed to parse!
+input: e
+! failed to parse!
+input: -9
+! failed to parse!
+input: 5.544
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	5
+    digits
+      digit	4
+      digits
+        digit	4
+
+input: 1
+! failed to parse!
+input: (-16)/-6.6/phi
+! failed to parse!
+input: 40
+! failed to parse!
+input: phi
+! failed to parse!
+input: e*830.1
+! failed to parse!
+input: 5.2
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	2
+
+input: 85.0
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	5
+  .
+  digits
+    digit	0
+
+input: 4.2
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	2
+
+input: 90
+! failed to parse!
+input: 6.9
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	9
+
+input: --6.565
+! failed to parse!
+input: --68.983
+! failed to parse!
+input: 6.5*94
+! failed to parse!
+input: -4/4
+! failed to parse!
+input: 1
+! failed to parse!
+input: 6*90.6
+! failed to parse!
+input: 7*(98.4-4)
+! failed to parse!
+input: 2
+! failed to parse!
+input: --3.84
+! failed to parse!
+input: 8010.46
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	0
+      digits
+        digit	1
+        digits
+          digit	0
+  .
+  digits
+    digit	4
+    digits
+      digit	6
+
+input: 970.995+--9.4
+! failed to parse!
+input: 128471
+! failed to parse!
+input: 2
+! failed to parse!
+input: 58.3
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	8
+  .
+  digits
+    digit	3
+
+input: 9/-5/45+6.1
+! failed to parse!
+input: -1
+! failed to parse!
+input: 7.6
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	6
+
+input: 4943+26888.80
+output:
+_ambig
+  start
+    digits
+      digit	4
+      digits
+        digit	9
+        digits
+          digit	4
+          digits
+            digit	3
+    +
+    start
+      digits
+        digit	2
+        digits
+          digit	6
+          digits
+            digit	8
+            digits
+              digit	8
+              digits
+                digit	8
+      .
+      digits
+        digit	8
+        digits
+          digit	0
+  start
+    start
+      digits
+        digit	4
+        digits
+          digit	9
+          digits
+            digit	4
+            digits
+              digit	3
+      +
+      digits
+        digit	2
+        digits
+          digit	6
+          digits
+            digit	8
+            digits
+              digit	8
+              digits
+                digit	8
+    .
+    digits
+      digit	8
+      digits
+        digit	0
+
+input: 64.896
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	4
+  .
+  digits
+    digit	8
+    digits
+      digit	9
+      digits
+        digit	6
+
+input: 47
+! failed to parse!
+input: 6.649991
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	6
+    digits
+      digit	4
+      digits
+        digit	9
+        digits
+          digit	9
+          digits
+            digit	9
+            digits
+              digit	1
+
+input: 0.7572
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	7
+    digits
+      digit	5
+      digits
+        digit	7
+        digits
+          digit	2
+
+input: 015.29505/76.532
+! failed to parse!
+input: 8
+! failed to parse!
+input: (4.87)
+! failed to parse!
+input: 763-7.0
+! failed to parse!
+input: ----64
+! failed to parse!
+input: 935098-4
+! failed to parse!
+input: -7.2
+! failed to parse!
+input: pi
+! failed to parse!
+input: 95
+! failed to parse!
+input: 2
+! failed to parse!
+input: 9.0
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	0
+
+input: 89.195/(1.4)
+! failed to parse!
+input: 9
+! failed to parse!
+input: 9
+! failed to parse!
+input: (-55.9)-0.6
+! failed to parse!
+input: 5+-4
+! failed to parse!
+input: -0*2
+! failed to parse!
+input: 7768
+! failed to parse!
+input: -4.7-e
+! failed to parse!
+input: 0.9
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	9
+
+input: 77*535
+! failed to parse!
+input: pi
+! failed to parse!
+input: 3.86
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	8
+    digits
+      digit	6
+
+input: 5.051
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	0
+    digits
+      digit	5
+      digits
+        digit	1
+
+input: 2
+! failed to parse!
+input: 834.2
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	3
+      digits
+        digit	4
+  .
+  digits
+    digit	2
+
+input: 01.209
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	1
+  .
+  digits
+    digit	2
+    digits
+      digit	0
+      digits
+        digit	9
+
+input: 367.90483*e/phi*16
+! failed to parse!
+input: 846535/-0.15
+! failed to parse!
+input: 70
+! failed to parse!
+input: 7506/818
+! failed to parse!
+input: 74.7*-1154.35/00.66
+! failed to parse!
+input: e
+! failed to parse!
+input: 4.5
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	5
+
+input: -2
+! failed to parse!
+input: 204.14
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	0
+      digits
+        digit	4
+  .
+  digits
+    digit	1
+    digits
+      digit	4
+
+input: e
+! failed to parse!
+input: 806.2
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	0
+      digits
+        digit	6
+  .
+  digits
+    digit	2
+
+input: 3
+! failed to parse!
+input: 0.45-03019
+! failed to parse!
+input: 432.62
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	3
+      digits
+        digit	2
+  .
+  digits
+    digit	6
+    digits
+      digit	2
+
+input: e/7/4.2
+! failed to parse!
+input: -9288.75
+! failed to parse!
+input: 0.19
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	1
+    digits
+      digit	9
+
+input: pi
+! failed to parse!
+input: 3
+! failed to parse!
+input: phi
+! failed to parse!
+input: e
+! failed to parse!
+input: 36.3616
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	6
+  .
+  digits
+    digit	3
+    digits
+      digit	6
+      digits
+        digit	1
+        digits
+          digit	6
+
+input: 8.4
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	4
+
+input: 70.8
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	0
+  .
+  digits
+    digit	8
+
+input: 3
+! failed to parse!
+input: (240)/e
+! failed to parse!
+input: 46762
+! failed to parse!
+input: 6.43
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	4
+    digits
+      digit	3
+
+input: 7
+! failed to parse!
+input: 7.9
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	9
+
+input: -8573.608
+! failed to parse!
+input: 600
+! failed to parse!
+input: 7.5+8.1
+output:
+_ambig
+  start
+    start
+      digits
+        digit	7
+      .
+      digits
+        digit	5
+    +
+    start
+      digits
+        digit	8
+      .
+      digits
+        digit	1
+  start
+    digits
+      digit	7
+    .
+    _ambig
+      start
+        digits
+          digit	5
+        +
+        start
+          digits
+            digit	8
+          .
+          digits
+            digit	1
+      start
+        start
+          digits
+            digit	5
+          +
+          digits
+            digit	8
+        .
+        digits
+          digit	1
+  start
+    _ambig
+      start
+        start
+          digits
+            digit	7
+          .
+          digits
+            digit	5
+        +
+        digits
+          digit	8
+      start
+        digits
+          digit	7
+        .
+        start
+          digits
+            digit	5
+          +
+          digits
+            digit	8
+    .
+    digits
+      digit	1
+
+input: 86262
+! failed to parse!
+input: 39
+! failed to parse!
+input: 5
+! failed to parse!
+input: 77
+! failed to parse!
+input: 33
+! failed to parse!
+input: 3
+! failed to parse!
+input: 0
+! failed to parse!
+input: 2
+! failed to parse!
+input: 8450.39+(89.52)
+! failed to parse!
+input: 361.523
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	6
+      digits
+        digit	1
+  .
+  digits
+    digit	5
+    digits
+      digit	2
+      digits
+        digit	3
+
+input: 1*3172.35421-999.43
+! failed to parse!
+input: 3.73*4
+! failed to parse!
+input: -8.10/5803.1
+! failed to parse!
+input: 6125.4
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	1
+      digits
+        digit	2
+        digits
+          digit	5
+  .
+  digits
+    digit	4
+
+input: 52914.087
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	2
+      digits
+        digit	9
+        digits
+          digit	1
+          digits
+            digit	4
+  .
+  digits
+    digit	0
+    digits
+      digit	8
+      digits
+        digit	7
+
+input: 5
+! failed to parse!
+input: 1351.26
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	3
+      digits
+        digit	5
+        digits
+          digit	1
+  .
+  digits
+    digit	2
+    digits
+      digit	6
+
+input: -(31)
+! failed to parse!
+input: 4
+! failed to parse!
+input: 4.249
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	2
+    digits
+      digit	4
+      digits
+        digit	9
+
+input: phi
+! failed to parse!
+input: -5.15
+! failed to parse!
+input: -964
+! failed to parse!
+input: 74
+! failed to parse!
+input: 065
+! failed to parse!
+input: 59880.1574
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	9
+      digits
+        digit	8
+        digits
+          digit	8
+          digits
+            digit	0
+  .
+  digits
+    digit	1
+    digits
+      digit	5
+      digits
+        digit	7
+        digits
+          digit	4
+
+input: -e-53.686
+! failed to parse!
+input: 15*02
+! failed to parse!
+input: 103
+! failed to parse!
+input: --64.1*8*8
+! failed to parse!
+input: i
+! failed to parse!
+input: -(4)
+! failed to parse!
+input: pi+6.7/-986.4/3.2
+! failed to parse!
+input: phi*-5944
+! failed to parse!
+input: 87
+! failed to parse!
+input: 52*16*8
+! failed to parse!
+input: 6283
+! failed to parse!
+input: -54.92
+! failed to parse!
+input: 8.2/6.898+-9
+! failed to parse!
+input: 8.7
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	7
+
+input: (1.2)
+! failed to parse!
+input: 596*75.85447
+! failed to parse!
+input: -7.6
+! failed to parse!
+input: 5
+! failed to parse!
+input: 3697.49
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	6
+      digits
+        digit	9
+        digits
+          digit	7
+  .
+  digits
+    digit	4
+    digits
+      digit	9
+
+input: -57
+! failed to parse!
+input: 0
+! failed to parse!
+input: 65/-95.5/e
+! failed to parse!
+input: phi
+! failed to parse!
+input: 5
+! failed to parse!
+input: 8.3
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	3
+
+input: -4.266
+! failed to parse!
+input: 8
+! failed to parse!
+input: 2.0
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	0
+
+input: --95.2351
+! failed to parse!
+input: 12
+! failed to parse!
+input: 6.2
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	2
+
+input: 0.6
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	6
+
+input: 30
+! failed to parse!
+input: e/--16.103-9
+! failed to parse!
+input: ---phi
+! failed to parse!
+input: 56129
+! failed to parse!
+input: 7
+! failed to parse!
+input: 54.4
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	4
+  .
+  digits
+    digit	4
+
+input: phi
+! failed to parse!
+input: -3.8--0484/832
+! failed to parse!
+input: 8.18
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	1
+    digits
+      digit	8
+
+input: 2.4
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	4
+
+input: 820.5
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	2
+      digits
+        digit	0
+  .
+  digits
+    digit	5
+
+input: 8.71
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	7
+    digits
+      digit	1
+
+input: 047*1
+! failed to parse!
+input: 6.59*4991.3
+! failed to parse!
+input: 88
+! failed to parse!
+input: 78.31
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	8
+  .
+  digits
+    digit	3
+    digits
+      digit	1
+
+input: 52
+! failed to parse!
+input: e
+! failed to parse!
+input: 9+193*8.2
+! failed to parse!
+input: 243.6
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	4
+      digits
+        digit	3
+  .
+  digits
+    digit	6
+
+input: 00
+! failed to parse!
+input: 66
+! failed to parse!
+input: 8
+! failed to parse!
+input: 752.56
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	5
+      digits
+        digit	2
+  .
+  digits
+    digit	5
+    digits
+      digit	6
+
+input: e/pi
+! failed to parse!
+input: 0.23-97.63
+! failed to parse!
+input: 586.445*14.326*-92.4
+! failed to parse!
+input: phi
+! failed to parse!
+input: 2.4
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	4
+
+input: -pi
+! failed to parse!
+input: 8
+! failed to parse!
+input: 765.52
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	6
+      digits
+        digit	5
+  .
+  digits
+    digit	5
+    digits
+      digit	2
+
+input: 64.4/e
+! failed to parse!
+input: 18
+! failed to parse!
+input: 4
+! failed to parse!
+input: 6*4.1452
+! failed to parse!
+input: ---2.68
+! failed to parse!
+input: 5+98.5
+output:
+_ambig
+  start
+    digits
+      digit	5
+    +
+    start
+      digits
+        digit	9
+        digits
+          digit	8
+      .
+      digits
+        digit	5
+  start
+    start
+      digits
+        digit	5
+      +
+      digits
+        digit	9
+        digits
+          digit	8
+    .
+    digits
+      digit	5
+
+input: 8.678
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	6
+    digits
+      digit	7
+      digits
+        digit	8
+
+input: 080
+! failed to parse!
+input: 9.94
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	9
+    digits
+      digit	4
+
+input: --4.5
+! failed to parse!
+input: -h
+! failed to parse!
+input: 6/78
+! failed to parse!
+input: pi
+! failed to parse!
+input: -6
+! failed to parse!
+input: 5
+! failed to parse!
+input: 43
+! failed to parse!
+input: 535.79
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	3
+      digits
+        digit	5
+  .
+  digits
+    digit	7
+    digits
+      digit	9
+
+input: 40.2
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	0
+  .
+  digits
+    digit	2
+
+input: 90
+! failed to parse!
+input: 7770
+! failed to parse!
+input: 9
+! failed to parse!
+input: 5.9
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	9
+
+input: 2086
+! failed to parse!
+input: 93.9
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	3
+  .
+  digits
+    digit	9
+
+input: 31
+! failed to parse!
+input: 6840.651/y
+! failed to parse!
+input: e
+! failed to parse!
+input: 4.8
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	8
+
+input: g
+! failed to parse!
+input: 0.68*-2
+! failed to parse!
+input: -2
+! failed to parse!
+input: 3.9
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	9
+
+input: e-75.5*42
+! failed to parse!
+input: 84.0
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	4
+  .
+  digits
+    digit	0
+
+input: 3636.6
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	6
+      digits
+        digit	3
+        digits
+          digit	6
+  .
+  digits
+    digit	6
+
+input: 6
+! failed to parse!
+input: 1.4
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	4
+
+input: 82
+! failed to parse!
+input: 0
+! failed to parse!
+input: 534.610
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	3
+      digits
+        digit	4
+  .
+  digits
+    digit	6
+    digits
+      digit	1
+      digits
+        digit	0
+
+input: 135.16
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	3
+      digits
+        digit	5
+  .
+  digits
+    digit	1
+    digits
+      digit	6
+
+input: 3.03*1.9
+! failed to parse!
+input: -89*56994.2
+! failed to parse!
+input: 3.3
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	3
+
+input: 40.44369
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	0
+  .
+  digits
+    digit	4
+    digits
+      digit	4
+      digits
+        digit	3
+        digits
+          digit	6
+          digits
+            digit	9
+
+input: 972.8/42.2
+! failed to parse!
+input: pi
+! failed to parse!
+input: 4.1*7.89
+! failed to parse!
+input: 69282.8
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	9
+      digits
+        digit	2
+        digits
+          digit	8
+          digits
+            digit	2
+  .
+  digits
+    digit	8
+
+input: 8
+! failed to parse!
+input: 2337
+! failed to parse!
+input: 4
+! failed to parse!
+input: 1.5
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	5
+
+input: 4
+! failed to parse!
+input: o*23.2
+! failed to parse!
+input: (383.540)
+! failed to parse!
+input: 703
+! failed to parse!
+input: 80088
+! failed to parse!
+input: 607166*233
+! failed to parse!
+input: 4
+! failed to parse!
+input: 56
+! failed to parse!
+input: 852.2/5*--06
+! failed to parse!
+input: 36
+! failed to parse!
+input: (526-3.0)/58324.5875
+! failed to parse!
+input: 149426
+! failed to parse!
+input: 2
+! failed to parse!
+input: 9
+! failed to parse!
+input: 18.69
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	8
+  .
+  digits
+    digit	6
+    digits
+      digit	9
+
+input: ---9.239
+! failed to parse!
+input: 509.0
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	0
+      digits
+        digit	9
+  .
+  digits
+    digit	0
+
+input: 0.856
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	8
+    digits
+      digit	5
+      digits
+        digit	6
+
+input: 23.0
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	3
+  .
+  digits
+    digit	0
+
+input: 37
+! failed to parse!
+input: 0.471
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	4
+    digits
+      digit	7
+      digits
+        digit	1
+
+input: 2
+! failed to parse!
+input: 2*16.9
+! failed to parse!
+input: 958.52
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	5
+      digits
+        digit	8
+  .
+  digits
+    digit	5
+    digits
+      digit	2
+
+input: 6.0*-0.8
+! failed to parse!
+input: 3/q
+! failed to parse!
+input: 0293.25
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	2
+      digits
+        digit	9
+        digits
+          digit	3
+  .
+  digits
+    digit	2
+    digits
+      digit	5
+
+input: 08
+! failed to parse!
+input: 3
+! failed to parse!
+input: -4660.38
+! failed to parse!
+input: 2
+! failed to parse!
+input: 65935.359/6.4/-phi
+! failed to parse!
+input: -9177.454
+! failed to parse!
+input: 3/4.3
+! failed to parse!
+input: 53818
+! failed to parse!
+input: 007434
+! failed to parse!
+input: 8193.867/-6.8/190
+! failed to parse!
+input: 9
+! failed to parse!
+input: -350.3/7.266
+! failed to parse!
+input: 6
+! failed to parse!
+input: 443
+! failed to parse!
+input: 6
+! failed to parse!
+input: 337.3
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	3
+      digits
+        digit	7
+  .
+  digits
+    digit	3
+
+input: -84
+! failed to parse!
+input: 192.47739
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	9
+      digits
+        digit	2
+  .
+  digits
+    digit	4
+    digits
+      digit	7
+      digits
+        digit	7
+        digits
+          digit	3
+          digits
+            digit	9
+
+input: 5747
+! failed to parse!
+input: 839.26
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	3
+      digits
+        digit	9
+  .
+  digits
+    digit	2
+    digits
+      digit	6
+
+input: 9
+! failed to parse!
+input: 18.99
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	8
+  .
+  digits
+    digit	9
+    digits
+      digit	9
+
+input: 2283
+! failed to parse!
+input: --653.18-62.0351
+! failed to parse!
+input: -0
+! failed to parse!
+input: 64849
+! failed to parse!
+input: e
+! failed to parse!
+input: 04.3
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	4
+  .
+  digits
+    digit	3
+
+input: 714741.4100
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	1
+      digits
+        digit	4
+        digits
+          digit	7
+          digits
+            digit	4
+            digits
+              digit	1
+  .
+  digits
+    digit	4
+    digits
+      digit	1
+      digits
+        digit	0
+        digits
+          digit	0
+
+input: --0
+! failed to parse!
+input: 2
+! failed to parse!
+input: 05.18*9*9/4
+! failed to parse!
+input: (973)*e
+! failed to parse!
+input: 803842
+! failed to parse!
+input: e*e*656
+! failed to parse!
+input: 5
+! failed to parse!
+input: 2
+! failed to parse!
+input: -9
+! failed to parse!
+input: 4.51
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	5
+    digits
+      digit	1
+
+input: 5.5
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	5
+
+input: 2
+! failed to parse!
+input: --2.201
+! failed to parse!
+input: phi
+! failed to parse!
+input: g
+! failed to parse!
+input: 92
+! failed to parse!
+input: 219915.88
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	1
+      digits
+        digit	9
+        digits
+          digit	9
+          digits
+            digit	1
+            digits
+              digit	5
+  .
+  digits
+    digit	8
+    digits
+      digit	8
+
+input: 85.08
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	5
+  .
+  digits
+    digit	0
+    digits
+      digit	8
+
+input: 45055.8
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	5
+      digits
+        digit	0
+        digits
+          digit	5
+          digits
+            digit	5
+  .
+  digits
+    digit	8
+
+input: 0.3
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	3
+
+input: 0
+! failed to parse!
+input: -1.3156
+! failed to parse!
+input: 66679.16
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	6
+      digits
+        digit	6
+        digits
+          digit	7
+          digits
+            digit	9
+  .
+  digits
+    digit	1
+    digits
+      digit	6
+
+input: 4.8
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	8
+
+input: 035.8
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	3
+      digits
+        digit	5
+  .
+  digits
+    digit	8
+
+input: 82968
+! failed to parse!
+input: 47
+! failed to parse!
+input: 1.410
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	4
+    digits
+      digit	1
+      digits
+        digit	0
+
+input: 97
+! failed to parse!
+input: 6572.4
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	5
+      digits
+        digit	7
+        digits
+          digit	2
+  .
+  digits
+    digit	4
+
+input: 4
+! failed to parse!
+input: -8
+! failed to parse!
+input: 65.3
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	5
+  .
+  digits
+    digit	3
+
+input: 554
+! failed to parse!
+input: 6.2
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	2
+
+input: 66/4.6
+! failed to parse!
+input: 9681.6
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	6
+      digits
+        digit	8
+        digits
+          digit	1
+  .
+  digits
+    digit	6
+
+input: phi
+! failed to parse!
+input: --5*-7840-7
+! failed to parse!
+input: -83
+! failed to parse!
+input: phi
+! failed to parse!
+input: 98+9779.4
+output:
+_ambig
+  start
+    digits
+      digit	9
+      digits
+        digit	8
+    +
+    start
+      digits
+        digit	9
+        digits
+          digit	7
+          digits
+            digit	7
+            digits
+              digit	9
+      .
+      digits
+        digit	4
+  start
+    start
+      digits
+        digit	9
+        digits
+          digit	8
+      +
+      digits
+        digit	9
+        digits
+          digit	7
+          digits
+            digit	7
+            digits
+              digit	9
+    .
+    digits
+      digit	4
+
+input: 52
+! failed to parse!
+input: -4
+! failed to parse!
+input: pi
+! failed to parse!
+input: 5
+! failed to parse!
+input: 1-1
+! failed to parse!
+input: 8
+! failed to parse!
+input: 419
+! failed to parse!
+input: -9
+! failed to parse!
+input: 93439*8182.5
+! failed to parse!
+input: 0.9
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	9
+
+input: 75.7/57
+! failed to parse!
+input: 4.00
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	0
+    digits
+      digit	0
+
+input: 16.42872
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	6
+  .
+  digits
+    digit	4
+    digits
+      digit	2
+      digits
+        digit	8
+        digits
+          digit	7
+          digits
+            digit	2
+
+input: 7
+! failed to parse!
+input: -1.54389
+! failed to parse!
+input: 664
+! failed to parse!
+input: pi
+! failed to parse!
+input: 9*-8.11
+! failed to parse!
+input: pi
+! failed to parse!
+input: 0
+! failed to parse!
+input: -16
+! failed to parse!
+input: 92.8
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	2
+  .
+  digits
+    digit	8
+
+input: -896.91
+! failed to parse!
+input: pi
+! failed to parse!
+input: 6.593/(80)*3.3
+! failed to parse!
+input: 1.147
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	1
+    digits
+      digit	4
+      digits
+        digit	7
+
+input: 890904.422
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	9
+      digits
+        digit	0
+        digits
+          digit	9
+          digits
+            digit	0
+            digits
+              digit	4
+  .
+  digits
+    digit	4
+    digits
+      digit	2
+      digits
+        digit	2
+
+input: 43
+! failed to parse!
+input: 2
+! failed to parse!
+input: 6.78
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	7
+    digits
+      digit	8
+
+input: (47*-4)
+! failed to parse!
+input: 1
+! failed to parse!
+input: 049
+! failed to parse!
+input: pi+75.5
+! failed to parse!
+input: 39
+! failed to parse!
+input: -phi
+! failed to parse!
+input: 3
+! failed to parse!
+input: 40.2*7.09
+! failed to parse!
+input: ---987.34
+! failed to parse!
+input: 042.7
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	4
+      digits
+        digit	2
+  .
+  digits
+    digit	7
+
+input: 6
+! failed to parse!
+input: 9
+! failed to parse!
+input: 988.32
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	8
+      digits
+        digit	8
+  .
+  digits
+    digit	3
+    digits
+      digit	2
+
+input: -phi
+! failed to parse!
+input: 6
+! failed to parse!
+input: (57.46)/-7.68
+! failed to parse!
+input: e
+! failed to parse!
+input: e
+! failed to parse!
+input: -1.32
+! failed to parse!
+input: 8*(i)
+! failed to parse!
+input: 9.67
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	6
+    digits
+      digit	7
+
+input: -8828.0
+! failed to parse!
+input: phi
+! failed to parse!
+input: 186
+! failed to parse!
+input: -3
+! failed to parse!
+input: 62.5
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	2
+  .
+  digits
+    digit	5
+
+input: pi
+! failed to parse!
+input: 1.488/4/-101
+! failed to parse!
+input: 843.2/1
+! failed to parse!
+input: 86.22
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	6
+  .
+  digits
+    digit	2
+    digits
+      digit	2
+
+input: 5
+! failed to parse!
+input: 25.7
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	5
+  .
+  digits
+    digit	7
+
+input: 5.4/7
+! failed to parse!
+input: 386
+! failed to parse!
+input: 84
+! failed to parse!
+input: 4.1
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	1
+
+input: 83*77
+! failed to parse!
+input: 9
+! failed to parse!
+input: 8.30/6.7
+! failed to parse!
+input: 579482*9.409
+! failed to parse!
+input: -37.1
+! failed to parse!
+input: m
+! failed to parse!
+input: 2.382
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	3
+    digits
+      digit	8
+      digits
+        digit	2
+
+input: 59752*--9-4.8
+! failed to parse!
+input: 56.5
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	6
+  .
+  digits
+    digit	5
+
+input: 8.04/3.7
+! failed to parse!
+input: 600.12373
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	0
+      digits
+        digit	0
+  .
+  digits
+    digit	1
+    digits
+      digit	2
+      digits
+        digit	3
+        digits
+          digit	7
+          digits
+            digit	3
+
+input: 92.91
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	2
+  .
+  digits
+    digit	9
+    digits
+      digit	1
+
+input: 9.4983+3.8-5.6
+! failed to parse!
+input: 4
+! failed to parse!
+input: -52.9
+! failed to parse!
+input: 0644
+! failed to parse!
+input: -0
+! failed to parse!
+input: (6)
+! failed to parse!
+input: e
+! failed to parse!
+input: -x
+! failed to parse!
+input: --3.3
+! failed to parse!
+input: 1.94
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	9
+    digits
+      digit	4
+
+input: -81
+! failed to parse!
+input: (69)-2.5
+! failed to parse!
+input: 9.0
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	0
+
+input: 07.5
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	7
+  .
+  digits
+    digit	5
+
+input: 84.370
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	4
+  .
+  digits
+    digit	3
+    digits
+      digit	7
+      digits
+        digit	0
+
+input: 6617.4
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	6
+      digits
+        digit	1
+        digits
+          digit	7
+  .
+  digits
+    digit	4
+
+input: 6.7
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	7
+
+input: 4.56
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	5
+    digits
+      digit	6
+
+input: 5
+! failed to parse!
+input: 43.5
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	3
+  .
+  digits
+    digit	5
+
+input: 7.698
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	6
+    digits
+      digit	9
+      digits
+        digit	8
+
+input: 81.24
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	1
+  .
+  digits
+    digit	2
+    digits
+      digit	4
+
+input: -7/e
+! failed to parse!
+input: 049452
+! failed to parse!
+input: 9730
+! failed to parse!
+input: -84.17
+! failed to parse!
+input: 7.896
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	8
+    digits
+      digit	9
+      digits
+        digit	6
+
+input: 2.3
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	3
+
+input: 514*-z
+! failed to parse!
+input: 0/5.32*4.8
+! failed to parse!
+input: 6
+! failed to parse!
+input: pi
+! failed to parse!
+input: 724
+! failed to parse!
+input: 0.0/e/3.494/502
+! failed to parse!
+input: 4
+! failed to parse!
+input: (46)
+! failed to parse!
+input: 0
+! failed to parse!
+input: 97.17
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	7
+  .
+  digits
+    digit	1
+    digits
+      digit	7
+
+input: 472.695
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	7
+      digits
+        digit	2
+  .
+  digits
+    digit	6
+    digits
+      digit	9
+      digits
+        digit	5
+
+input: pi*3.64
+! failed to parse!
+input: j+phi
+! failed to parse!
+input: ---179.9
+! failed to parse!
+input: i
+! failed to parse!
+input: 5
+! failed to parse!
+input: e/e
+! failed to parse!
+input: 696
+! failed to parse!
+input: 9
+! failed to parse!
+input: 51.8
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	1
+  .
+  digits
+    digit	8
+
+input: -4
+! failed to parse!
+input: 46.76
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	6
+  .
+  digits
+    digit	7
+    digits
+      digit	6
+
+input: pi/3.5
+! failed to parse!
+input: -5/8.50
+! failed to parse!
+input: 5
+! failed to parse!
+input: 1
+! failed to parse!
+input: 5119
+! failed to parse!
+input: 1.83
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	8
+    digits
+      digit	3
+
+input: -60
+! failed to parse!
+input: 4.737112
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	7
+    digits
+      digit	3
+      digits
+        digit	7
+        digits
+          digit	1
+          digits
+            digit	1
+            digits
+              digit	2
+
+input: -88.7
+! failed to parse!
+input: 9
+! failed to parse!
+input: 4.50
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	5
+    digits
+      digit	0
+
+input: 7.9
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	9
+
+input: 3+388.5
+output:
+_ambig
+  start
+    digits
+      digit	3
+    +
+    start
+      digits
+        digit	3
+        digits
+          digit	8
+          digits
+            digit	8
+      .
+      digits
+        digit	5
+  start
+    start
+      digits
+        digit	3
+      +
+      digits
+        digit	3
+        digits
+          digit	8
+          digits
+            digit	8
+    .
+    digits
+      digit	5
+
+input: 9.50/63269
+! failed to parse!
+input: 5.0
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	0
+
+input: 4.1
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	1
+
+input: 39.291
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	9
+  .
+  digits
+    digit	2
+    digits
+      digit	9
+      digits
+        digit	1
+
+input: 3035/14
+! failed to parse!
+input: 2
+! failed to parse!
+input: 3.9274
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	9
+    digits
+      digit	2
+      digits
+        digit	7
+        digits
+          digit	4
+
+input: 2/40
+! failed to parse!
+input: -phi
+! failed to parse!
+input: 42.6
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	2
+  .
+  digits
+    digit	6
+
+input: 7.23
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	2
+    digits
+      digit	3
+
+input: 6
+! failed to parse!
+input: 9
+! failed to parse!
+input: 2+-6
+! failed to parse!
+input: -5
+! failed to parse!
+input: -9.21
+! failed to parse!
+input: -89
+! failed to parse!
+input: -0.88
+! failed to parse!
+input: 09.2
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	9
+  .
+  digits
+    digit	2
+
+input: 9
+! failed to parse!
+input: 0
+! failed to parse!
+input: 1
+! failed to parse!
+input: 497810
+! failed to parse!
+input: 2.181
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	1
+    digits
+      digit	8
+      digits
+        digit	1
+
+input: --8
+! failed to parse!
+input: e
+! failed to parse!
+input: -25+phi
+! failed to parse!
+input: 14.40
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	4
+  .
+  digits
+    digit	4
+    digits
+      digit	0
+
+input: e
+! failed to parse!
+input: 62
+! failed to parse!
+input: 2
+! failed to parse!
+input: --92
+! failed to parse!
+input: 5.266
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	2
+    digits
+      digit	6
+      digits
+        digit	6
+
+input: (6)*50005.340
+output:
+_ambig
+  start
+    (
+    digits
+      digit	6
+    )
+    *
+    start
+      digits
+        digit	5
+        digits
+          digit	0
+          digits
+            digit	0
+            digits
+              digit	0
+              digits
+                digit	5
+      .
+      digits
+        digit	3
+        digits
+          digit	4
+          digits
+            digit	0
+  start
+    start
+      (
+      digits
+        digit	6
+      )
+      *
+      digits
+        digit	5
+        digits
+          digit	0
+          digits
+            digit	0
+            digits
+              digit	0
+              digits
+                digit	5
+    .
+    digits
+      digit	3
+      digits
+        digit	4
+        digits
+          digit	0
+
+input: 741725
+! failed to parse!
+input: 0.7651-19
+! failed to parse!
+input: 4
+! failed to parse!
+input: 6.509/143.26
+! failed to parse!
+input: (e*5)
+! failed to parse!
+input: 47.1
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	7
+  .
+  digits
+    digit	1
+
+input: 02.0786
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	2
+  .
+  digits
+    digit	0
+    digits
+      digit	7
+      digits
+        digit	8
+        digits
+          digit	6
+
+input: 19.3
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	9
+  .
+  digits
+    digit	3
+
+input: 5/-851.80+40.22
+! failed to parse!
+input: 0
+! failed to parse!
+input: 9.9783
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	9
+    digits
+      digit	7
+      digits
+        digit	8
+        digits
+          digit	3
+
+input: 0
+! failed to parse!
+input: -71
+! failed to parse!
+input: 7
+! failed to parse!
+input: 481
+! failed to parse!
+input: 392
+! failed to parse!
+input: 9
+! failed to parse!
+input: 0.2031
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	2
+    digits
+      digit	0
+      digits
+        digit	3
+        digits
+          digit	1
+
+input: 36
+! failed to parse!
+input: 6.0
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	0
+
+input: 6784
+! failed to parse!
+input: 172.3
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	7
+      digits
+        digit	2
+  .
+  digits
+    digit	3
+
+input: phi
+! failed to parse!
+input: 4.503
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	5
+    digits
+      digit	0
+      digits
+        digit	3
+
+input: 69478
+! failed to parse!
+input: 9.8
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	8
+
+input: -g*1575.9
+! failed to parse!
+input: 758.03
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	5
+      digits
+        digit	8
+  .
+  digits
+    digit	0
+    digits
+      digit	3
+
+input: 82847.4/4.41
+! failed to parse!
+input: 0932
+! failed to parse!
+input: 205
+! failed to parse!
+input: 564.8
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	6
+      digits
+        digit	4
+  .
+  digits
+    digit	8
+
+input: -6
+! failed to parse!
+input: o
+! failed to parse!
+input: -418
+! failed to parse!
+input: -pi
+! failed to parse!
+input: 6
+! failed to parse!
+input: 43.7
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	3
+  .
+  digits
+    digit	7
+
+input: 6.96
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	9
+    digits
+      digit	6
+
+input: 8
+! failed to parse!
+input: 971.7
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	7
+      digits
+        digit	1
+  .
+  digits
+    digit	7
+
+input: 852
+! failed to parse!
+input: 752
+! failed to parse!
+input: 14.1
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	4
+  .
+  digits
+    digit	1
+
+input: 30
+! failed to parse!
+input: 575294.9
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	7
+      digits
+        digit	5
+        digits
+          digit	2
+          digits
+            digit	9
+            digits
+              digit	4
+  .
+  digits
+    digit	9
+
+input: -phi
+! failed to parse!
+input: 7
+! failed to parse!
+input: -7
+! failed to parse!
+input: 73
+! failed to parse!
+input: 26.7
+output:
+start
+  digits
+    digit	2
+    digits
+      digit	6
+  .
+  digits
+    digit	7
+
+input: 0.0
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	0
+
+input: -60
+! failed to parse!
+input: 1
+! failed to parse!
+input: -(-2)
+! failed to parse!
+input: 342.6
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	4
+      digits
+        digit	2
+  .
+  digits
+    digit	6
+
+input: 11
+! failed to parse!
+input: --3.8
+! failed to parse!
+input: e-08
+! failed to parse!
+input: 1531.8*1089
+! failed to parse!
+input: 7.4
+output:
+start
+  digits
+    digit	7
+  .
+  digits
+    digit	4
+
+input: -v*14031
+! failed to parse!
+input: 9.0
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	0
+
+input: 6
+! failed to parse!
+input: c--9.46
+! failed to parse!
+input: 62
+! failed to parse!
+input: 7
+! failed to parse!
+input: 83980.80
+output:
+start
+  digits
+    digit	8
+    digits
+      digit	3
+      digits
+        digit	9
+        digits
+          digit	8
+          digits
+            digit	0
+  .
+  digits
+    digit	8
+    digits
+      digit	0
+
+input: 1*22
+! failed to parse!
+input: 11840
+! failed to parse!
+input: 18/2/9.8
+! failed to parse!
+input: 2255
+! failed to parse!
+input: 70.574
+output:
+start
+  digits
+    digit	7
+    digits
+      digit	0
+  .
+  digits
+    digit	5
+    digits
+      digit	7
+      digits
+        digit	4
+
+input: 2.9
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	9
+
+input: --5
+! failed to parse!
+input: -(52)
+! failed to parse!
+input: 16210.30*0.8
+! failed to parse!
+input: 8.7489
+output:
+start
+  digits
+    digit	8
+  .
+  digits
+    digit	7
+    digits
+      digit	4
+      digits
+        digit	8
+        digits
+          digit	9
+
+input: 62959.2/57*0.0
+! failed to parse!
+input: 4.0
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	0
+
+input: -68
+! failed to parse!
+input: 15.63784/5+3.9
+! failed to parse!
+input: 3.1
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	1
+
+input: 5.9/-2
+! failed to parse!
+input: -8.3130
+! failed to parse!
+input: 9
+! failed to parse!
+input: -7
+! failed to parse!
+input: 45.61*8.2239
+! failed to parse!
+input: 4
+! failed to parse!
+input: -2.0
+! failed to parse!
+input: pi
+! failed to parse!
+input: 63.14
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	3
+  .
+  digits
+    digit	1
+    digits
+      digit	4
+
+input: 6
+! failed to parse!
+input: 22
+! failed to parse!
+input: -38.51
+! failed to parse!
+input: 05
+! failed to parse!
+input: -2
+! failed to parse!
+input: 1.061
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	0
+    digits
+      digit	6
+      digits
+        digit	1
+
+input: 36
+! failed to parse!
+input: phi
+! failed to parse!
+input: 7/72
+! failed to parse!
+input: 0
+! failed to parse!
+input: 0
+! failed to parse!
+input: -99.2
+! failed to parse!
+input: e
+! failed to parse!
+input: 7
+! failed to parse!
+input: 678.6
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	7
+      digits
+        digit	8
+  .
+  digits
+    digit	6
+
+input: 57261
+! failed to parse!
+input: 454
+! failed to parse!
+input: 38*6
+! failed to parse!
+input: 73*2.3
+! failed to parse!
+input: 7*0
+! failed to parse!
+input: 5.33/9643.7
+! failed to parse!
+input: s
+! failed to parse!
+input: 0.6
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	6
+
+input: 121
+! failed to parse!
+input: e
+! failed to parse!
+input: --0.0
+! failed to parse!
+input: o
+! failed to parse!
+input: 4.7
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	7
+
+input: 33.8
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	3
+  .
+  digits
+    digit	8
+
+input: 5.3-3.6
+! failed to parse!
+input: 12
+! failed to parse!
+input: 14.55
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	4
+  .
+  digits
+    digit	5
+    digits
+      digit	5
+
+input: 2
+! failed to parse!
+input: -e
+! failed to parse!
+input: -k
+! failed to parse!
+input: 5701
+! failed to parse!
+input: 0
+! failed to parse!
+input: -f
+! failed to parse!
+input: -1.95
+! failed to parse!
+input: 5.7
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	7
+
+input: 44
+! failed to parse!
+input: -564
+! failed to parse!
+input: 2
+! failed to parse!
+input: 185+5
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	8
+      digits
+        digit	5
+  +
+  digits
+    digit	5
+
+input: 604812*pi
+! failed to parse!
+input: 5.7
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	7
+
+input: 3.9
+output:
+start
+  digits
+    digit	3
+  .
+  digits
+    digit	9
+
+input: -3.0*2
+! failed to parse!
+input: 3.3/3.2+e
+! failed to parse!
+input: e
+! failed to parse!
+input: 1.2
+output:
+start
+  digits
+    digit	1
+  .
+  digits
+    digit	2
+
+input: e+8256
+! failed to parse!
+input: -9
+! failed to parse!
+input: 15
+! failed to parse!
+input: 91
+! failed to parse!
+input: g
+! failed to parse!
+input: 7
+! failed to parse!
+input: 4
+! failed to parse!
+input: 824963
+! failed to parse!
+input: 68
+! failed to parse!
+input: 4.6
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	6
+
+input: 6.9
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	9
+
+input: 4.370
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	3
+    digits
+      digit	7
+      digits
+        digit	0
+
+input: 1.37/-4.6963
+! failed to parse!
+input: -e
+! failed to parse!
+input: 6.0
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	0
+
+input: pi
+! failed to parse!
+input: pi
+! failed to parse!
+input: (-5+94)
+! failed to parse!
+input: 5.16
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	1
+    digits
+      digit	6
+
+input: 6.57
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	5
+    digits
+      digit	7
+
+input: 4
+! failed to parse!
+input: 264429
+! failed to parse!
+input: 700/95
+! failed to parse!
+input: 42
+! failed to parse!
+input: phi
+! failed to parse!
+input: 0+107.6
+output:
+_ambig
+  start
+    digits
+      digit	0
+    +
+    start
+      digits
+        digit	1
+        digits
+          digit	0
+          digits
+            digit	7
+      .
+      digits
+        digit	6
+  start
+    start
+      digits
+        digit	0
+      +
+      digits
+        digit	1
+        digits
+          digit	0
+          digits
+            digit	7
+    .
+    digits
+      digit	6
+
+input: 947.7
+output:
+start
+  digits
+    digit	9
+    digits
+      digit	4
+      digits
+        digit	7
+  .
+  digits
+    digit	7
+
+input: 5.00
+output:
+start
+  digits
+    digit	5
+  .
+  digits
+    digit	0
+    digits
+      digit	0
+
+input: 0.46
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	4
+    digits
+      digit	6
+
+input: 648
+! failed to parse!
+input: 727/37
+! failed to parse!
+input: 385996
+! failed to parse!
+input: -9
+! failed to parse!
+input: 5767.914
+output:
+start
+  digits
+    digit	5
+    digits
+      digit	7
+      digits
+        digit	6
+        digits
+          digit	7
+  .
+  digits
+    digit	9
+    digits
+      digit	1
+      digits
+        digit	4
+
+input: 282562.82*40.11113
+! failed to parse!
+input: -7.2
+! failed to parse!
+input: 431.5
+output:
+start
+  digits
+    digit	4
+    digits
+      digit	3
+      digits
+        digit	1
+  .
+  digits
+    digit	5
+
+input: 6
+! failed to parse!
+input: 7
+! failed to parse!
+input: 19
+! failed to parse!
+input: 485
+! failed to parse!
+input: (95)
+! failed to parse!
+input: 2
+! failed to parse!
+input: 340
+! failed to parse!
+input: 3758.6
+output:
+start
+  digits
+    digit	3
+    digits
+      digit	7
+      digits
+        digit	5
+        digits
+          digit	8
+  .
+  digits
+    digit	6
+
+input: 2.9
+output:
+start
+  digits
+    digit	2
+  .
+  digits
+    digit	9
+
+input: -61
+! failed to parse!
+input: 90
+! failed to parse!
+input: 9
+! failed to parse!
+input: -3
+! failed to parse!
+input: 6
+! failed to parse!
+input: 169.2
+output:
+start
+  digits
+    digit	1
+    digits
+      digit	6
+      digits
+        digit	9
+  .
+  digits
+    digit	2
+
+input: -3-61.55
+! failed to parse!
+input: -7.7
+! failed to parse!
+input: 48975
+! failed to parse!
+input: 08907
+! failed to parse!
+input: 3.3108-1
+! failed to parse!
+input: -e
+! failed to parse!
+input: 9
+! failed to parse!
+input: --3665
+! failed to parse!
+input: 309
+! failed to parse!
+input: -63
+! failed to parse!
+input: 2
+! failed to parse!
+input: 36.6+-86
+! failed to parse!
+input: -69
+! failed to parse!
+input: 103973.14*-463.8
+! failed to parse!
+input: pi
+! failed to parse!
+input: -81.6
+! failed to parse!
+input: 4
+! failed to parse!
+input: 9.6
+output:
+start
+  digits
+    digit	9
+  .
+  digits
+    digit	6
+
+input: k
+! failed to parse!
+input: 65.5
+output:
+start
+  digits
+    digit	6
+    digits
+      digit	5
+  .
+  digits
+    digit	5
+
+input: 38
+! failed to parse!
+input: 0
+! failed to parse!
+input: -3.1
+! failed to parse!
+input: 0.3
+output:
+start
+  digits
+    digit	0
+  .
+  digits
+    digit	3
+
+input: pi
+! failed to parse!
+input: 4.0473
+output:
+start
+  digits
+    digit	4
+  .
+  digits
+    digit	0
+    digits
+      digit	4
+      digits
+        digit	7
+        digits
+          digit	3
+
+input: 04.14
+output:
+start
+  digits
+    digit	0
+    digits
+      digit	4
+  .
+  digits
+    digit	1
+    digits
+      digit	4
+
+input: 6.2
+output:
+start
+  digits
+    digit	6
+  .
+  digits
+    digit	2
+
+input: e
+! failed to parse!
+input: phi-0410.9
+! failed to parse!
+benchmark: mathexpr recall: 276/1000=0.276, precision: 90/100=0.9

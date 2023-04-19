@@ -1,1 +1,0 @@
-PYTHONPATH=./grammar_generator:$PYTHONPATH python3 run_benchmarks.py
