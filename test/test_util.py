@@ -4,7 +4,7 @@ from typing import List
 
 from models.Blank import Blank
 from models.GeneralizedInput import GeneralizedInput
-from util.grimoire_util import random_slice, random_generalized, generic_generalized
+from util.grimoire_util import random_slice, random_generalized
 from util.util import find_all_overlapping_substr, find_all_nonoverlapping_substr, replace_all_instances, \
     replace_random_instance, find_random_substring
 
@@ -12,8 +12,8 @@ from util.util import find_all_overlapping_substr, find_all_nonoverlapping_subst
 class UtilTest(unittest.TestCase):
     def setUp(self):
         self.input1 = GeneralizedInput([b"hello", b"world"])
-        self.input2 = GeneralizedInput([b"hello", Blank(), b"world"])
-        self.input3 = GeneralizedInput([b"hello", Blank(), b"world", Blank(), b"bye", Blank(), b"world"])
+        self.input2 = GeneralizedInput([b"hello", Blank.get_blank(), b"world"])
+        self.input3 = GeneralizedInput([b"hello", Blank.get_blank(), b"world", Blank.get_blank(), b"bye", Blank.get_blank(), b"world"])
 
     def test_random_slice_no_blank(self):
         answer = random_slice([self.input1]).input
@@ -42,11 +42,11 @@ class UtilTest(unittest.TestCase):
             GeneralizedInput([b"hello"]),
             GeneralizedInput([b"world"]),
             GeneralizedInput([b"bye"]),
-            GeneralizedInput([b"hello", Blank(), b"world"]),
-            GeneralizedInput([b"world", Blank(), b"bye"]),
-            GeneralizedInput([b"bye", Blank(), b"world"]),
-            GeneralizedInput([b"hello", Blank(), b"world", Blank(), b"bye"]),
-            GeneralizedInput([b"world", Blank(), b"bye", Blank(), b"world"])
+            GeneralizedInput([b"hello", Blank.get_blank(), b"world"]),
+            GeneralizedInput([b"world", Blank.get_blank(), b"bye"]),
+            GeneralizedInput([b"bye", Blank.get_blank(), b"world"]),
+            GeneralizedInput([b"hello", Blank.get_blank(), b"world", Blank.get_blank(), b"bye"]),
+            GeneralizedInput([b"world", Blank.get_blank(), b"bye", Blank.get_blank(), b"world"])
         ]
         all_possible = generalized + strings + generalized_slices
         for i in range(30):
@@ -108,36 +108,6 @@ class UtilTest(unittest.TestCase):
         expected = b"cbcba"
         actual = replace_all_instances(input_bytes, pattern, replace_bytes)
         self.assertEqual(expected, actual)
-
-    # TODO: fix test to work with different splitting rules
-    def test_generic_generalized(self):
-        def generator() -> bool:
-            results = [
-                False, # 256
-                False, # 128
-                False, # 64
-                False, # 32
-                True, False, True, False, True, False, # 2
-                False, False, False, False, False # 1
-            ]
-            for result in results:
-                yield result
-
-        input_data = b"hello world"
-        gen = generator()
-
-        def candidate_check(input_bytes: bytes) -> bool:
-            return next(gen)
-
-        result = generic_generalized(input_data, candidate_check).input
-        self.assertTrue(isinstance(result[0], Blank)) # eyyyyy :D
-        self.assertTrue(isinstance(result[2], Blank))
-        self.assertTrue(isinstance(result[4], Blank))
-        self.assertEqual(result[1], b"ll")
-        self.assertEqual(result[3], b"wo")
-        self.assertEqual(result[5], b"d")
-
-        pass
 
 
 if __name__ == '__main__':

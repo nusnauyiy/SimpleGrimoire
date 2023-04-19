@@ -1,0 +1,8 @@
+{
+  "message": "my commit message",
+  "committer": {
+    "name": "My name",
+    "email": "my email"
+  },
+  "content": "base64encoded"
+}

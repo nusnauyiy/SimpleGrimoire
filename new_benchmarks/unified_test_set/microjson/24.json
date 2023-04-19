@@ -1,0 +1,32 @@
+[
+  [
+    "sense",
+    {
+      "sn":"1 a",
+      "dt":[
+        [
+          "text",
+          "{bc}to undergo a test"
+        ]
+      ]
+    }
+  ],[
+    "sense",
+    {
+      "sn":"b",
+      "dt":[
+        [
+          "text",
+          "{bc}to be assigned a standing or evaluation on the basis of {a_link|tests} "
+        ],[
+          "vis",
+          [
+            {"t":"{wi}tested{\/wi} positive for cocaine"},
+            {"t":"the cake {wi}tested{\/wi} done"}
+          ]
+        ]
+      ]
+    }
+  ]
+]
+

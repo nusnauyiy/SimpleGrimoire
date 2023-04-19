@@ -1,0 +1,24 @@
+{"ins":[
+  {
+    "ifc":"-seled",
+    "if":"tas*seled"
+  },{
+  "il":"or",
+  "ifc":"-selled",
+  "if":"tas*selled"
+  },{
+  "ifc":"-sel*ing",
+  "if":"tas*sel*ing"
+  },{
+  "il":"or",
+  "ifc":"-sel*ling",
+  "if":"tas*sel*ling",
+  "prs":[
+    {
+      "mw":"\u02c8ta-s(\u0259-)li\u014b",
+      "sound":{"audio":"tassel02","ref":"c","stat":"1"}
+    }
+  ]
+  }
+]
+}

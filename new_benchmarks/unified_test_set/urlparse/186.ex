@@ -1,0 +1,1 @@
+ftps://host1/folder/folder?key1=value2&key2=value3

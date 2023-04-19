@@ -9,6 +9,37 @@ from grammar_generator.ebnf_generator_v5 import generate_ebnf_v5
 from main import fuzz_main
 from util.util import str_to_bytes
 
+'''
+Directory structure that the script expects:
+
+--benchmarks_dir
+- benchmarks_dir
+    - benchmark1.py
+    - benchmark2.py
+    
+--input_parent_dir (training inputs)
+- input_parent_dir
+    - benchmark1 (<< directory)
+        - input1
+        - input2
+        ...
+    - benchmark2
+        - input1
+        - input2
+        ...
+
+--golden_input_parent_dir (test inputs)
+- golden_input_parent_dir
+    - benchmark1 (<< directory)
+        - input1
+        - input2
+        ...
+    - benchmark2
+        - input1
+        - input2
+        ...
+'''
+
 DEFAULT_BENCHMARKS_DIR = "benchmarks"
 DEFAULT_PARENT_OUTPUT_DIR = "run_benchmarks_output"
 DEFAULT_PARENT_INPUT_DIR = f"{DEFAULT_BENCHMARKS_DIR}/seeds"
@@ -22,12 +53,14 @@ class Args():
                  module_to_fuzz: str,
                  output_dir: str,
                  input_dir: str = None,
-                 time: int = 10):
+                 time: int = 10,
+                 cumulative: bool = True):
         self.module_to_fuzz = module_to_fuzz
         self.fuzzer = "GRIMOIRE"
         self.output_dir = output_dir
         self.input_dir = input_dir
         self.time = time
+        self.cumulative = cumulative
 
 def calculate_precision(grammar, module_to_fuzz, benchmark_output_file = None):
     module_under_test = importlib.import_module(module_to_fuzz)

@@ -1,0 +1,29 @@
+Grimoire pipeline currently works like this:
+1. Run seeds through fuzzer to generate initial saved inputs
+2. Loop through saved inputs; for each input I:
+    a. Mutate I -> I'
+    b. Run I' through the fuzzer
+    c. If I' has new coverage, generalize it into a generalized input G
+        i.   Remove a chunk C in I', creating a candidate input I''
+        ii.  Run I'' through the fuzzer
+        iii. If I'' has the same coverage as I', update G by replacing C with a Blank()
+        iv.  At the end, save G
+
+With the replacement phase, we want it to work like this:
+1. Run seeds through fuzzer to generate initial saved inputs
+2. Loop through saved inputs; for each input I:
+    a. Mutate I -> I'
+    b. Run I' through the fuzzer
+    c. If I' has new coverage, generalize it in two phases:
+        ==== 1 - Delete-blank Generalization (DG) ====
+        i.   Remove a chunk C in I', creating a candidate input I''
+        ii.  Run I'' through the fuzzer
+        iii. If I'' has the same coverage as I', update DG by removing C // TODO or, replacing with a Delete-Blank?
+        ==== 2 - Replace-blank Generalization (RG) ====
+        i.   Remove a chunk C in DG
+        ii.  Replace the chunk with ???, creating a candidate input I''' // TODO
+            - we can try different input families, like numbers, strings, alphanumerics, etc.
+        iii. Run I''' through the fuzzer
+        iv.  If I''' is accepted, update RG by replacing C with a Blank // TODO or, replacing with a Replace-Blank?
+            - save information about what can go in the blank (ie. the input family)
+    d. At the end, save RG
