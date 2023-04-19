@@ -248,8 +248,9 @@ import string
 def main(arg):
     try:
         p = Parser(arg, {a:ord(a) for a in string.ascii_lowercase if a != 'e'})
-        p.getValue()
-    except:
+        print(p.getValue())
+    except Exception as e:
+        print(e)
         sys.exit(1)
 
 def test_one_input(input_data: bytes):
@@ -262,6 +263,7 @@ def test_one_input(input_data: bytes):
         pass
 
 if __name__== "__main__":
-    f = open(sys.argv[1], "r")
-    main(f.read())
+    # f = open(sys.argv[1], "r")
+    # main(f.read())
+    main(sys.argv[1])
 # )]

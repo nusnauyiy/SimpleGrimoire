@@ -64,17 +64,21 @@ class Args():
 
 def calculate_precision(grammar, module_to_fuzz, benchmark_output_file = None):
     module_under_test = importlib.import_module(module_to_fuzz)
-    ig_positive_examples = grammar.sample_positives(100, 3)
+    num_total = 0
     num_accepted = 0
-    num_total = len(ig_positive_examples)
-    for example in ig_positive_examples:
-        if benchmark_output_file is not None:
-            benchmark_output_file.write(f"\n!!! Generated an example from grammar: {example}")
-        try:
-            module_under_test.test_one_input(str_to_bytes(example))
-            num_accepted += 1
-        except:
-            pass
+    for i in range(100):
+        ig_positive_examples = grammar.sample_positives(1, 3)
+        for example in ig_positive_examples:
+            print(f"\n!!! Generated an example from grammar: {example}")
+            num_total += 1
+            if benchmark_output_file is not None:
+                benchmark_output_file.write(f"\n!!! Generated an example from grammar: {example}")
+            try:
+                module_under_test.test_one_input(str_to_bytes(example))
+                benchmark_output_file.write(f"\n== example passed :) ==")
+                num_accepted += 1
+            except:
+                benchmark_output_file.write(f"\n==! example failed :( !==")
     precision = num_accepted / num_total if num_total != 0 else 0.0
     return num_accepted, num_total, precision
 
@@ -89,6 +93,7 @@ def calculate_recall(parser, input_dir, benchmark_output_file = None):
             inp = f.read()
             if benchmark_output_file is not None:
                 benchmark_output_file.write(f"\ninput: {inp}")
+                print(f"\ninput: {inp}")
             try:
                 tree = parser.parse(inp)
                 if benchmark_output_file is not None:

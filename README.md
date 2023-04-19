@@ -2,6 +2,17 @@
 
 A version of the Grimoire algorithm implemented on top of a simple python coverage fuzzer.
 
+# Getting Started
+## System Requirements
+
+## Setup
+
+## Usage
+### Running Grimoire Fuzzer
+
+### Evaluation
+
+
 Run calculator example with:
 ```
 python3 main.py benchmarks.calculator --fuzzer GRIMOIRE --time 10 --input_dir benchmarks/seeds/calculator

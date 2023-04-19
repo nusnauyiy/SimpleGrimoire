@@ -7,6 +7,14 @@ then
   exit 0
 fi
 
+if [ "$1" == "apimd" ]
+then
+  PYTHONPATH=./new_benchmarks:$PYTHONPATH
+  python3 main.py new_benchmarks.apimd.apimd_parser --fuzzer GRIMOIRE --time 10 --input_dir new_benchmarks/unified_train_set/apimd_parser --output_dir output/eval$timestamp
+  python3 eval.py --benchmarks_dir new_benchmarks --benchmark apimd.apimd_parser --output_parent_dir output/eval$timestamp/new_benchmarks.apimd.apimd_parser --golden_input_parent_dir new_benchmarks/unified_test_set
+  exit 0
+fi
+
 for benchmark in calculator cgidecode mathexpr sexpr urlparse microjson
 do
   echo $benchmark
