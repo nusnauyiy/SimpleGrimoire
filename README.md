@@ -67,6 +67,10 @@ If successful, a `benckmark_output.txt` file will be generated in the same outpu
 
 # Documentation
 
-[Grimoire](docs/GRIMOIRE.md): details of implementation of the Grimoire algorithm.
+[Grimoire fuzzer](docs/GRIMOIRE_FUZZER.md): details of implementation of the Grimoire algorithm.
 
-[Evaluation](docs/EVALUATION.md): details of benchmark evaluation.
+[Grimoire Pipeline](docs/GRIMOIRE_PIPELINE.md): details of benchmark evaluation.
+
+[EBNF Generation](docs/EBNF_GENERATION.md): details of generating an EBNF grammar from Grimoire's generalized inputs.
+
+[Replacement Classes](docs/REPLACEMENT_CLASSES.md): overview of replacement classes used by Replacement Grimoire.
