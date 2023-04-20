@@ -40,15 +40,20 @@ Replace <benchmark> with:
 ### Running Grimoire Fuzzer only
 Run the following on command line:
 ```shell
-python3 main.py new_benchmarks.<benchmark> --fuzzer GRIMOIRE --time 10 --input_dir new_benchmarks/unified_train_set/<benchmark>
+Run with: `python3 main.py <benchmark.path>.<benchmark> --fuzzer GRIMOIRE --time <seconds> --input_dir <benchmark seed path>/<benchmark>`
 ```
-Replace `<benchmark>` with one of the following:
+Benchmarks:
 - calculator ([source](new_benchmarks/calculator.py))
 - cgidecode ([source](new_benchmarks/cgidecode.py))
 - mathexpr ([source](new_benchmarks/mathexpr.py))
 - microjson ([source](new_benchmarks/microjson.py))
 - sexpr ([source](new_benchmarks/sexpr.py))
 - urlparse ([source](new_benchmarks/urlparse.py))
+
+eg.
+```shell
+python3 main.py new_benchmarks.calculator --fuzzer GRIMOIRE --time 10 --input_dir new_benchmarks/unified_train_set/calculator
+```
 
 ### Running Evaluation only
 To run this, you will need to have an existing output folder from running Grimoire on the benchmark.

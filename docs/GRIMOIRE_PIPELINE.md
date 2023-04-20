@@ -2,6 +2,8 @@
 
 Run with: `./eval.sh <benchmark>`
 
+-----
+
 Grimoire fuzzer is evaluated on a benchmark based on two main metrics: precision and recall.
 
 Evaluation runs in 4 main steps.
