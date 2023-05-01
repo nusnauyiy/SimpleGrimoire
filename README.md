@@ -25,7 +25,7 @@ Run the following on the command line:
 ```shell
 ./eval.sh <benchmark>
 ```
-Replace <benchmark> with:
+Replace `<benchmark>` with:
 - nothing, to run all single-file benchmarks
 - calculator ([source](new_benchmarks/calculator.py))
 - cgidecode ([source](new_benchmarks/cgidecode.py))
